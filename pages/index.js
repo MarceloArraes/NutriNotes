@@ -32,7 +32,7 @@ export default function PaginaInicial() {
       <Box
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          backgroundColor: appConfig.theme.colors.primary[500],
+          //backgroundColor: appConfig.theme.colors.primary[500],
           backgroundImage: 'url(https://i.giphy.com/media/6901DbEbbm4o0/giphy.webp)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}
