@@ -1,7 +1,44 @@
-import '../styles/globals.css'
+import React from "react";
 
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+
+
+export default function MyApp({ Component, pageProps}) {
+  console.log('Roda em todas as páginas');
+  const [username, setUsername] = React.useState('MarceloArraes');
+
+  return ( 
+    <>
+    <GlobalStyle />
+    <Component {...pageProps} />
+    </>
+  );
 }
-
-export default MyApp
+//        border: 1px solid red;
+function GlobalStyle() {
+  return (
+    <style global jsx>{`
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        list-style: none;
+      }
+      body {
+        font-family: 'Open Sans', sans-serif;
+      }
+      /* App fit Height */ 
+      html, body, #__next {
+        min-height: 100vh;
+        display: flex;
+        flex: 1;
+      }
+      #__next {
+        flex: 1;
+      }
+      #__next > * {
+        flex: 1;
+      }
+      /* ./App fit Height */ 
+    `}</style>
+  );
+}
