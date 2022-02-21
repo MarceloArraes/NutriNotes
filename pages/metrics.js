@@ -1,5 +1,5 @@
 import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
-//import {Box} from '@material-ui/core';
+import {FormControl,FormLabel,RadioGroup,FormControlLabel, Radio} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
 import appConfig from '../config.json';
 
@@ -81,12 +81,32 @@ function EstimativaDePeso(props){
             >
             {/* <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(props.altura*props.altura).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax> */}
             <MathJax>{`\\(Peso (kg) = (1.73  \\times  CB) + (0.98 \\times CP) + (0.37 \\times DCSE) + (1.16 \\times AJ) – 81.69\\)`}</MathJax>
+            <MathJax>{`\\(Peso (kg) = (1.73  \\times  {${props.CB}}) + (0.98 \\times {${props.CP}}) + (0.37 \\times {${props.CDSE}}) + (1.16 \\times {${props.AJ}}) – 81.69={${props.estimativaDePeso.toFixed(2)}}\\)`}</MathJax>
              
             </Text>
             </Box>
         </MathJaxContext>
     );
   }
+
+  function RadioSexo(){
+
+    return(
+        <FormControl>
+        <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+        <RadioGroup
+            aria-labelledby="demo-radio-buttons-group-label"
+            defaultValue="female"
+            name="radio-buttons-group"
+        >
+            <FormControlLabel value="female" control={<Radio />} label="Female" />
+            <FormControlLabel value="male" control={<Radio />} label="Male" />
+        </RadioGroup>
+        </FormControl>      
+
+    )
+  }
+
 
 export default function MetricsPage() {
     //Refs and constants
@@ -241,10 +261,37 @@ export default function MetricsPage() {
                                 color: appConfig.theme.colors.neutrals[200],
                             }}
                             >
-
                             Usuário: {username} 
                         </Box>
-
+                        <Box
+                            styleSheet={{
+                                backgroundColor: appConfig.theme.colors.neutrals[600],
+                                width: '100%',
+                                border: '5px',
+                                marginBottom: '16px',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                marginRight: '12px',
+                                color: appConfig.theme.colors.neutrals[200],
+                            }}
+                            >
+                        <TextField
+                            placeholder="Nome do Paciente"
+                            type="textarea"
+                            styleSheet={{
+                                width: '100%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                backgroundColor: appConfig.theme.colors.neutrals[800],
+                                marginRight: '12px',
+                                color: appConfig.theme.colors.neutrals[200],
+                            }}/>
+                            <RadioSexo />
+                        </Box>
+                        
                         <TextField
                             label="Peso Atual (Kg)"
                             disabled={isDisabled}
