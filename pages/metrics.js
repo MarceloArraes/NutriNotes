@@ -1,20 +1,70 @@
 import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
 //import {Box} from '@material-ui/core';
-import React,{useEffect} from 'react';
+import React,{useEffect, useState, useRef} from 'react';
 import appConfig from '../config.json';
 //import { createClient } from '@supabase/supabase-js'
 import { useRouter } from 'next/router'
+import { MathJaxContext, MathJax } from 'better-react-mathjax';
+
+//         \\`frac(25x)(10) = 2^(10)\\`
+//         \\(\\frac{25x}{10} = 2^{10}\\)
+function IMC(props) {
+    console.log(props);
+    
+    return (
+        <MathJaxContext>
+              <h2>Formula para Calculo do IMC</h2>
+              <Box 
+                styleSheet={{
+                    gap: '16px',
+                    padding: '16px',
+                    margin: '16px',
+                    borderRadius: '5px',
+                }}
+              >
+            <Text styleSheet={{padding: '5px',
+                    margin: '5px',
+                    borderRadius: '5px',}} >
+            
+            <MathJax>{"\\(\\frac{peso}{altura*altura} \\approx IMC\\)"}</MathJax>
+            </Text>
+            <Text styleSheet={{padding: '5px',
+                    margin: '5px',
+                    borderRadius: '5px',}}
+            >
+            <MathJax>{`\\(\\frac{${props.peso}}{${(props.altura*props.altura).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax>
+            </Text>
+            </Box>
+        </MathJaxContext>
+    );
+  }
+
+
 
 
 export default function MetricsPage() {
     const roteamento = useRouter();
-    const [message, setMessage] = React.useState('');
-    const [pesoAtual, setPesoAtual] = React.useState('');
-    const [altura, setAltura] = React.useState('');
-    const [imc, setImc] = React.useState('');
+    const [message, setMessage] = useState('');
+    const [pesoAtual, setPesoAtual] = useState('');
+    const [altura, setAltura] = useState('');
+    const [imc, setImc] = useState('');
     const username = roteamento.query.email;
-    const [messages, setMessages] = React.useState([]);
+    const [messages, setMessages] = useState([]);
+    const [isDisabled, setIsDisabled] = useState(false);
+    const firstUpdate = useRef(true);
     
+    useEffect(() => {
+        //prevent default
+        if(firstUpdate.current) {
+            firstUpdate.current = false;
+            setIsDisabled(false);
+            return;
+        }
+        setIsDisabled(true);
+        firstUpdate.current = false;
+    }, [imc]);
+
+
     function handleMessageInput(e){
         const mensagem ={
             /* id: Math.random(),  */
@@ -60,7 +110,6 @@ export default function MetricsPage() {
                     styleSheet={{
                         position: 'relative',
                         display: 'flex',
-                        
                         flex: 1,
                         height: '80%',
                         backgroundColor: appConfig.theme.colors.neutrals[600],
@@ -74,33 +123,28 @@ export default function MetricsPage() {
                         as="form"
                         onSubmit={(e) => {
                             e.preventDefault();
+                            if(pesoAtual.trim().length > 0 && altura.trim().length > 0) {
                             console.log("Fazer conta do IMC");
                             console.log("Peso: ", pesoAtual);
                             console.log("Altura: ", altura);
-                            // Aqui vou usar para capturar o email do usuário e enviar para o banco de dados;
-                            if(altura > 2){
-                                let alturaemmetros = altura /100;
-                                let imc = pesoAtual / (alturaemmetros * alturaemmetros);
-                                setImc(imc);
-                            }else{
-                            
-                            let localimc = pesoAtual/(altura * altura);
+                                if(altura > 2){
+                                    let alturaemmetros = altura /100;
+                                    setAltura(alturaemmetros);
+                                    let imc = pesoAtual / (alturaemmetros * alturaemmetros);
+                                    setImc(imc);
+                                }else{
+                                
+                                let localimc = pesoAtual/(altura * altura);
 
-                            setImc(localimc);
+                                setImc(localimc);
+                                }
                         }
                           }}
+                          
                         styleSheet={{
                             display: 'flex',
                             alignItems: 'center',
                             flexDirection: 'column',
-                            crossAxisCount : {
-                                xl : 2,
-                                lg : 2,
-                                md : 1,
-                                sm : 1,
-                                xs : 1,
-                                }
-                            
                         }}
                     >
                         <Box
@@ -116,39 +160,16 @@ export default function MetricsPage() {
                                 color: appConfig.theme.colors.neutrals[200],
                             }}
                             >
+
                             Usuário: {username} 
                         </Box>
-                        {/* <TextField
-                            placeholder="Insira sua mensagem aqui..."
-                            type="textarea"
-                            styleSheet={{
-                                width: '100%',
-                                border: '0',
-                                resize: 'none',
-                                borderRadius: '5px',
-                                padding: '6px 8px',
-                                backgroundColor: appConfig.theme.colors.neutrals[800],
-                                marginRight: '12px',
-                                color: appConfig.theme.colors.neutrals[200],
-                            }}
-                            value={message}
 
-                            onKeyPress={(e) => {
-                                handleMessageInput(e);
-                            }
-                          }
-                            onChange={(e) => {
-                            setMessage(e.target.value);
-                            }
-                            }
-                        /> */}
                         <TextField
                             label="Peso Atual (Kg)"
+                            disabled={isDisabled}
                             onChange={(e) => {  
-
                                 setPesoAtual(e.target.value); 
-                            
-                            } }
+                            }}
                             onKeyPress={(e) => {
                                 handleMessageInput(e);
                             }}
@@ -168,6 +189,7 @@ export default function MetricsPage() {
                         />
                         <TextField
                             label="Altura em Centímetros"
+                            disabled={isDisabled}
                             onChange={(e) => {
                                 setAltura(e.target.value); 
                             } }
@@ -189,6 +211,7 @@ export default function MetricsPage() {
                             value={altura}
                             variant="bottomBorder"
                         />
+                        {!imc?
                         <Button
                         type='submit'
                         label='Enviar'
@@ -207,28 +230,60 @@ export default function MetricsPage() {
                             mainColorLight: appConfig.theme.colors.primary[400],
                             mainColorStrong: appConfig.theme.colors.primary[600],
                         }}
-                        />
+                        />:
+                        <Button
+                        type='button'
+                        label='Resetar'
+                        fullWidth
+                        onClick={() => {
+                            setPesoAtual('');
+                            setAltura('');
+                            setImc('');
+                            setIsDisabled(false);
+                            firstUpdate.current = true;
+                        }}
+                        styleSheet={{
+                            width: '100%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                marginRight: '12px',
+                            }}
+                        buttonColors={{
+                            contrastColor: appConfig.theme.colors.neutrals["000"],
+                            mainColor: appConfig.theme.colors.primary[500],
+                            mainColorLight: appConfig.theme.colors.primary[400],
+                            mainColorStrong: appConfig.theme.colors.primary[600],
+                        }}
+                        />}
                     </Box>
                     {imc ? 
                     <Box
-                    styleSheet={{
+                        styleSheet={{
                         display: 'flex',
                         flexDirection: 'column',
+                        width: '100%',
                         alignItems: 'center',
-                        justifyContent: 'center',
+                        /* maxWidth: '200px', */
+                        padding: '16px',
+                        backgroundColor: appConfig.theme.colors.neutrals[800],
+                        border: '1px solid',
+                        borderColor: appConfig.theme.colors.neutrals[999],
+                        borderRadius: '10px',
                         flex: 1,
-                        
-                    }}
+                        minHeight: '240px',
+                        }}
                     >
-                        
-                        <Text>
-                            IMC: {imc}
-                        </Text>
-                           
-                        
+                            <Text>
+                                IMC: {imc.toFixed(2)}
+                                {/* send props to APP */}
+                                <IMC peso={pesoAtual} altura={altura} imc={imc} />
+                            </Text>
                     </Box>
                     :null}
                 </Box>
+                
             </Box>
         </Box>
     )

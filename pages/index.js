@@ -9,6 +9,8 @@ const SUPABASE_URL =  '';
 const supabase_client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY); */
 
 
+
+
 function Titulo(props) {
   const Tag = props.tag || 'h1';
   return (
@@ -94,6 +96,9 @@ export default function PaginaInicial() {
               }
               }
             />
+
+
+
             <Button
               type='submit'
               label='Entrar'
@@ -105,9 +110,9 @@ export default function PaginaInicial() {
                 mainColorStrong: appConfig.theme.colors.primary[600],
               }}
             />
-          </Box>
+          </Box>  
           {/* Formulário */}
-
+          
 
           {/* Photo Area */}
           <Box

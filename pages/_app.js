@@ -1,7 +1,6 @@
 import React from "react";
 
 
-
 export default function MyApp({ Component, pageProps}) {
   console.log('Roda em todas as páginas');
 
@@ -12,6 +11,7 @@ export default function MyApp({ Component, pageProps}) {
     </>
   );
 }
+
 //        border: 1px solid red;
 function GlobalStyle() {
   return (
