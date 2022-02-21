@@ -13,7 +13,6 @@ function IMC(props) {
     
     return (
         <MathJaxContext>
-              <h2>Formula para Calculo do IMC</h2>
               <Box 
                 styleSheet={{
                     gap: '16px',
@@ -22,34 +21,99 @@ function IMC(props) {
                     borderRadius: '5px',
                 }}
               >
-            <Text styleSheet={{padding: '5px',
-                    margin: '5px',
-                    borderRadius: '5px',}} >
-            
-            <MathJax>{"\\(\\frac{peso}{altura^2} \\approx IMC\\)"}</MathJax>
-            </Text>
+            IMC: {props.imc.toFixed(2)}
             <Text styleSheet={{padding: '5px',
                     margin: '5px',
                     borderRadius: '5px',}}
             >
-            <MathJax>{`\\(\\frac{${props.peso}}{${(props.altura*props.altura).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax>
+            <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(props.altura*props.altura).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax>
             </Text>
             </Box>
         </MathJaxContext>
     );
   }
 
+  function PerdaDePeso(props){
+    console.log(props);
+    
+    return (
+        <MathJaxContext>
+              <Box 
+                styleSheet={{
+                    gap: '16px',
+                    padding: '16px',
+                    margin: '16px',
+                    borderRadius: '5px',
+                }}
+              >
+            Perda de Peso: {props.perdaDePeso}%
+            <Text styleSheet={{padding: '5px',
+                    margin: '5px',
+                    borderRadius: '5px',}}
+            >
+            {/* <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(props.altura*props.altura).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax> */}
+            <MathJax>{`\\(\\frac {PH-PA}{PH} \\times 100=\\frac {${props.pesohabitual}-${props.pesoatual}}{${props.pesohabitual}} \\times 100={${props.perdaDePeso}}\\%\\)`}</MathJax>
+            {/* <MathJax>{`\\(\\frac {${props.pesohabitual}-${props.pesoatual}}{${props.pesohabitual}} \\times 100={${props.perdaDePeso}}\\%\\)`}</MathJax> */}
+            </Text>
+            </Box>
+        </MathJaxContext>
+    );
+  }
+//Peso (kg) = (1,73 x CB) + (0,98 x CP) + (0,37 x DCSE) + (1,16 x AJ) – 81,69
 
-
+function EstimativaDePeso(props){
+    console.log("Estimativa de Peso props: ", props);
+    
+    return (
+        <MathJaxContext>
+              <Box 
+                styleSheet={{
+                    gap: '16px',
+                    padding: '16px',
+                    margin: '16px',
+                    borderRadius: '5px',
+                }}
+              >
+            Estimativa de Peso: 
+            <Text styleSheet={{padding: '5px',
+                    margin: '5px',
+                    borderRadius: '5px',}}
+            >
+            {/* <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(props.altura*props.altura).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax> */}
+            <MathJax>{`\\(Peso (kg) = (1.73  \\times  CB) + (0.98 \\times CP) + (0.37 \\times DCSE) + (1.16 \\times AJ) – 81.69\\)`}</MathJax>
+             
+            </Text>
+            </Box>
+        </MathJaxContext>
+    );
+  }
 
 export default function MetricsPage() {
+    //Refs and constants
     const roteamento = useRouter();
-    const [message, setMessage] = useState('');
+    const username = roteamento.query.email;
+    
+
+    //IMC
     const [pesoAtual, setPesoAtual] = useState('');
     const [altura, setAltura] = useState('');
     const [imc, setImc] = useState('');
-    const username = roteamento.query.email;
-    const [messages, setMessages] = useState([]);
+
+    //Perda de peso
+    const [pesoHabitual, setPesoHabitual] = useState('');
+    const [perdaDePeso, setPerdaDePeso] = useState('');
+
+    //Estimativa de peso
+    const [CB, setCB] = useState('');
+    const [CP, setCP] = useState('');
+    const [DCSE, setDCSE] = useState('');
+    const [AJ, setAJ] = useState('');
+    const [estimativaDePeso, setEstimativaDePeso] = useState('');
+    
+    
+    const [message, setMessage] = useState('');
+
+    //Modals
     const [isDisabled, setIsDisabled] = useState(false);
     const firstUpdate = useRef(true);
     
@@ -62,7 +126,7 @@ export default function MetricsPage() {
         }
         setIsDisabled(true);
         firstUpdate.current = false;
-    }, [imc]);
+    }, [imc, perdaDePeso,estimativaDePeso]);
 
 
     function handleMessageInput(e){
@@ -133,12 +197,29 @@ export default function MetricsPage() {
                                     let imc = pesoAtual / (alturaemmetros * alturaemmetros);
                                     setImc(imc);
                                 }else{
-                                
-                                let localimc = pesoAtual/(altura * altura);
-
-                                setImc(localimc);
+                                    let localimc = pesoAtual/(altura * altura);
+                                    setImc(localimc);
                                 }
-                        }
+                            }
+                            if(pesoAtual.trim().length > 0 && pesoHabitual.trim().length > 0) {
+                                console.log("Fazer conta do peso habitual");
+                                console.log("Peso: ", pesoAtual);
+                                console.log("Peso habitual: ", pesoHabitual);
+                                let perdaDePeso2 = ((pesoHabitual - pesoAtual) / pesoHabitual )*100;
+                                console.log("Percentual de perda de peso: ", perdaDePeso2);
+                                setPerdaDePeso(perdaDePeso2);
+                            }
+                            if(CB.trim().length>0 && CP.trim().length>0 && DCSE.trim().length>0 && AJ.trim().length>0){
+                            console.log("Estimativa de peso baseadas nos dados");
+                            console.log("CB: ", CB);
+                            console.log("CP: ", CP);
+                            console.log("DCSE: ", DCSE);
+                            console.log("AJ: ", AJ);
+                            //aqui tenho q ver se o paciente é homem ou mulher
+                            let estimativa = 1.73 * CB + (0.98 * CP) + (0.37 *DCSE) + (1.16 * AJ) - 81.69;
+                            setEstimativaDePeso(estimativa);
+                            }
+
                           }}
                           
                         styleSheet={{
@@ -211,7 +292,122 @@ export default function MetricsPage() {
                             value={altura}
                             variant="bottomBorder"
                         />
-                        {!imc?
+                        <TextField
+                            label="Peso Habitual(Anterior) (Kg)"
+                            disabled={isDisabled}
+                            onChange={(e) => {  
+                                setPesoHabitual(e.target.value); 
+                            }}
+                            onKeyPress={(e) => {
+                                handleMessageInput(e);
+                            }}
+                            placeholder="PESO Habitual PLACEHOLDER"
+                            styleSheet={{width: '100%',
+                            border: '0',
+                            resize: 'none',
+                            borderRadius: '5px',
+                            padding: '6px 8px',
+                            backgroundColor: appConfig.theme.colors.neutrals[800],
+                            marginRight: '12px',
+                            color: appConfig.theme.colors.neutrals[200],
+                            }}
+                            type="number"
+                            value={pesoHabitual}
+                            variant="bottomBorder"
+                        />
+                        <TextField
+                            label="CB - Circunferência do Braço"
+                            disabled={isDisabled}
+                            onChange={(e) => {  
+                                setCB(e.target.value); 
+                            }}
+                            onKeyPress={(e) => {
+                                handleMessageInput(e);
+                            }}
+                            placeholder="PESO Habitual PLACEHOLDER"
+                            styleSheet={{width: '100%',
+                            border: '0',
+                            resize: 'none',
+                            borderRadius: '5px',
+                            padding: '6px 8px',
+                            backgroundColor: appConfig.theme.colors.neutrals[800],
+                            marginRight: '12px',
+                            color: appConfig.theme.colors.neutrals[200],
+                            }}
+                            type="number"
+                            value={CB}
+                            variant="bottomBorder"
+                        />
+                        <TextField
+                            label="CP - Circunferência da Panturrilha"
+                            disabled={isDisabled}
+                            onChange={(e) => {  
+                                setCP(e.target.value); 
+                            }}
+                            onKeyPress={(e) => {
+                                handleMessageInput(e);
+                            }}
+                            placeholder="PESO Habitual PLACEHOLDER"
+                            styleSheet={{width: '100%',
+                            border: '0',
+                            resize: 'none',
+                            borderRadius: '5px',
+                            padding: '6px 8px',
+                            backgroundColor: appConfig.theme.colors.neutrals[800],
+                            marginRight: '12px',
+                            color: appConfig.theme.colors.neutrals[200],
+                            }}
+                            type="number"
+                            value={CP}
+                            variant="bottomBorder"
+                        />
+                        <TextField
+                            label="DCSE - Dobra Cutânea Sub Escapular"
+                            disabled={isDisabled}
+                            onChange={(e) => {  
+                                setDCSE(e.target.value); 
+                            }}
+                            onKeyPress={(e) => {
+                                handleMessageInput(e);
+                            }}
+                            placeholder="PESO Habitual PLACEHOLDER"
+                            styleSheet={{width: '100%',
+                            border: '0',
+                            resize: 'none',
+                            borderRadius: '5px',
+                            padding: '6px 8px',
+                            backgroundColor: appConfig.theme.colors.neutrals[800],
+                            marginRight: '12px',
+                            color: appConfig.theme.colors.neutrals[200],
+                            }}
+                            type="number"
+                            value={DCSE}
+                            variant="bottomBorder"
+                        />
+                        <TextField
+                            label="AJ - Altura do Joelho"
+                            disabled={isDisabled}
+                            onChange={(e) => {  
+                                setAJ(e.target.value); 
+                            }}
+                            onKeyPress={(e) => {
+                                handleMessageInput(e);
+                            }}
+                            placeholder="PESO Habitual PLACEHOLDER"
+                            styleSheet={{width: '100%',
+                            border: '0',
+                            resize: 'none',
+                            borderRadius: '5px',
+                            padding: '6px 8px',
+                            backgroundColor: appConfig.theme.colors.neutrals[800],
+                            marginRight: '12px',
+                            color: appConfig.theme.colors.neutrals[200],
+                            }}
+                            type="number"
+                            value={AJ}
+                            variant="bottomBorder"
+                        />
+                        {!imc && !perdaDePeso && !estimativaDePeso ?
                         <Button
                         type='submit'
                         label='Enviar'
@@ -239,6 +435,13 @@ export default function MetricsPage() {
                             setPesoAtual('');
                             setAltura('');
                             setImc('');
+                            setPesoHabitual('');
+                            setCB('');
+                            setCP('');
+                            setDCSE('');
+                            setAJ('');
+                            setPerdaDePeso('');
+                            setEstimativaDePeso('');
                             setIsDisabled(false);
                             firstUpdate.current = true;
                         }}
@@ -276,12 +479,39 @@ export default function MetricsPage() {
                         }}
                     >
                             <Text>
-                                IMC: {imc.toFixed(2)}
+                                
                                 {/* send props to APP */}
                                 <IMC peso={pesoAtual} altura={altura} imc={imc} />
                             </Text>
                     </Box>
                     :null}
+                    {perdaDePeso?
+                    <Box
+                    styleSheet={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    width: '100%',
+                    alignItems: 'center',
+                    /* maxWidth: '200px', */
+                    padding: '16px',
+                    backgroundColor: appConfig.theme.colors.neutrals[800],
+                    border: '1px solid',
+                    borderColor: appConfig.theme.colors.neutrals[999],
+                    borderRadius: '10px',
+                    flex: 1,
+                    minHeight: '240px',
+                    }}
+                >
+                        <Text>
+                            
+                            {/* send props to APP */}
+                            <PerdaDePeso pesoatual={pesoAtual} pesohabitual={pesoHabitual} perdaDePeso={perdaDePeso} />
+                        </Text>
+                </Box>
+                :null}
+                {estimativaDePeso? 
+                <EstimativaDePeso CB={CB} CP={CP} DCSE={DCSE} AJ={AJ} estimativaDePeso={estimativaDePeso} />
+                :null}
                 </Box>
                 
             </Box>
