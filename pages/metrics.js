@@ -1,4 +1,5 @@
 import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
+//import {Box} from '@material-ui/core';
 import React,{useEffect} from 'react';
 import appConfig from '../config.json';
 //import { createClient } from '@supabase/supabase-js'
@@ -8,8 +9,9 @@ import { useRouter } from 'next/router'
 export default function MetricsPage() {
     const roteamento = useRouter();
     const [message, setMessage] = React.useState('');
-    const [pesoAtual, setPesoAtual] = React.useState(undefined);
-    const [altura, setAltura] = React.useState(undefined);
+    const [pesoAtual, setPesoAtual] = React.useState('');
+    const [altura, setAltura] = React.useState('');
+    const [imc, setImc] = React.useState('');
     const username = roteamento.query.email;
     const [messages, setMessages] = React.useState([]);
     
@@ -58,6 +60,7 @@ export default function MetricsPage() {
                     styleSheet={{
                         position: 'relative',
                         display: 'flex',
+                        
                         flex: 1,
                         height: '80%',
                         backgroundColor: appConfig.theme.colors.neutrals[600],
@@ -66,10 +69,46 @@ export default function MetricsPage() {
                         padding: '16px',
                     }}
                 >
+                    
                     <Box
+                        as="form"
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                            console.log("Fazer conta do IMC");
+                            console.log("Peso: ", pesoAtual);
+                            console.log("Altura: ", altura);
+                            // Aqui vou usar para capturar o email do usuário e enviar para o banco de dados;
+                            if(altura > 2){
+                                let alturaemmetros = altura /100;
+                                let imc = pesoAtual / (alturaemmetros * alturaemmetros);
+                                setImc(imc);
+                            }else{
+                            
+                            let localimc = pesoAtual/(altura * altura);
+
+                            setImc(localimc);
+                        }
+                          }}
+                        styleSheet={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            flexDirection: 'column',
+                            crossAxisCount : {
+                                xl : 2,
+                                lg : 2,
+                                md : 1,
+                                sm : 1,
+                                xs : 1,
+                                }
+                            
+                        }}
+                    >
+                        <Box
                             styleSheet={{
                                 backgroundColor: appConfig.theme.colors.primary[900],
-                                border: '0',
+                                width: '100%',
+                                border: '5px',
+                                marginBottom: '16px',
                                 resize: 'none',
                                 borderRadius: '5px',
                                 padding: '6px 8px',
@@ -78,17 +117,7 @@ export default function MetricsPage() {
                             }}
                             >
                             Usuário: {username} 
-                    </Box>
-                    <Box
-                        as="form"
-                        styleSheet={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            crossAxisCount : {
-                                xs : 3
-                                }
-                        }}
-                    >
+                        </Box>
                         {/* <TextField
                             placeholder="Insira sua mensagem aqui..."
                             type="textarea"
@@ -114,29 +143,34 @@ export default function MetricsPage() {
                             }
                         /> */}
                         <TextField
-                            label="Peso Atual"
-                            onChange={(e) => {  setPesoAtual(e.target.value); } }
+                            label="Peso Atual (Kg)"
+                            onChange={(e) => {  
+
+                                setPesoAtual(e.target.value); 
+                            
+                            } }
                             onKeyPress={(e) => {
                                 handleMessageInput(e);
                             }}
-                            placeholder="Placeholder text..."
-                            styleSheet={{
-                                width: '100%',
-                                border: '0',
-                                resize: 'none',
-                                borderRadius: '5px',
-                                padding: '6px 8px',
-                                backgroundColor: appConfig.theme.colors.neutrals[800],
-                                marginRight: '12px',
-                                color: appConfig.theme.colors.neutrals[200],
+                            placeholder="PESO ATUAL PLACEHOLDER"
+                            styleSheet={{width: '100%',
+                            border: '0',
+                            resize: 'none',
+                            borderRadius: '5px',
+                            padding: '6px 8px',
+                            backgroundColor: appConfig.theme.colors.neutrals[800],
+                            marginRight: '12px',
+                            color: appConfig.theme.colors.neutrals[200],
                             }}
                             type="number"
                             value={pesoAtual}
                             variant="bottomBorder"
                         />
                         <TextField
-                            label="Altura"
-                            onChange={(e) => {  setAltura(e.target.value); } }
+                            label="Altura em Centímetros"
+                            onChange={(e) => {
+                                setAltura(e.target.value); 
+                            } }
                             onKeyPress={(e) => {
                                 handleMessageInput(e);
                             }}
@@ -159,6 +193,14 @@ export default function MetricsPage() {
                         type='submit'
                         label='Enviar'
                         fullWidth
+                        styleSheet={{
+                            width: '100%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                marginRight: '12px',
+                            }}
                         buttonColors={{
                             contrastColor: appConfig.theme.colors.neutrals["000"],
                             mainColor: appConfig.theme.colors.primary[500],
@@ -166,8 +208,26 @@ export default function MetricsPage() {
                             mainColorStrong: appConfig.theme.colors.primary[600],
                         }}
                         />
-
                     </Box>
+                    {imc ? 
+                    <Box
+                    styleSheet={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flex: 1,
+                        
+                    }}
+                    >
+                        
+                        <Text>
+                            IMC: {imc}
+                        </Text>
+                           
+                        
+                    </Box>
+                    :null}
                 </Box>
             </Box>
         </Box>
