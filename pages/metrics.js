@@ -91,13 +91,19 @@ function EstimativaDePeso(props){
 
   function RadioSexo(){
 
+    function handleChange(event) {
+        console.log(event.target.value);
+        //setSexo(event.target.value);
+    }
+
     return(
         <FormControl>
-        <FormLabel id="demo-radio-buttons-group-label">Gender</FormLabel>
+        <FormLabel id="demo-row-radio-buttons-group-label">Sexo</FormLabel>
         <RadioGroup
-            aria-labelledby="demo-radio-buttons-group-label"
+            aria-labelledby="demo-row-radio-buttons-group-label"
             defaultValue="female"
-            name="radio-buttons-group"
+            name="radio-row-buttons-group"
+            onChange={handleChange}
         >
             <FormControlLabel value="female" control={<Radio />} label="Female" />
             <FormControlLabel value="male" control={<Radio />} label="Male" />
