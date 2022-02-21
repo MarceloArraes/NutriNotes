@@ -2,7 +2,7 @@ import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components'
 //import {Box} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
 import appConfig from '../config.json';
-//import { createClient } from '@supabase/supabase-js'
+
 import { useRouter } from 'next/router'
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
 
@@ -26,7 +26,7 @@ function IMC(props) {
                     margin: '5px',
                     borderRadius: '5px',}} >
             
-            <MathJax>{"\\(\\frac{peso}{altura*altura} \\approx IMC\\)"}</MathJax>
+            <MathJax>{"\\(\\frac{peso}{altura^2} \\approx IMC\\)"}</MathJax>
             </Text>
             <Text styleSheet={{padding: '5px',
                     margin: '5px',

@@ -1,14 +1,13 @@
 import appConfig from '../config.json';
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import React,{ useState, createContext, useContext } from 'react';
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+import { createClient } from '@supabase/supabase-js';
 
 //Aqui vou usar para capturar o email do usuário e enviar para o banco de dados;
-/* const SUPABASE_ANON_KEY = '';
-const SUPABASE_URL =  '';
-const supabase_client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY); */
-
-
+const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+const SUPABASE_URL =  process.env.NEXT_PUBLIC_SUPABASE_URL;
+const supabase_client = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 
 function Titulo(props) {
@@ -28,6 +27,23 @@ function Titulo(props) {
 export default function PaginaInicial() {
   const roteamento = useRouter();
   const [username, setUsername] = useState('Seu Email');
+
+  function insertEmailonDatabase(){
+    console.log('para inserir no banco de dados');
+    const registeremail ={
+      /* id: Math.random(),  */
+      email: username, 
+    }
+    supabase_client
+    .from('emails').insert(
+        [registeremail])
+    .then(result => {
+        console.log(result);
+        //setMessages([...messages, result.data[0]]);
+    });
+
+  }
+
 
   return (
     <>
@@ -59,9 +75,8 @@ export default function PaginaInicial() {
             as="form"
             onSubmit={(e) => {
               e.preventDefault();
-              
               // Aqui vou usar para capturar o email do usuário e enviar para o banco de dados;
-
+              insertEmailonDatabase();
               roteamento.push(`/metrics?email=${username}`);
 
             }}
@@ -96,7 +111,6 @@ export default function PaginaInicial() {
               }
               }
             />
-
 
 
             <Button
