@@ -1,8 +1,17 @@
-import React from "react";
+import React,{useEffect} from "react";
+
 
 
 export default function MyApp({ Component, pageProps}) {
   console.log('Roda em todas as páginas');
+
+  useEffect(() => {
+    const jssStyles = document.querySelector('#jss-server-side')
+    if (jssStyles && jssStyles.parentElement) {
+      jssStyles.parentElement.removeChild(jssStyles)
+    }
+  }, [])
+
 
   return ( 
     <>

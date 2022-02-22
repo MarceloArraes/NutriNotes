@@ -89,11 +89,11 @@ function EstimativaDePeso(props){
     );
   }
 
-  function RadioSexo(){
+  function RadioSexo(props){
 
     function handleChange(event) {
         console.log(event.target.value);
-        //setSexo(event.target.value);
+        props.setSexo(event.target.value);
     }
 
     return(
@@ -101,12 +101,12 @@ function EstimativaDePeso(props){
         <FormLabel id="demo-row-radio-buttons-group-label">Sexo</FormLabel>
         <RadioGroup
             aria-labelledby="demo-row-radio-buttons-group-label"
-            defaultValue="female"
+            defaultValue="Mulher"
             name="radio-row-buttons-group"
             onChange={handleChange}
         >
-            <FormControlLabel value="female" control={<Radio />} label="Female" />
-            <FormControlLabel value="male" control={<Radio />} label="Male" />
+            <FormControlLabel value="Mulher" control={<Radio />} label="Mulher" />
+            <FormControlLabel value="Homem" control={<Radio />} label="Homem" />
         </RadioGroup>
         </FormControl>      
 
@@ -131,6 +131,7 @@ export default function MetricsPage() {
 
     //Estimativa de peso
     const [CB, setCB] = useState('');
+    const [sexo, setSexo] = useState('');
     const [CP, setCP] = useState('');
     const [DCSE, setDCSE] = useState('');
     const [AJ, setAJ] = useState('');
@@ -174,7 +175,10 @@ export default function MetricsPage() {
     return (
         <Box
             styleSheet={{
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center',
+                height: 'auto',
                 backgroundColor: appConfig.theme.colors.primary[500],
                 backgroundImage: `url(https://i.giphy.com/media/l2JHVUriDGEtWOx0c/giphy.webp)`,
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
@@ -189,9 +193,8 @@ export default function MetricsPage() {
                     boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
                     borderRadius: '5px',
                     backgroundColor: appConfig.theme.colors.neutrals[700],
-                    height: '100%',
                     maxWidth: '95%',
-                    maxHeight: '95vh',
+                    maxHeight: '100%',
                     padding: '32px',
                 }}
             >
@@ -201,7 +204,7 @@ export default function MetricsPage() {
                         position: 'relative',
                         display: 'flex',
                         flex: 1,
-                        height: '80%',
+                        //height: '80%',
                         backgroundColor: appConfig.theme.colors.neutrals[600],
                         flexDirection: 'column',
                         borderRadius: '5px',
@@ -210,83 +213,106 @@ export default function MetricsPage() {
                 >
                     
                     <Box
-                        as="form"
-                        onSubmit={(e) => {
-                            e.preventDefault();
-                            if(pesoAtual.trim().length > 0 && altura.trim().length > 0) {
-                            console.log("Fazer conta do IMC");
-                            console.log("Peso: ", pesoAtual);
-                            console.log("Altura: ", altura);
-                                if(altura > 2){
-                                    let alturaemmetros = altura /100;
-                                    setAltura(alturaemmetros);
-                                    let imc = pesoAtual / (alturaemmetros * alturaemmetros);
-                                    setImc(imc);
-                                }else{
-                                    let localimc = pesoAtual/(altura * altura);
-                                    setImc(localimc);
-                                }
-                            }
-                            if(pesoAtual.trim().length > 0 && pesoHabitual.trim().length > 0) {
-                                console.log("Fazer conta do peso habitual");
+                            as="form"
+                            onSubmit={(e) => {
+                                e.preventDefault();
+                                if(pesoAtual.trim().length > 0 && altura.trim().length > 0) {
+                                console.log("Fazer conta do IMC");
                                 console.log("Peso: ", pesoAtual);
-                                console.log("Peso habitual: ", pesoHabitual);
-                                let perdaDePeso2 = ((pesoHabitual - pesoAtual) / pesoHabitual )*100;
-                                console.log("Percentual de perda de peso: ", perdaDePeso2);
-                                setPerdaDePeso(perdaDePeso2);
-                            }
-                            if(CB.trim().length>0 && CP.trim().length>0 && DCSE.trim().length>0 && AJ.trim().length>0){
-                            console.log("Estimativa de peso baseadas nos dados");
-                            console.log("CB: ", CB);
-                            console.log("CP: ", CP);
-                            console.log("DCSE: ", DCSE);
-                            console.log("AJ: ", AJ);
-                            //aqui tenho q ver se o paciente é homem ou mulher
-                            let estimativa = 1.73 * CB + (0.98 * CP) + (0.37 *DCSE) + (1.16 * AJ) - 81.69;
-                            setEstimativaDePeso(estimativa);
-                            }
+                                console.log("Altura: ", altura);
+                                    if(altura > 2){
+                                        let alturaemmetros = altura /100;
+                                        setAltura(alturaemmetros);
+                                        let imc = pesoAtual / (alturaemmetros * alturaemmetros);
+                                        setImc(imc);
+                                    }else{
+                                        let localimc = pesoAtual/(altura * altura);
+                                        setImc(localimc);
+                                    }
+                                }
+                                if(pesoAtual.trim().length > 0 && pesoHabitual.trim().length > 0) {
+                                    console.log("Fazer conta do peso habitual");
+                                    console.log("Peso: ", pesoAtual);
+                                    console.log("Peso habitual: ", pesoHabitual);
+                                    let perdaDePeso2 = ((pesoHabitual - pesoAtual) / pesoHabitual )*100;
+                                    console.log("Percentual de perda de peso: ", perdaDePeso2);
+                                    setPerdaDePeso(perdaDePeso2);
+                                }
+                                if(CB.trim().length>0 && CP.trim().length>0 && DCSE.trim().length>0 && AJ.trim().length>0){
+                                console.log("Estimativa de peso baseadas nos dados");
+                                console.log("CB: ", CB);
+                                console.log("CP: ", CP);
+                                console.log("DCSE: ", DCSE);
+                                console.log("AJ: ", AJ);
+                                //aqui tenho q ver se o paciente é homem ou mulher
+                                let estimativa = 1.73 * CB + (0.98 * CP) + (0.37 *DCSE) + (1.16 * AJ) - 81.69;
+                                setEstimativaDePeso(estimativa);
+                                }
 
-                          }}
-                          
-                        styleSheet={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            flexDirection: 'column',
-                        }}
-                    >
-                        <Box
-                            styleSheet={{
-                                backgroundColor: appConfig.theme.colors.primary[900],
-                                width: '100%',
-                                border: '5px',
-                                marginBottom: '16px',
-                                resize: 'none',
-                                borderRadius: '5px',
-                                padding: '6px 8px',
-                                marginRight: '12px',
-                                color: appConfig.theme.colors.neutrals[200],
                             }}
-                            >
-                            Usuário: {username} 
-                        </Box>
-                        <Box
+                            
                             styleSheet={{
-                                backgroundColor: appConfig.theme.colors.neutrals[600],
-                                width: '100%',
-                                border: '5px',
-                                marginBottom: '16px',
-                                resize: 'none',
-                                borderRadius: '5px',
-                                padding: '6px 8px',
-                                marginRight: '12px',
-                                color: appConfig.theme.colors.neutrals[200],
+                                display: 'flex',
+                                alignItems: 'center',
+                                flexDirection: 'column',
+                                
                             }}
-                            >
-                        <TextField
-                            placeholder="Nome do Paciente"
-                            type="textarea"
-                            styleSheet={{
-                                width: '100%',
+                        >
+                            <Box
+                                styleSheet={{
+                                    backgroundColor: appConfig.theme.colors.primary[900],
+                                    width: '100%',
+                                    border: '5px',
+                                    marginBottom: '16px',
+                                    resize: 'none',
+                                    borderRadius: '5px',
+                                    padding: '6px 8px',
+                                    marginRight: '12px',
+                                    color: appConfig.theme.colors.neutrals[200],
+                                }}
+                                >
+                                Usuário: {username} 
+                            </Box>
+                            <Box
+                                styleSheet={{
+                                    backgroundColor: appConfig.theme.colors.neutrals[600],
+                                    width: '100%',
+                                    border: '5px',
+                                    marginBottom: '16px',
+                                    resize: 'none',
+                                    borderRadius: '5px',
+                                    padding: '6px 8px',
+                                    marginRight: '12px',
+                                    color: appConfig.theme.colors.neutrals[200],
+                                }}
+                                >
+                            <TextField
+                                placeholder="Nome do Paciente"
+                                type="textarea"
+                                styleSheet={{
+                                    width: '100%',
+                                    border: '0',
+                                    resize: 'none',
+                                    borderRadius: '5px',
+                                    padding: '6px 8px',
+                                    backgroundColor: appConfig.theme.colors.neutrals[800],
+                                    marginRight: '12px',
+                                    color: appConfig.theme.colors.neutrals[200],
+                                }}/>
+                                <RadioSexo setSexo={setSexo} />
+                            </Box>
+                            
+                            <TextField
+                                label="Peso Atual (Kg)"
+                                disabled={isDisabled}
+                                onChange={(e) => {  
+                                    setPesoAtual(e.target.value); 
+                                }}
+                                onKeyPress={(e) => {
+                                    handleMessageInput(e);
+                                }}
+                                placeholder="PESO ATUAL PLACEHOLDER"
+                                styleSheet={{width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
@@ -294,228 +320,231 @@ export default function MetricsPage() {
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                            }}/>
-                            <RadioSexo />
-                        </Box>
+                                }}
+                                type="number"
+                                value={pesoAtual}
+                                variant="bottomBorder"
+                            />
+                            <TextField
+                                label="Altura em Centímetros"
+                                disabled={isDisabled}
+                                onChange={(e) => {
+                                    setAltura(e.target.value); 
+                                } }
+                                onKeyPress={(e) => {
+                                    handleMessageInput(e);
+                                }}
+                                placeholder="Placeholder text..."
+                                styleSheet={{
+                                    width: '100%',
+                                    border: '0',
+                                    resize: 'none',
+                                    borderRadius: '5px',
+                                    padding: '6px 8px',
+                                    backgroundColor: appConfig.theme.colors.neutrals[800],
+                                    marginRight: '12px',
+                                    color: appConfig.theme.colors.neutrals[200],
+                                }}
+                                type="number"
+                                value={altura}
+                                variant="bottomBorder"
+                            />
+                            <TextField
+                                label="Peso Habitual(Anterior) (Kg)"
+                                disabled={isDisabled}
+                                onChange={(e) => {  
+                                    setPesoHabitual(e.target.value); 
+                                }}
+                                onKeyPress={(e) => {
+                                    handleMessageInput(e);
+                                }}
+                                placeholder="PESO Habitual PLACEHOLDER"
+                                styleSheet={{width: '100%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                backgroundColor: appConfig.theme.colors.neutrals[800],
+                                marginRight: '12px',
+                                color: appConfig.theme.colors.neutrals[200],
+                                }}
+                                type="number"
+                                value={pesoHabitual}
+                                variant="bottomBorder"
+                            />
+                            <TextField
+                                label="CB - Circunferência do Braço"
+                                disabled={isDisabled}
+                                onChange={(e) => {  
+                                    setCB(e.target.value); 
+                                }}
+                                onKeyPress={(e) => {
+                                    handleMessageInput(e);
+                                }}
+                                placeholder="PESO Habitual PLACEHOLDER"
+                                styleSheet={{width: '100%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                backgroundColor: appConfig.theme.colors.neutrals[800],
+                                marginRight: '12px',
+                                color: appConfig.theme.colors.neutrals[200],
+                                }}
+                                type="number"
+                                value={CB}
+                                variant="bottomBorder"
+                            />
+                            <TextField
+                                label="CP - Circunferência da Panturrilha"
+                                disabled={isDisabled}
+                                onChange={(e) => {  
+                                    setCP(e.target.value); 
+                                }}
+                                onKeyPress={(e) => {
+                                    handleMessageInput(e);
+                                }}
+                                placeholder="PESO Habitual PLACEHOLDER"
+                                styleSheet={{width: '100%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                backgroundColor: appConfig.theme.colors.neutrals[800],
+                                marginRight: '12px',
+                                color: appConfig.theme.colors.neutrals[200],
+                                }}
+                                type="number"
+                                value={CP}
+                                variant="bottomBorder"
+                            />
+                            <TextField
+                                label="DCSE - Dobra Cutânea Sub Escapular"
+                                disabled={isDisabled}
+                                onChange={(e) => {  
+                                    setDCSE(e.target.value); 
+                                }}
+                                onKeyPress={(e) => {
+                                    handleMessageInput(e);
+                                }}
+                                placeholder="PESO Habitual PLACEHOLDER"
+                                styleSheet={{width: '100%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                backgroundColor: appConfig.theme.colors.neutrals[800],
+                                marginRight: '12px',
+                                color: appConfig.theme.colors.neutrals[200],
+                                }}
+                                type="number"
+                                value={DCSE}
+                                variant="bottomBorder"
+                            />
+                            <TextField
+                                label="AJ - Altura do Joelho"
+                                disabled={isDisabled}
+                                onChange={(e) => {  
+                                    setAJ(e.target.value); 
+                                }}
+                                onKeyPress={(e) => {
+                                    handleMessageInput(e);
+                                }}
+                                placeholder="PESO Habitual PLACEHOLDER"
+                                styleSheet={{width: '100%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                backgroundColor: appConfig.theme.colors.neutrals[800],
+                                marginRight: '12px',
+                                color: appConfig.theme.colors.neutrals[200],
+                                }}
+                                type="number"
+                                value={AJ}
+                                variant="bottomBorder"
+                            />
+                            {!imc && !perdaDePeso && !estimativaDePeso ?
+                            <Button
+                            type='submit'
+                            label='Enviar'
+                            fullWidth
+                            styleSheet={{
+                                width: '100%',
+                                    border: '0',
+                                    resize: 'none',
+                                    borderRadius: '5px',
+                                    padding: '6px 8px',
+                                    marginRight: '12px',
+                                }}
+                            buttonColors={{
+                                contrastColor: appConfig.theme.colors.neutrals["000"],
+                                mainColor: appConfig.theme.colors.primary[500],
+                                mainColorLight: appConfig.theme.colors.primary[400],
+                                mainColorStrong: appConfig.theme.colors.primary[600],
+                            }}
+                            />:
+                            <Button
+                            type='button'
+                            label='Resetar'
+                            fullWidth
+                            onClick={() => {
+                                setPesoAtual('');
+                                setAltura('');
+                                setImc('');
+                                setPesoHabitual('');
+                                setCB('');
+                                setCP('');
+                                setDCSE('');
+                                setAJ('');
+                                setPerdaDePeso('');
+                                setEstimativaDePeso('');
+                                setIsDisabled(false);
+                                firstUpdate.current = true;
+                            }}
+                            styleSheet={{
+                                width: '100%',
+                                    border: '0',
+                                    resize: 'none',
+                                    borderRadius: '5px',
+                                    padding: '6px 8px',
+                                    marginRight: '12px',
+                                }}
+                            buttonColors={{
+                                contrastColor: appConfig.theme.colors.neutrals["000"],
+                                mainColor: appConfig.theme.colors.primary[500],
+                                mainColorLight: appConfig.theme.colors.primary[400],
+                                mainColorStrong: appConfig.theme.colors.primary[600],
+                            }}
+                            />}
                         
-                        <TextField
-                            label="Peso Atual (Kg)"
-                            disabled={isDisabled}
-                            onChange={(e) => {  
-                                setPesoAtual(e.target.value); 
-                            }}
-                            onKeyPress={(e) => {
-                                handleMessageInput(e);
-                            }}
-                            placeholder="PESO ATUAL PLACEHOLDER"
-                            styleSheet={{width: '100%',
-                            border: '0',
-                            resize: 'none',
-                            borderRadius: '5px',
-                            padding: '6px 8px',
-                            backgroundColor: appConfig.theme.colors.neutrals[800],
-                            marginRight: '12px',
-                            color: appConfig.theme.colors.neutrals[200],
-                            }}
-                            type="number"
-                            value={pesoAtual}
-                            variant="bottomBorder"
-                        />
-                        <TextField
-                            label="Altura em Centímetros"
-                            disabled={isDisabled}
-                            onChange={(e) => {
-                                setAltura(e.target.value); 
-                            } }
-                            onKeyPress={(e) => {
-                                handleMessageInput(e);
-                            }}
-                            placeholder="Placeholder text..."
+                        {imc ? 
+                        <Box
                             styleSheet={{
-                                width: '100%',
-                                border: '0',
-                                resize: 'none',
-                                borderRadius: '5px',
-                                padding: '6px 8px',
-                                backgroundColor: appConfig.theme.colors.neutrals[800],
-                                marginRight: '12px',
-                                color: appConfig.theme.colors.neutrals[200],
-                            }}
-                            type="number"
-                            value={altura}
-                            variant="bottomBorder"
-                        />
-                        <TextField
-                            label="Peso Habitual(Anterior) (Kg)"
-                            disabled={isDisabled}
-                            onChange={(e) => {  
-                                setPesoHabitual(e.target.value); 
-                            }}
-                            onKeyPress={(e) => {
-                                handleMessageInput(e);
-                            }}
-                            placeholder="PESO Habitual PLACEHOLDER"
-                            styleSheet={{width: '100%',
-                            border: '0',
-                            resize: 'none',
-                            borderRadius: '5px',
-                            padding: '6px 8px',
-                            backgroundColor: appConfig.theme.colors.neutrals[800],
-                            marginRight: '12px',
-                            color: appConfig.theme.colors.neutrals[200],
-                            }}
-                            type="number"
-                            value={pesoHabitual}
-                            variant="bottomBorder"
-                        />
-                        <TextField
-                            label="CB - Circunferência do Braço"
-                            disabled={isDisabled}
-                            onChange={(e) => {  
-                                setCB(e.target.value); 
-                            }}
-                            onKeyPress={(e) => {
-                                handleMessageInput(e);
-                            }}
-                            placeholder="PESO Habitual PLACEHOLDER"
-                            styleSheet={{width: '100%',
-                            border: '0',
-                            resize: 'none',
-                            borderRadius: '5px',
-                            padding: '6px 8px',
-                            backgroundColor: appConfig.theme.colors.neutrals[800],
-                            marginRight: '12px',
-                            color: appConfig.theme.colors.neutrals[200],
-                            }}
-                            type="number"
-                            value={CB}
-                            variant="bottomBorder"
-                        />
-                        <TextField
-                            label="CP - Circunferência da Panturrilha"
-                            disabled={isDisabled}
-                            onChange={(e) => {  
-                                setCP(e.target.value); 
-                            }}
-                            onKeyPress={(e) => {
-                                handleMessageInput(e);
-                            }}
-                            placeholder="PESO Habitual PLACEHOLDER"
-                            styleSheet={{width: '100%',
-                            border: '0',
-                            resize: 'none',
-                            borderRadius: '5px',
-                            padding: '6px 8px',
-                            backgroundColor: appConfig.theme.colors.neutrals[800],
-                            marginRight: '12px',
-                            color: appConfig.theme.colors.neutrals[200],
-                            }}
-                            type="number"
-                            value={CP}
-                            variant="bottomBorder"
-                        />
-                        <TextField
-                            label="DCSE - Dobra Cutânea Sub Escapular"
-                            disabled={isDisabled}
-                            onChange={(e) => {  
-                                setDCSE(e.target.value); 
-                            }}
-                            onKeyPress={(e) => {
-                                handleMessageInput(e);
-                            }}
-                            placeholder="PESO Habitual PLACEHOLDER"
-                            styleSheet={{width: '100%',
-                            border: '0',
-                            resize: 'none',
-                            borderRadius: '5px',
-                            padding: '6px 8px',
-                            backgroundColor: appConfig.theme.colors.neutrals[800],
-                            marginRight: '12px',
-                            color: appConfig.theme.colors.neutrals[200],
-                            }}
-                            type="number"
-                            value={DCSE}
-                            variant="bottomBorder"
-                        />
-                        <TextField
-                            label="AJ - Altura do Joelho"
-                            disabled={isDisabled}
-                            onChange={(e) => {  
-                                setAJ(e.target.value); 
-                            }}
-                            onKeyPress={(e) => {
-                                handleMessageInput(e);
-                            }}
-                            placeholder="PESO Habitual PLACEHOLDER"
-                            styleSheet={{width: '100%',
-                            border: '0',
-                            resize: 'none',
-                            borderRadius: '5px',
-                            padding: '6px 8px',
-                            backgroundColor: appConfig.theme.colors.neutrals[800],
-                            marginRight: '12px',
-                            color: appConfig.theme.colors.neutrals[200],
-                            }}
-                            type="number"
-                            value={AJ}
-                            variant="bottomBorder"
-                        />
-                        {!imc && !perdaDePeso && !estimativaDePeso ?
-                        <Button
-                        type='submit'
-                        label='Enviar'
-                        fullWidth
-                        styleSheet={{
+                            display: 'flex',
+                            flexDirection: 'column',
                             width: '100%',
-                                border: '0',
-                                resize: 'none',
-                                borderRadius: '5px',
-                                padding: '6px 8px',
-                                marginRight: '12px',
+                            alignItems: 'center',
+                            padding: '6px 8px',
+                            marginBottom: '16px',
+                            marginTop: '16px',
+                            marginRight: '12px',
+                            backgroundColor: appConfig.theme.colors.neutrals[800],
+                            border: '1px solid',
+                            borderColor: appConfig.theme.colors.neutrals[999],
+                            borderRadius: '10px',
+                            flex: 1,
+                            minHeight: '240px', 
                             }}
-                        buttonColors={{
-                            contrastColor: appConfig.theme.colors.neutrals["000"],
-                            mainColor: appConfig.theme.colors.primary[500],
-                            mainColorLight: appConfig.theme.colors.primary[400],
-                            mainColorStrong: appConfig.theme.colors.primary[600],
-                        }}
-                        />:
-                        <Button
-                        type='button'
-                        label='Resetar'
-                        fullWidth
-                        onClick={() => {
-                            setPesoAtual('');
-                            setAltura('');
-                            setImc('');
-                            setPesoHabitual('');
-                            setCB('');
-                            setCP('');
-                            setDCSE('');
-                            setAJ('');
-                            setPerdaDePeso('');
-                            setEstimativaDePeso('');
-                            setIsDisabled(false);
-                            firstUpdate.current = true;
-                        }}
-                        styleSheet={{
-                            width: '100%',
-                                border: '0',
-                                resize: 'none',
-                                borderRadius: '5px',
-                                padding: '6px 8px',
-                                marginRight: '12px',
-                            }}
-                        buttonColors={{
-                            contrastColor: appConfig.theme.colors.neutrals["000"],
-                            mainColor: appConfig.theme.colors.primary[500],
-                            mainColorLight: appConfig.theme.colors.primary[400],
-                            mainColorStrong: appConfig.theme.colors.primary[600],
-                        }}
-                        />}
-                    </Box>
-                    {imc ? 
-                    <Box
+                        >
+                                <Text>
+                                    {/* send props to APP */}
+                                    <IMC peso={pesoAtual} altura={altura} imc={imc} />
+                                </Text>
+                        </Box>
+                        :null}
+                        {perdaDePeso?
+                        <Box
                         styleSheet={{
                         display: 'flex',
                         flexDirection: 'column',
@@ -534,11 +563,11 @@ export default function MetricsPage() {
                             <Text>
                                 
                                 {/* send props to APP */}
-                                <IMC peso={pesoAtual} altura={altura} imc={imc} />
+                                <PerdaDePeso pesoatual={pesoAtual} pesohabitual={pesoHabitual} perdaDePeso={perdaDePeso} />
                             </Text>
                     </Box>
                     :null}
-                    {perdaDePeso?
+                    {estimativaDePeso? 
                     <Box
                     styleSheet={{
                     display: 'flex',
@@ -546,27 +575,22 @@ export default function MetricsPage() {
                     width: '100%',
                     alignItems: 'center',
                     /* maxWidth: '200px', */
-                    padding: '16px',
+                    padding: '6px 8px',
+                    marginRight: '12px',
                     backgroundColor: appConfig.theme.colors.neutrals[800],
                     border: '1px solid',
                     borderColor: appConfig.theme.colors.neutrals[999],
                     borderRadius: '10px',
                     flex: 1,
-                    minHeight: '240px',
+                    minHeight: '240px', 
                     }}
-                >
-                        <Text>
-                            
-                            {/* send props to APP */}
-                            <PerdaDePeso pesoatual={pesoAtual} pesohabitual={pesoHabitual} perdaDePeso={perdaDePeso} />
-                        </Text>
+                >   <Text>
+                    <EstimativaDePeso CB={CB} CP={CP} DCSE={DCSE} AJ={AJ} estimativaDePeso={estimativaDePeso} />
+                    </Text>
                 </Box>
-                :null}
-                {estimativaDePeso? 
-                <EstimativaDePeso CB={CB} CP={CP} DCSE={DCSE} AJ={AJ} estimativaDePeso={estimativaDePeso} />
-                :null}
+                    :null}
+                    </Box>
                 </Box>
-                
             </Box>
         </Box>
     )
