@@ -2,6 +2,13 @@ import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components'
 import {FormControl,FormLabel,RadioGroup,FormControlLabel, Radio} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
 import appConfig from '../config.json';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
 
 import { useRouter } from 'next/router'
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
@@ -11,6 +18,55 @@ import { MathJaxContext, MathJax } from 'better-react-mathjax';
 function IMC(props) {
     console.log(props);
     
+    function createData(name, faixabaixaIMC, faixaaltaIMC) {
+        return { name, faixabaixaIMC, faixaaltaIMC };
+      }
+      
+      const rows = [
+        createData('Magreza grau III', '<16', ''),
+        createData('Magreza grau II',   '≤16','≤16.9'),
+        createData('Magreza grau I',    '≤17','≤18,4'),
+        createData('Faixa Normal',      '≤18,5','≤24,9'),
+        createData('Pré Obesidade',     '≤25','≤29,9'),
+        createData('Obesidade Grau I',  '≤30','≤34,9'),
+        createData('Obesidade Grau II', '≤35','≤39,9'),
+        createData('Obesidade Grau III','≤40',''),
+      ];
+    
+      function DenseTable() {
+        return (
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 250 }} size="small" aria-label="a dense table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Estado Nutricional</TableCell>
+                  <TableCell align="left">Faixa IMC</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows.map((row) => (
+                  <TableRow
+                    key={row.name}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.name}
+                    </TableCell>
+                    <TableRow 
+                    key={row.name}
+                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    >
+                        <TableCell align="right">{row.faixabaixaIMC}</TableCell>
+                        <TableCell align="right">{row.faixaaltaIMC}</TableCell>
+                    </TableRow>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        );
+      }
+      
     return (
         <MathJaxContext>
               <Box 
@@ -28,10 +84,16 @@ function IMC(props) {
             >
             <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(props.altura*props.altura).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax>
             </Text>
+            <Text>
+                Colocar as tabelas aqui?
+            </Text>
+            <DenseTable/>
             </Box>
         </MathJaxContext>
     );
   }
+
+
 
   function PerdaDePeso(props){
     console.log(props);
@@ -55,6 +117,7 @@ function IMC(props) {
             <MathJax>{`\\(\\frac {PH-PA}{PH} \\times 100=\\frac {${props.pesohabitual}-${props.pesoatual}}{${props.pesohabitual}} \\times 100={${props.perdaDePeso}}\\%\\)`}</MathJax>
             {/* <MathJax>{`\\(\\frac {${props.pesohabitual}-${props.pesoatual}}{${props.pesohabitual}} \\times 100={${props.perdaDePeso}}\\%\\)`}</MathJax> */}
             </Text>
+
             </Box>
         </MathJaxContext>
     );
