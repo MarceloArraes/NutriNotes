@@ -21,7 +21,10 @@ function IMC(props) {
     function createData(name, faixabaixaIMC, faixaaltaIMC) {
         return { name, faixabaixaIMC, faixaaltaIMC };
       }
-      
+
+      if(props.altura>3){
+      var alturaemmetros = props.altura /100;
+        }
       const rows = [
         createData('Magreza grau III', '<16', ''),
         createData('Magreza grau II',   '≤16','≤16.9'),
@@ -82,7 +85,7 @@ function IMC(props) {
                     margin: '5px',
                     borderRadius: '5px',}}
             >
-            <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(props.altura*props.altura).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax>
+            <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(alturaemmetros*alturaemmetros).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax>
             </Text>
             <Text>
                 Colocar as tabelas aqui?
@@ -95,6 +98,33 @@ function IMC(props) {
 
 
 
+  function GEB(props){
+    console.log(props);
+    //props = altura + peso + idade
+    return (
+        <MathJaxContext>
+              <Box 
+                styleSheet={{
+                    gap: '16px',
+                    padding: '16px',
+                    margin: '16px',
+                    borderRadius: '5px',
+                }}
+              >
+            Perda de Peso: {props.perdaDePeso}%
+            <Text styleSheet={{padding: '5px',
+                    margin: '5px',
+                    borderRadius: '5px',}}
+            >
+            {/* <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(props.altura*props.altura).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax> */}
+            <MathJax>{`\\(\\frac {PH-PA}{PH} \\times 100=\\frac {${props.pesohabitual}-${props.pesoatual}}{${props.pesohabitual}} \\times 100={${props.perdaDePeso}}\\%\\)`}</MathJax>
+            {/* <MathJax>{`\\(\\frac {${props.pesohabitual}-${props.pesoatual}}{${props.pesohabitual}} \\times 100={${props.perdaDePeso}}\\%\\)`}</MathJax> */}
+            </Text>
+
+            </Box>
+        </MathJaxContext>
+    );
+  }
   function PerdaDePeso(props){
     console.log(props);
     
@@ -168,11 +198,10 @@ function EstimativaDePeso(props){
             name="radio-row-buttons-group"
             onChange={handleChange}
         >
-            <FormControlLabel value="Mulher" control={<Radio />} label="Mulher" />
-            <FormControlLabel value="Homem" control={<Radio />} label="Homem" />
+            <FormControlLabel value="mulher" control={<Radio />} label="Mulher" />
+            <FormControlLabel value="homem" control={<Radio />} label="Homem" />
         </RadioGroup>
         </FormControl>      
-
     )
   }
 
@@ -194,11 +223,15 @@ export default function MetricsPage() {
 
     //Estimativa de peso
     const [CB, setCB] = useState('');
-    const [sexo, setSexo] = useState('');
+    const [sexo, setSexo] = useState('mulher');
     const [CP, setCP] = useState('');
     const [DCSE, setDCSE] = useState('');
     const [AJ, setAJ] = useState('');
     const [estimativaDePeso, setEstimativaDePeso] = useState('');
+
+    //GEB
+    const [idade, setIdade] = useState('');
+    const [geb, setGeb] = useState('');
     
     
     const [message, setMessage] = useState('');
@@ -279,13 +312,15 @@ export default function MetricsPage() {
                             as="form"
                             onSubmit={(e) => {
                                 e.preventDefault();
+                                //Here i will put a function that i send all the inputs and the function set the results.
+
                                 if(pesoAtual.trim().length > 0 && altura.trim().length > 0) {
                                 console.log("Fazer conta do IMC");
                                 console.log("Peso: ", pesoAtual);
                                 console.log("Altura: ", altura);
-                                    if(altura > 2){
+                                    if(altura > 3){
                                         let alturaemmetros = altura /100;
-                                        setAltura(alturaemmetros);
+                                        //setAltura(alturaemmetros);
                                         let imc = pesoAtual / (alturaemmetros * alturaemmetros);
                                         setImc(imc);
                                     }else{
@@ -311,7 +346,28 @@ export default function MetricsPage() {
                                 let estimativa = 1.73 * CB + (0.98 * CP) + (0.37 *DCSE) + (1.16 * AJ) - 81.69;
                                 setEstimativaDePeso(estimativa);
                                 }
+                                if(pesoAtual.trim().length > 0 && idade.trim().length > 0 && altura.trim().length > 0) {
+                                    console.log("Fazer conta do GEB");
+                                    if(sexo==="homem"){
+                                    console.log("Sexo: ", sexo);
+                                    console.log("Peso: ", pesoAtual);
+                                    console.log("Idade: ", idade);
+                                    console.log("Altura: ", altura);
+                                    //66,47  + 13,75  (Peso) + 5 (Estatura cm) - 6,76 (Idade)
 
+                                    let geb = 66.47 + (13.75*pesoAtual) + (5*altura) - (6.76*idade);
+                                    setGeb(geb);
+                                }else{
+                                    console.log("Sexo: ", sexo);
+                                    console.log("Peso: ", pesoAtual);
+                                    console.log("Idade: ", idade);
+                                    console.log("Altura: ", altura);
+                                    //66,47  + 13,75  (Peso) + 5 (Estatura cm) - 6,76 (Idade)
+
+                                    let geb = 655.1 + (9.56*pesoAtual) + (1.85*altura) - (4.68*idade);
+                                    setGeb(geb);
+                                }
+                                }
                             }}
                             
                             styleSheet={{
@@ -364,28 +420,28 @@ export default function MetricsPage() {
                                 }}/>
                                 <RadioSexo setSexo={setSexo} />
                             </Box>
-                            
                             <TextField
-                                label="Peso Atual (Kg)"
+                                label="Idade"
                                 disabled={isDisabled}
-                                onChange={(e) => {  
-                                    setPesoAtual(e.target.value); 
-                                }}
+                                onChange={(e) => {
+                                    setIdade(e.target.value); 
+                                } }
                                 onKeyPress={(e) => {
                                     handleMessageInput(e);
                                 }}
-                                placeholder="PESO ATUAL PLACEHOLDER"
-                                styleSheet={{width: '100%',
-                                border: '0',
-                                resize: 'none',
-                                borderRadius: '5px',
-                                padding: '6px 8px',
-                                backgroundColor: appConfig.theme.colors.neutrals[800],
-                                marginRight: '12px',
-                                color: appConfig.theme.colors.neutrals[200],
+                                placeholder="Placeholder text..."
+                                styleSheet={{
+                                    width: '100%',
+                                    border: '0',
+                                    resize: 'none',
+                                    borderRadius: '5px',
+                                    padding: '6px 8px',
+                                    backgroundColor: appConfig.theme.colors.neutrals[800],
+                                    marginRight: '12px',
+                                    color: appConfig.theme.colors.neutrals[200],
                                 }}
                                 type="number"
-                                value={pesoAtual}
+                                value={idade}
                                 variant="bottomBorder"
                             />
                             <TextField
@@ -412,6 +468,31 @@ export default function MetricsPage() {
                                 value={altura}
                                 variant="bottomBorder"
                             />
+                            
+                            <TextField
+                                label="Peso Atual (Kg)"
+                                disabled={isDisabled}
+                                onChange={(e) => {  
+                                    setPesoAtual(e.target.value); 
+                                }}
+                                onKeyPress={(e) => {
+                                    handleMessageInput(e);
+                                }}
+                                placeholder="PESO ATUAL PLACEHOLDER"
+                                styleSheet={{width: '100%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                backgroundColor: appConfig.theme.colors.neutrals[800],
+                                marginRight: '12px',
+                                color: appConfig.theme.colors.neutrals[200],
+                                }}
+                                type="number"
+                                value={pesoAtual}
+                                variant="bottomBorder"
+                            />
+                            
                             <TextField
                                 label="Peso Habitual(Anterior) (Kg)"
                                 disabled={isDisabled}
@@ -527,7 +608,7 @@ export default function MetricsPage() {
                                 value={AJ}
                                 variant="bottomBorder"
                             />
-                            {!imc && !perdaDePeso && !estimativaDePeso ?
+                            {!imc && !perdaDePeso && !estimativaDePeso && !geb ?
                             <Button
                             type='submit'
                             label='Enviar'
@@ -547,39 +628,76 @@ export default function MetricsPage() {
                                 mainColorStrong: appConfig.theme.colors.primary[600],
                             }}
                             />:
-                            <Button
-                            type='button'
-                            label='Resetar'
-                            fullWidth
-                            onClick={() => {
-                                setPesoAtual('');
-                                setAltura('');
-                                setImc('');
-                                setPesoHabitual('');
-                                setCB('');
-                                setCP('');
-                                setDCSE('');
-                                setAJ('');
-                                setPerdaDePeso('');
-                                setEstimativaDePeso('');
-                                setIsDisabled(false);
-                                firstUpdate.current = true;
-                            }}
-                            styleSheet={{
-                                width: '100%',
+                            <><Button
+                                type='button'
+                                label='Resetar'
+                                fullWidth
+                                onClick={() => {
+                                    setPesoAtual('');
+                                    setAltura('');
+                                    setImc('');
+                                    setPesoHabitual('');
+                                    setCB('');
+                                    setCP('');
+                                    setDCSE('');
+                                    setAJ('');
+                                    setPerdaDePeso('');
+                                    setEstimativaDePeso('');
+                                    setGeb('');
+                                    setIdade('');
+                                    setSexo('mulher');
+                                    setIsDisabled(false);
+                                    firstUpdate.current = true;
+                                } }
+                                styleSheet={{
+                                    width: '100%',
                                     border: '0',
                                     resize: 'none',
                                     borderRadius: '5px',
                                     padding: '6px 8px',
                                     marginRight: '12px',
                                 }}
-                            buttonColors={{
-                                contrastColor: appConfig.theme.colors.neutrals["000"],
-                                mainColor: appConfig.theme.colors.primary[500],
-                                mainColorLight: appConfig.theme.colors.primary[400],
-                                mainColorStrong: appConfig.theme.colors.primary[600],
-                            }}
-                            />}
+                                buttonColors={{
+                                    contrastColor: appConfig.theme.colors.neutrals["000"],
+                                    mainColor: appConfig.theme.colors.primary[500],
+                                    mainColorLight: appConfig.theme.colors.primary[400],
+                                    mainColorStrong: appConfig.theme.colors.primary[600],
+                                }} /><Box
+                                    styleSheet={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        width: '100%',
+                                        alignItems: 'center',
+                                        padding: '6px 8px',
+                                        marginBottom: '16px',
+                                        marginTop: '16px',
+                                        marginRight: '12px',
+                                        backgroundColor: appConfig.theme.colors.neutrals[800],
+                                        border: '1px solid',
+                                        borderColor: appConfig.theme.colors.neutrals[999],
+                                        borderRadius: '10px',
+                                        flex: 1,
+                                        minHeight: '240px',
+                                    }}
+                                >   
+                                    {imc? <Text>
+                                        IMC: {imc.toFixed(2)}
+                                    </Text>:null}
+                                    
+                                    {perdaDePeso? <Text>
+                                        Perda de peso: {perdaDePeso.toFixed(2)}%
+                                    </Text>:null}
+
+                                    {estimativaDePeso? <Text>
+                                        Estimativa de Peso: {estimativaDePeso.toFixed(2)}kg
+                                    </Text>:null}
+                                    {geb? <Text>
+                                        GEB: {geb.toFixed(2)}
+                                    </Text>:null}
+                                    
+
+                                </Box></>
+                            }
                         
                         {imc ? 
                         <Box
