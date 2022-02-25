@@ -349,8 +349,8 @@ function handleformSubmit(){
                 alignItems: 'center', 
                 justifyContent: 'center',
                 height: 'auto',
-                backgroundColor: appConfig.theme.colors.primary[500],
-                backgroundImage: `url(https://i.giphy.com/media/l2JHVUriDGEtWOx0c/giphy.webp)`,
+                //backgroundColor: appConfig.theme.colors.primary[500],
+                //backgroundImage: `url(https://i.giphy.com/media/l2JHVUriDGEtWOx0c/giphy.webp)`,
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 color: appConfig.theme.colors.neutrals['000']
             }}
