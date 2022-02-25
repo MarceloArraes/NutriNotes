@@ -222,10 +222,11 @@ export default function MetricsPage() {
     const username = roteamento.query.email;
     
 
-    //IMC
+    //IMC e IMC ideal
     const [pesoAtual, setPesoAtual] = useState(''); ///INPUT
     const [altura, setAltura] = useState('');///INPUT
     const [imc, setImc] = useState(''); ///RESULTADO
+    const [pesoIdeal, setPesoIdeal] = useState(''); ///RESULTADO
 
     //Perda de peso
     const [pesoHabitual, setPesoHabitual] = useState(''); ///INPUT
@@ -272,14 +273,37 @@ function handleformSubmit(){
             console.log("Fazer conta do IMC");
             console.log("Peso: ", pesoAtual);
             console.log("Altura: ", altura);
+            var idealImc = 0.0;
+
+            if(idade>60){
+                idealImc = 24.5;
+            }else{
+                if(sexo=='mulher'){
+                    idealImc = 21;
+                }
+                else{
+                    idealImc = 22;
+                }
+            }
+
+            //Essa é a forma mais concisa de fazer a conta do IMC ideal, mas preferi deixar mais clara acima.
+            //idade>60? idealImc = 24.5: sexo=='mulher'? idealImc = 21: idealImc = 22;
+
+            console.log("Ideal IMC: ", idealImc);
                 if(altura > 3){
                     let alturaemmetros = altura /100;
-                    //setAltura(alturaemmetros);
                     let imc = pesoAtual / (alturaemmetros * alturaemmetros);
+                    let pesoIdeal = (alturaemmetros * alturaemmetros) * idealImc;
+                    console.log("Peso Ideal1: ", pesoIdeal);
                     setImc(imc);
+                    setPesoIdeal(pesoIdeal);
+
                 }else{
-                    let localimc = pesoAtual/(altura * altura);
-                    setImc(localimc);
+                    let imc = pesoAtual/(altura * altura);
+                    let pesoIdeal = (altura * altura) * idealImc;
+                    console.log("Peso Ideal2: ", pesoIdeal);
+                    setImc(imc);
+                    setPesoIdeal(pesoIdeal);
                 }
             }
         if(pesoAtual.trim().length > 0 && pesoHabitual.trim().length > 0) {
@@ -311,12 +335,17 @@ function handleformSubmit(){
                 console.log("Peso: ", pesoAtual);
                 console.log("Idade: ", idade);
                 console.log("Altura: ", altura);
+                var alturaemcentimetros = altura
+                if(altura<3){
+                    alturaemcentimetros = altura * 100;
+                }
+
                 if(sexo==="homem"){
-                let geb = 66.47 + (13.75*pesoAtual) + (5*altura) - (6.76*idade);
+                let geb = 66.47 + (13.75*pesoAtual) + (5*alturaemcentimetros) - (6.76*idade);
                 setGeb(geb);
                 localGeb = geb;
                 }else{
-                let geb = 655.1 + (9.56*pesoAtual) + (1.85*altura) - (4.68*idade);
+                let geb = 655.1 + (9.56*pesoAtual) + (1.85*alturaemcentimetros) - (4.68*idade);
                 setGeb(geb);
                 localGeb = geb;
             }
@@ -735,23 +764,27 @@ function handleformSubmit(){
                                 >   
                                     {imc? <Text>
                                         IMC: {imc.toFixed(2)}
-                                    </Text>:null}
-                                    
-                                    {perdaDePeso? <Text>
-                                        Perda de peso: {perdaDePeso.toFixed(2)}%
-                                    </Text>:null}
-
-                                    {estimativaDePeso? <Text>
-                                        Estimativa de Peso: {estimativaDePeso.toFixed(2)}kg
-                                    </Text>:null}
+                                        <div></div>
+                                        PESO IDEAL: {pesoIdeal.toFixed(2)}
                                     {geb? <Text>
+                                        <div></div>
                                         GEB: {geb.toFixed(2)}
                                     </Text>:null}
                                     {NET? 
                                     <Text>
                                         NET: {NET.toFixed(2)}
                                     </Text>:null}
-                                    
+                                    </Text>:null}
+                                    {perdaDePeso? <Text>
+                                        Perda de peso: {perdaDePeso.toFixed(2)}%
+                                    </Text>:null}
+                                    {pesoIdeal? <Text>
+                                        Peso ideal: {pesoIdeal.toFixed(2)}
+                                    </Text>:null}
+                                    {estimativaDePeso? <Text>
+                                        <div></div>
+                                        Estimativa de Peso: {estimativaDePeso.toFixed(2)}kg
+                                    </Text>:null}
                                 </Box></>
                             }
                         
