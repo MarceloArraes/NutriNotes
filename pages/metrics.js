@@ -56,14 +56,10 @@ function IMC(props) {
                     <TableCell component="th" scope="row">
                       {row.name}
                     </TableCell>
-                    <TableRow 
-                    key={row.name}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                    >
+                    
                         <TableCell align="right">{row.faixabaixaIMC}</TableCell>
                         <TableCell align="right">{row.faixaaltaIMC}</TableCell>
                     </TableRow>
-                  </TableRow>
                 ))}
               </TableBody>
             </Table>
@@ -88,10 +84,8 @@ function IMC(props) {
             >
             <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(alturaemmetros*alturaemmetros).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax>
             </Text>
-            <Text>
-                Colocar as tabelas aqui?
-            </Text>
             <DenseTable/>
+            
             </Box>
         </MathJaxContext>
     );
@@ -248,12 +242,17 @@ export default function MetricsPage() {
     //GEB
     const [idade, setIdade] = useState(''); ///INPUT
     const [geb, setGeb] = useState('');   ///RESULTADO
-    
     const [nome, setNome] = useState(''); ///INPUT
+
+    //Necessidade Energética Total - NET
+    const [Fa, setFa] = useState(''); ///INPUT
+    const [Fi, setFi] = useState(''); ///INPUT
+    const[NET, setNET] = useState(''); ///RESULTADO
 
     //Modals
     const [isDisabled, setIsDisabled] = useState(false); ///MODAL
     const firstUpdate = useRef(true); ///MODAL
+
     
     useEffect(() => {
         //prevent default
@@ -268,6 +267,7 @@ export default function MetricsPage() {
     
 function handleformSubmit(){
         console.log("submit");
+        var localGeb = 0.0;
         if(pesoAtual.trim().length > 0 && altura.trim().length > 0) {
             console.log("Fazer conta do IMC");
             console.log("Peso: ", pesoAtual);
@@ -314,11 +314,22 @@ function handleformSubmit(){
                 if(sexo==="homem"){
                 let geb = 66.47 + (13.75*pesoAtual) + (5*altura) - (6.76*idade);
                 setGeb(geb);
+                localGeb = geb;
                 }else{
                 let geb = 655.1 + (9.56*pesoAtual) + (1.85*altura) - (4.68*idade);
                 setGeb(geb);
+                localGeb = geb;
             }
-            }
+        }
+            if(Fa.trim().length>0 && Fi.trim().length>0 && localGeb>0){
+                console.log("Fazer conta do NET");
+                console.log("Fa: ", Fa);
+                console.log("Fi: ", Fi);
+                let net = localGeb*(Fa * Fi)
+                setNET(net);
+                }
+            
+            
         
     }
 
@@ -363,7 +374,6 @@ function handleformSubmit(){
                         position: 'relative',
                         display: 'flex',
                         flex: 1,
-                        //height: '80%',
                         backgroundColor: appConfig.theme.colors.neutrals[600],
                         flexDirection: 'column',
                         borderRadius: '5px',
@@ -375,7 +385,6 @@ function handleformSubmit(){
                             as="form"
                             onSubmit={(e) => {
                                 e.preventDefault();
-                                //Here i will put a function that i send all the inputs and the function set the results.
                                 handleformSubmit();
                             }}
                             
@@ -604,6 +613,50 @@ function handleformSubmit(){
                                 value={AJ}
                                 variant="bottomBorder"
                             />
+                            <TextField
+                                label="FA - Fator de Atividade"
+                                disabled={isDisabled}
+                                onChange={(e) => {  
+                                    setFa(e.target.value); 
+                                }}
+                                placeholder="Fator de Atividade (Ver Abaixo)PLACEHOLDER"
+                                styleSheet={{width: '100%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                backgroundColor: appConfig.theme.colors.neutrals[800],
+                                marginRight: '12px',
+                                color: appConfig.theme.colors.neutrals[200],
+                                }}
+                                type="number"
+                                value={Fa}
+                                variant="bottomBorder"
+                            />
+                            <TextField
+                                label="FI - Fator de Injúria (padrão = 1)"
+                                disabled={isDisabled}
+                                onChange={(e) => {  
+                                    setFi(e.target.value); 
+                                }}
+                                placeholder="FI - Fator de Injúria PLACEHOLDER"
+                                styleSheet={{width: '100%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                backgroundColor: appConfig.theme.colors.neutrals[800],
+                                marginRight: '12px',
+                                color: appConfig.theme.colors.neutrals[200],
+                                }}
+                                type="number"
+                                value={Fi}
+                                variant="bottomBorder"
+                            />
+
+{/* A partir daqui são botões e depois os quadros(outputs) */}
+
+
                             {!imc && !perdaDePeso && !estimativaDePeso && !geb ?
                             <Button
                             type='submit'
@@ -693,6 +746,10 @@ function handleformSubmit(){
                                     </Text>:null}
                                     {geb? <Text>
                                         GEB: {geb.toFixed(2)}
+                                    </Text>:null}
+                                    {NET? 
+                                    <Text>
+                                        NET: {NET.toFixed(2)}
                                     </Text>:null}
                                     
                                 </Box></>
@@ -801,6 +858,7 @@ function handleformSubmit(){
         </Box>
     )
 }
+
 
 
 function Header() {
