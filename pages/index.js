@@ -91,6 +91,7 @@ export default function PaginaInicial() {
             </Text>
 
             <TextField
+              placeholder="Digite seu email"
               fullWidth
               textFieldColors={{
                 neutral: {
@@ -111,7 +112,6 @@ export default function PaginaInicial() {
               }
               }
             />
-
 
             <Button
               type='submit'

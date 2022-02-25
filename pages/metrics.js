@@ -176,15 +176,21 @@ function EstimativaDePeso(props){
                     borderRadius: '5px',
                 }}
               >
-            Estimativa de Peso: 
+            Estimativa de Peso para {props.sexo}:
             <Text styleSheet={{padding: '5px',
                     margin: '5px',
                     borderRadius: '5px',}}
             >
             {/* <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(props.altura*props.altura).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax> */}
+            {props.sexo=='homem'?
+            <>
             <MathJax>{`\\(Peso (kg) = (1.73  \\times  CB) + (0.98 \\times CP) + (0.37 \\times DCSE) + (1.16 \\times AJ) – 81.69\\)`}</MathJax>
-            <MathJax>{`\\(Peso (kg) = (1.73  \\times  {${props.CB}}) + (0.98 \\times {${props.CP}}) + (0.37 \\times {${props.CDSE}}) + (1.16 \\times {${props.AJ}}) – 81.69={${props.estimativaDePeso.toFixed(2)}}\\)`}</MathJax>
-             
+            <MathJax>{`\\(Peso (kg) = (1.73  \\times  {${props.CB}}) + (0.98 \\times {${props.CP}}) + (0.37 \\times {${props.DCSE}}) + (1.16 \\times {${props.AJ}}) – 81.69={${props.estimativaDePeso.toFixed(2)}}\\)`}</MathJax>
+            </>:
+            <>
+            <MathJax>{`\\(Peso (kg) = (0.98  \\times  CB) + (1.27 \\times CP) + (0.4 \\times DCSE) + (0.87 \\times AJ) – 62.35\\)`}</MathJax>
+            <MathJax>{`\\(Peso (kg) = (0.98  \\times  {${props.CB}}) + (1.27 \\times {${props.CP}}) + (0.4 \\times {${props.DCSE}}) + (0.87 \\times {${props.AJ}}) –  62.35={${props.estimativaDePeso.toFixed(2)}}\\)`}</MathJax>
+            </>}
             </Text>
             </Box>
         </MathJaxContext>
@@ -216,7 +222,6 @@ function RadioSexo(props){
 
 
 export default function MetricsPage() {
-
 
     //Refs and constants
     const roteamento = useRouter();
@@ -261,7 +266,7 @@ export default function MetricsPage() {
         firstUpdate.current = false;
     }, [imc, perdaDePeso,estimativaDePeso, geb]);
     
-    function handleformSubmit(){
+function handleformSubmit(){
         console.log("submit");
         if(pesoAtual.trim().length > 0 && altura.trim().length > 0) {
             console.log("Fazer conta do IMC");
@@ -302,22 +307,14 @@ export default function MetricsPage() {
             }
             if(pesoAtual.trim().length > 0 && idade.trim().length > 0 && altura.trim().length > 0) {
                 console.log("Fazer conta do GEB");
-                if(sexo==="homem"){
                 console.log("Sexo: ", sexo);
                 console.log("Peso: ", pesoAtual);
                 console.log("Idade: ", idade);
                 console.log("Altura: ", altura);
-                //66,47  + 13,75  (Peso) + 5 (Estatura cm) - 6,76 (Idade)
-    
+                if(sexo==="homem"){
                 let geb = 66.47 + (13.75*pesoAtual) + (5*altura) - (6.76*idade);
                 setGeb(geb);
-            }else{
-                console.log("Sexo: ", sexo);
-                console.log("Peso: ", pesoAtual);
-                console.log("Idade: ", idade);
-                console.log("Altura: ", altura);
-                //66,47  + 13,75  (Peso) + 5 (Estatura cm) - 6,76 (Idade)
-    
+                }else{
                 let geb = 655.1 + (9.56*pesoAtual) + (1.85*altura) - (4.68*idade);
                 setGeb(geb);
             }
@@ -331,10 +328,7 @@ export default function MetricsPage() {
            e.preventDefault();
            handleformSubmit();
        }
-/*        if (e.key === 'Enter' && message.trim().length  > 0) {
-           console.log('entered e.key', e.key);
-           setMessage('');
-       }  */
+
     }
 
     return (
@@ -774,7 +768,7 @@ export default function MetricsPage() {
                         minHeight: '240px', 
                     }}
                 >   <Text>
-                    <EstimativaDePeso CB={CB} CP={CP} DCSE={DCSE} AJ={AJ} estimativaDePeso={estimativaDePeso} />
+                    <EstimativaDePeso sexo={sexo} CB={CB} CP={CP} DCSE={DCSE} AJ={AJ} estimativaDePeso={estimativaDePeso} />
                     </Text>
                 </Box>
                     :null}
