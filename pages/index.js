@@ -51,7 +51,7 @@ export default function PaginaInicial() {
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           //backgroundColor: appConfig.theme.colors.primary[500],
-          backgroundImage: 'url(https://i.giphy.com/media/6901DbEbbm4o0/giphy.webp)',
+          //backgroundImage: 'url(https://www.pixelstalk.net/wp-content/uploads/2016/06/Jungle-HD-Images.jpg)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}
       >
