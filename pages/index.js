@@ -1,8 +1,10 @@
 import appConfig from '../config.json';
 import { Box, Button, Text, TextField, Image } from '@skynexui/components';
+//import Image from 'next/image';
 import React,{ useState, createContext, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { createClient } from '@supabase/supabase-js';
+import sampleImage from '../public/download.jpg';
 
 //Aqui vou usar para capturar o email do usuário e enviar para o banco de dados;
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -50,8 +52,8 @@ export default function PaginaInicial() {
       <Box
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          //backgroundColor: appConfig.theme.colors.primary[500],
-          //backgroundImage: 'url(file:////home/cnode/git/nutriprojeto/nutrinotes/public/download.jpg)',
+          backgroundColor: appConfig.theme.colors.primary[100],
+          backgroundImage: 'url(/clipart-pretty-nature-png-10.png)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}
       >
@@ -149,7 +151,7 @@ export default function PaginaInicial() {
                 borderRadius: '50%',
                 marginBottom: '16px',
               }}
-              src={`https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fnutricionistathaysa.com.br%2Fwp-content%2Fuploads%2F2019%2F12%2Filustracao-nutricao-clinica-doencas.jpg&f=1&nofb=1`}
+              src={'/png-yeux-png-ico-694.png'}
             />
             <Text
               variant="body4"
