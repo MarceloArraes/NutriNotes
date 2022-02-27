@@ -679,8 +679,7 @@ function handleformSubmit(){
                                 variant="bottomBorder"
                             />
                             
-                            {infoButton?
-                            <Collapse>
+                            <Collapse in={infoButton}>
                             <Button
                             type='button'
                             label='Tabela de Referencia.'
@@ -723,7 +722,7 @@ function handleformSubmit(){
                                     </Text>
                                 </Box>
                             </Popper>
-                            </Collapse>:null}
+                            </Collapse>
                             <TextField
                                 label="FI - Fator de Injúria (padrão = 1)"
                                 disabled={isDisabled}
