@@ -2,7 +2,7 @@ import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components'
 import {FormControl,FormLabel,RadioGroup,FormControlLabel, Radio, Collapse} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
 import appConfig from '../config.json';
- import Table from '@mui/material/Table';
+import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
@@ -700,9 +700,6 @@ function handleFaPopper(){
                             onClick={(event) => {
                                 setAnchorEl(anchorEl ? null : event.currentTarget);
                                 setOpenPopper(!openPopper);
-                                //handleFaPopper();
-                                //console.log(timerId);
-                                //clearTimeout(timerId);
                             }}
                             styleSheet={{
                                 width: '50%',
@@ -966,27 +963,6 @@ function handleFaPopper(){
                 >   <Text>
                     <GEB pesoAtual={pesoAtual} altura={altura} idade={idade} geb={geb} />
                     </Text>
-                    </Box>
-                    :null}
-                    {Fa? 
-                    <Box
-                    styleSheet={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        width: '100%',
-                        alignItems: 'center',
-                        padding: '6px 8px',
-                        marginBottom: '16px',
-                        marginTop: '16px',
-                        marginRight: '12px',
-                        backgroundColor: appConfig.theme.colors.neutrals[800],
-                        border: '1px solid',
-                        borderColor: appConfig.theme.colors.neutrals[999],
-                        borderRadius: '10px',
-                        flex: 1,
-                        minHeight: '240px', 
-                    }}
-                >   
                     </Box>
                     :null}
                     </Box>

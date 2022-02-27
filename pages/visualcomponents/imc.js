@@ -1,4 +1,4 @@
-import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
+/* import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -85,3 +85,4 @@ export function IMC(props) {
       </MathJaxContext>
   );
 }
+ */
