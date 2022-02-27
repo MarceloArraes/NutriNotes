@@ -152,6 +152,7 @@ export default function PaginaInicial() {
                 marginBottom: '16px',
               }}
               src={'/ícone.png'}
+              alt="Icon"
             />
             <Text
               variant="body4"

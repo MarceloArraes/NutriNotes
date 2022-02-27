@@ -797,6 +797,7 @@ function handleFaPopper(){
                         
                         {imc ? 
                         <Box
+                            in={(imc!=='').toString()}
                             styleSheet={{
                             display: 'flex',
                             flexDirection: 'column',
