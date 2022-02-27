@@ -1,5 +1,5 @@
 import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
-import {FormControl,FormLabel,RadioGroup,FormControlLabel, Radio} from '@material-ui/core';
+import {FormControl,FormLabel,RadioGroup,FormControlLabel, Radio, Collapse} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
 import appConfig from '../config.json';
  import Table from '@mui/material/Table';
@@ -14,13 +14,11 @@ import IMC from './visualcomponents/imc.js';
 import { useRouter } from 'next/router'
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
 import ClassificationFa from './visualcomponents/classificationFa.js';
-
+import Popper from '@mui/material/Popper';
 
 function GEB(props){
     console.log("PROPS GEB: ", props);
 
-    //66,47  + 13,75  (Peso) + 5 (Estatura cm) - 6,76 (Idade)
-    //props = peso + altura + idade; alem do geb.
     return (
         <MathJaxContext>
               <Box 
@@ -177,8 +175,10 @@ export default function MetricsPage() {
     //Modals
     const [isDisabled, setIsDisabled] = useState(false); ///MODAL
     const firstUpdate = useRef(true); ///MODAL
+    const [infoButton, setInfoButton] = useState(false); ///MODAL
+    const [anchorEl, setAnchorEl] = useState(null); ///MODAL
+    const [openPopper,setOpenPopper] = useState(false); ///MODAL
 
-    
     useEffect(() => {
         //prevent default
         if(firstUpdate.current) {
@@ -190,6 +190,25 @@ export default function MetricsPage() {
         firstUpdate.current = false;
     }, [imc, perdaDePeso,estimativaDePeso, geb]);
     
+
+    useEffect(() => {
+        //timer
+        if(!openPopper){
+        const timer = setTimeout(() => {
+            setInfoButton(false)
+            setAnchorEl(null)
+        }, 3000);
+        }
+        if(openPopper){
+            //setInfoButton(false)
+            //setOpenPopper(false)
+            //setAnchorEl(null)
+            //pause timer
+            clearTimeout(timer);
+        }
+
+    }, [setInfoButton, openPopper]);
+
 function handleformSubmit(){
         console.log("submit");
         var localGeb = 0.0;
@@ -285,6 +304,19 @@ function handleformSubmit(){
         
     }
 
+function handleFaPopper(){
+        //setInfoButton(true)
+        //timer
+/*         const timerId = setTimeout(
+            () => {
+            setInfoButton(false)
+            setOpenPopper(false)
+            setAnchorEl(null)
+        }, 4000)
+        return () => clearTimeout(timerId) */
+}
+
+
     return (
         <Box
             styleSheet={{
@@ -316,14 +348,12 @@ function handleformSubmit(){
                     styleSheet={{
                         position: 'relative',
                         display: 'flex',
-                        flex: 2,
                         backgroundColor: appConfig.theme.colors.neutrals[600],
                         flexDirection: 'column',
                         borderRadius: '5px',
                         padding: '16px',
                     }}
                 >
-                    
                     <Box
                             as="form"
                             onSubmit={(e) => {
@@ -334,7 +364,9 @@ function handleformSubmit(){
                             styleSheet={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                flexDirection: 'column',
+                                flexDirection: 'row',
+                                flexWrap: 'wrap',
+                                flex: 2,
                             }}
                         >
                             <Box
@@ -360,7 +392,8 @@ function handleformSubmit(){
                                 onChange={(e) => {
                                     setNome(e.target.value); 
                                 } }
-                                styleSheet={{width: '100%',
+                                styleSheet={{
+                                width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
@@ -369,7 +402,7 @@ function handleformSubmit(){
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
                                 }}/>
-                                <Box
+                            <Box
                                 styleSheet={{
                                     backgroundColor: appConfig.theme.colors.neutrals[600],
                                     width: '100%',
@@ -562,8 +595,15 @@ function handleformSubmit(){
                                 onChange={(e) => {  
                                     setFa(e.target.value); 
                                 }}
+                                onMouseOver={(e) => {
+                                    e.preventDefault();
+                                    setInfoButton(true);
+                                }
+                                }
+                                //onMouseOut={() => setInfoButton(false)}
                                 placeholder="Fator de Atividade (Ver Abaixo)PLACEHOLDER"
-                                styleSheet={{width: '100%',
+                                styleSheet={{
+                                width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
@@ -576,7 +616,54 @@ function handleformSubmit(){
                                 value={Fa}
                                 variant="bottomBorder"
                             />
-                            <Button></Button>
+                            
+                            <Collapse in={infoButton} >
+                            <Button
+                            type='button'
+                            label='Tabela de Referencia.'
+                            /* fullWidth */
+                            onClick={(event) => {
+                                setAnchorEl(anchorEl ? null : event.currentTarget);
+                                setOpenPopper(!openPopper);
+                                //handleFaPopper();
+                                //console.log(timerId);
+                                //clearTimeout(timerId);
+                            }}
+                            styleSheet={{
+                                width: '50%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                marginRight: '12px',
+                                marginBottom: '9px',
+                                }}
+                            buttonColors={{
+                                contrastColor: appConfig.theme.colors.neutrals["000"],
+                                mainColor: appConfig.theme.colors.primary[500],
+                                mainColorLight: appConfig.theme.colors.primary[400],
+                                mainColorStrong: appConfig.theme.colors.primary[600],
+                            }}
+                            />
+                            <Popper open={openPopper} anchorEl={anchorEl} placement={"right"}>
+                            <Box styleSheet={{
+                                    backgroundColor: appConfig.theme.colors.neutrals[600],
+                                    width: '100%',
+                                    border: '5px',
+                                    marginBottom: '5px',
+                                    resize: 'none',
+                                    borderRadius: '5px',
+                                    padding: '6px 8px',
+                                    marginRight: '12px',
+                                    color: appConfig.theme.colors.neutrals[200],
+                                }}
+                            >
+                                    <Text>
+                                        <ClassificationFa  />
+                                    </Text>
+                                </Box>
+                            </Popper>
+                            </Collapse>
                             <TextField
                                 label="FI - Fator de Injúria (padrão = 1)"
                                 disabled={isDisabled}
@@ -823,9 +910,7 @@ function handleformSubmit(){
                         flex: 1,
                         minHeight: '240px', 
                     }}
-                >   <Text>
-                        <ClassificationFa  />
-                    </Text>
+                >   
                     </Box>
                     :null}
                     </Box>
