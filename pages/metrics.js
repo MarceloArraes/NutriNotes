@@ -1,6 +1,7 @@
 import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
 import {FormControl,FormLabel,RadioGroup,FormControlLabel, Radio, Collapse} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
+import {IMC} from './visualcomponents/imc.js';
 import appConfig from '../config.json';
  import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -10,7 +11,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
  
-import IMC from './visualcomponents/imc.js';
+
 import { useRouter } from 'next/router'
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
 import ClassificationFa from './visualcomponents/classificationFa.js';
@@ -138,7 +139,7 @@ function RadioSexo(props){
 
 
 export default function MetricsPage() {
-
+    
     //Refs and constants
     const roteamento = useRouter();
     const username = roteamento.query.email;

@@ -11,7 +11,7 @@ import { MathJaxContext, MathJax } from 'better-react-mathjax';
 
 
 
-export default function IMC(props) {
+export function IMC(props) {
   console.log(props);
   
   function createData(name, faixabaixaIMC, faixaaltaIMC) {
