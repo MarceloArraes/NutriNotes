@@ -1,6 +1,8 @@
 import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
 import {FormControl,FormLabel,RadioGroup,FormControlLabel, Radio, Collapse} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
+
+
 import appConfig from '../config.json';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,16 +15,16 @@ import Paper from '@mui/material/Paper';
 
 import { useRouter } from 'next/router'
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
-import ClassificationFa from './visualcomponents/classificationFa.js';
+//import ClassificationFa from './visualcomponents/classificationFa.js';
 import Popper from '@mui/material/Popper';
 
 function IMC(props) {
     console.log(props);
-    
+
     function createData(name, faixabaixaIMC, faixaaltaIMC) {
         return { name, faixabaixaIMC, faixaaltaIMC };
       }
-  
+
       if(props.altura>3){
       var alturaemmetros = props.altura /100;
         }
@@ -36,15 +38,15 @@ function IMC(props) {
         createData('Obesidade Grau II', '≤35','≤39,9'),
         createData('Obesidade Grau III','≤40',''),
       ];
-    
-      function NutricionalStateTable() {
+
+      function DenseTable() {
         return (
           <TableContainer component={Paper}>
             <Table sx={{ minWidth: 250 }} size="small" aria-label="a dense table">
               <TableHead>
                 <TableRow>
                   <TableCell>Estado Nutricional</TableCell>
-                  <TableCell colSpan={2} align="center">Faixa IMC</TableCell>
+                  <TableCell align="left">Faixa IMC</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -56,7 +58,7 @@ function IMC(props) {
                     <TableCell component="th" scope="row">
                       {row.name}
                     </TableCell>
-                    
+
                         <TableCell align="right">{row.faixabaixaIMC}</TableCell>
                         <TableCell align="right">{row.faixaaltaIMC}</TableCell>
                     </TableRow>
@@ -66,7 +68,7 @@ function IMC(props) {
           </TableContainer>
         );
       }
-      
+
     return (
         <MathJaxContext>
               <Box 
@@ -84,8 +86,8 @@ function IMC(props) {
             >
             <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(alturaemmetros*alturaemmetros).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax>
             </Text>
-            <NutricionalStateTable/>
-            
+            <DenseTable/>
+
             </Box>
         </MathJaxContext>
     );
@@ -705,7 +707,7 @@ function handleformSubmit(){
                                 mainColorStrong: appConfig.theme.colors.primary[600],
                             }}
                             />
-                            <Popper open={openPopper} anchorEl={anchorEl} placement={"right"}>
+                            {/* <Popper open={openPopper} anchorEl={anchorEl} placement={"right"}>
                             <Box styleSheet={{
                                     backgroundColor: appConfig.theme.colors.neutrals[600],
                                     width: '100%',
@@ -722,7 +724,7 @@ function handleformSubmit(){
                                         <ClassificationFa  />
                                     </Text>
                                 </Box>
-                            </Popper>
+                            </Popper> */}
                             </Collapse>:null}
                             <TextField
                                 label="FI - Fator de Injúria (padrão = 1)"
