@@ -379,19 +379,6 @@ function handleformSubmit(){
         
     }
 
-function handleFaPopper(){
-        //setInfoButton(true)
-        //timer
-/*         const timerId = setTimeout(
-            () => {
-            setInfoButton(false)
-            setOpenPopper(false)
-            setAnchorEl(null)
-        }, 4000)
-        return () => clearTimeout(timerId) */
-}
-
-
     return (
         <Box
             styleSheet={{
@@ -400,7 +387,7 @@ function handleFaPopper(){
                 justifyContent: 'center',
                 height: 'auto',
                 //backgroundColor: appConfig.theme.colors.primary[500],
-                backgroundImage: `url(/fundo.png)`,
+                backgroundImage: `url(/background.png)`,
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 color: appConfig.theme.colors.neutrals['000']
             }}
@@ -692,7 +679,8 @@ function handleFaPopper(){
                                 variant="bottomBorder"
                             />
                             
-                            <Collapse in={infoButton} >
+                            {infoButton?
+                            <Collapse>
                             <Button
                             type='button'
                             label='Tabela de Referencia.'
@@ -735,7 +723,7 @@ function handleFaPopper(){
                                     </Text>
                                 </Box>
                             </Popper>
-                            </Collapse>
+                            </Collapse>:null}
                             <TextField
                                 label="FI - Fator de Injúria (padrão = 1)"
                                 disabled={isDisabled}

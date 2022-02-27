@@ -53,7 +53,7 @@ export default function PaginaInicial() {
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           backgroundColor: appConfig.theme.colors.primary[100],
-          backgroundImage: 'url(/fundo.png)',
+          backgroundImage: 'url(/background.png)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}
       >
@@ -151,7 +151,7 @@ export default function PaginaInicial() {
                 borderRadius: '50%',
                 marginBottom: '16px',
               }}
-              src={'/ícone.png'}
+              src={'/icon.png'}
               alt="Icon"
             />
             <Text
