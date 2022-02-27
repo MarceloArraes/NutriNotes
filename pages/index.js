@@ -53,7 +53,7 @@ export default function PaginaInicial() {
         styleSheet={{
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           backgroundColor: appConfig.theme.colors.primary[100],
-          backgroundImage: 'url(/clipart-pretty-nature-png-10.png)',
+          backgroundImage: 'url(/fundo.png)',
           backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
         }}
       >
@@ -151,7 +151,7 @@ export default function PaginaInicial() {
                 borderRadius: '50%',
                 marginBottom: '16px',
               }}
-              src={'/png-yeux-png-ico-694.png'}
+              src={'/ícone.png'}
             />
             <Text
               variant="body4"

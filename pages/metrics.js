@@ -2,96 +2,21 @@ import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components'
 import {FormControl,FormLabel,RadioGroup,FormControlLabel, Radio} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
 import appConfig from '../config.json';
-import Table from '@mui/material/Table';
+ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
-
+ 
+import IMC from './visualcomponents/imc.js';
 import { useRouter } from 'next/router'
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
+import ClassificationFa from './visualcomponents/classificationFa.js';
 
-//         \\`frac(25x)(10) = 2^(10)\\`
-//         \\(\\frac{25x}{10} = 2^{10}\\)
 
-function IMC(props) {
-    console.log(props);
-    
-    function createData(name, faixabaixaIMC, faixaaltaIMC) {
-        return { name, faixabaixaIMC, faixaaltaIMC };
-      }
-
-      if(props.altura>3){
-      var alturaemmetros = props.altura /100;
-        }
-      const rows = [
-        createData('Magreza grau III', '<16', ''),
-        createData('Magreza grau II',   '≤16','≤16.9'),
-        createData('Magreza grau I',    '≤17','≤18,4'),
-        createData('Faixa Normal',      '≤18,5','≤24,9'),
-        createData('Pré Obesidade',     '≤25','≤29,9'),
-        createData('Obesidade Grau I',  '≤30','≤34,9'),
-        createData('Obesidade Grau II', '≤35','≤39,9'),
-        createData('Obesidade Grau III','≤40',''),
-      ];
-    
-      function DenseTable() {
-        return (
-          <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 250 }} size="small" aria-label="a dense table">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Estado Nutricional</TableCell>
-                  <TableCell align="left">Faixa IMC</TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow
-                    key={row.name}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                  >
-                    <TableCell component="th" scope="row">
-                      {row.name}
-                    </TableCell>
-                    
-                        <TableCell align="right">{row.faixabaixaIMC}</TableCell>
-                        <TableCell align="right">{row.faixaaltaIMC}</TableCell>
-                    </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        );
-      }
-      
-    return (
-        <MathJaxContext>
-              <Box 
-                styleSheet={{
-                    gap: '16px',
-                    padding: '16px',
-                    margin: '16px',
-                    borderRadius: '5px',
-                }}
-              >
-            IMC: {props.imc.toFixed(2)}
-            <Text styleSheet={{padding: '5px',
-                    margin: '5px',
-                    borderRadius: '5px',}}
-            >
-            <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(alturaemmetros*alturaemmetros).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax>
-            </Text>
-            <DenseTable/>
-            
-            </Box>
-        </MathJaxContext>
-    );
-  }
-
-  function GEB(props){
+function GEB(props){
     console.log("PROPS GEB: ", props);
 
     //66,47  + 13,75  (Peso) + 5 (Estatura cm) - 6,76 (Idade)
@@ -128,7 +53,7 @@ function IMC(props) {
         </MathJaxContext>
     );
   }
-  function PerdaDePeso(props){
+function PerdaDePeso(props){
     console.log(props);
     
     return (
@@ -155,7 +80,6 @@ function IMC(props) {
         </MathJaxContext>
     );
   }
-//Peso (kg) = (1,73 x CB) + (0,98 x CP) + (0,37 x DCSE) + (1,16 x AJ) – 81,69
 
 function EstimativaDePeso(props){
     console.log("Estimativa de Peso props: ", props);
@@ -289,7 +213,6 @@ function handleformSubmit(){
             //Essa é a forma mais concisa de fazer a conta do IMC ideal, mas preferi deixar mais clara acima.
             //idade>60? idealImc = 24.5: sexo=='mulher'? idealImc = 21: idealImc = 22;
 
-            console.log("Ideal IMC: ", idealImc);
                 if(altura > 3){
                     let alturaemmetros = altura /100;
                     let imc = pesoAtual / (alturaemmetros * alturaemmetros);
@@ -362,15 +285,6 @@ function handleformSubmit(){
         
     }
 
-    function handleMessageInput(e){
-        
-       if (e.key === 'Enter') {
-           e.preventDefault();
-           handleformSubmit();
-       }
-
-    }
-
     return (
         <Box
             styleSheet={{
@@ -379,7 +293,7 @@ function handleformSubmit(){
                 justifyContent: 'center',
                 height: 'auto',
                 //backgroundColor: appConfig.theme.colors.primary[500],
-                //backgroundImage: `url(https://i.giphy.com/media/l2JHVUriDGEtWOx0c/giphy.webp)`,
+                backgroundImage: `url(/fundo.png)`,
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 color: appConfig.theme.colors.neutrals['000']
             }}
@@ -402,7 +316,7 @@ function handleformSubmit(){
                     styleSheet={{
                         position: 'relative',
                         display: 'flex',
-                        flex: 1,
+                        flex: 2,
                         backgroundColor: appConfig.theme.colors.neutrals[600],
                         flexDirection: 'column',
                         borderRadius: '5px',
@@ -421,7 +335,6 @@ function handleformSubmit(){
                                 display: 'flex',
                                 alignItems: 'center',
                                 flexDirection: 'column',
-                                
                             }}
                         >
                             <Box
@@ -439,19 +352,7 @@ function handleformSubmit(){
                                 >
                                 Usuário: {username} 
                             </Box>
-                            <Box
-                                styleSheet={{
-                                    backgroundColor: appConfig.theme.colors.neutrals[600],
-                                    width: '100%',
-                                    border: '5px',
-                                    marginBottom: '16px',
-                                    resize: 'none',
-                                    borderRadius: '5px',
-                                    padding: '6px 8px',
-                                    marginRight: '12px',
-                                    color: appConfig.theme.colors.neutrals[200],
-                                }}
-                                >
+
                             <TextField
                                 placeholder="Nome do Paciente"
                                 type="textarea"
@@ -459,18 +360,31 @@ function handleformSubmit(){
                                 onChange={(e) => {
                                     setNome(e.target.value); 
                                 } }
+                                styleSheet={{width: '100%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                backgroundColor: appConfig.theme.colors.neutrals[800],
+                                marginRight: '12px',
+                                color: appConfig.theme.colors.neutrals[200],
+                                }}/>
+                                <Box
                                 styleSheet={{
+                                    backgroundColor: appConfig.theme.colors.neutrals[600],
                                     width: '100%',
-                                    border: '0',
+                                    border: '5px',
+                                    marginBottom: '5px',
                                     resize: 'none',
                                     borderRadius: '5px',
                                     padding: '6px 8px',
-                                    backgroundColor: appConfig.theme.colors.neutrals[800],
                                     marginRight: '12px',
                                     color: appConfig.theme.colors.neutrals[200],
-                                }}/>
-                                <RadioSexo isDisabled={isDisabled} setSexo={setSexo} />
+                                }}
+                                >
+                            <RadioSexo  isDisabled={isDisabled} setSexo={setSexo} />
                             </Box>
+                            
                             <TextField
                                 label="Idade"
                                 disabled={isDisabled}
@@ -662,6 +576,7 @@ function handleformSubmit(){
                                 value={Fa}
                                 variant="bottomBorder"
                             />
+                            <Button></Button>
                             <TextField
                                 label="FI - Fator de Injúria (padrão = 1)"
                                 disabled={isDisabled}
@@ -691,7 +606,10 @@ function handleformSubmit(){
                             type='submit'
                             label='Enviar'
                             onKeyPress={(e) => {
-                                handleMessageInput(e);
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    handleformSubmit();
+                                }
                             }}
                             fullWidth
                             styleSheet={{
@@ -726,6 +644,8 @@ function handleformSubmit(){
                                     setEstimativaDePeso('');
                                     setGeb('');
                                     setIdade('');
+                                    setFa('');
+                                    setFi('');
                                     setSexo('mulher');
 
                                     setIsDisabled(false);
@@ -882,6 +802,29 @@ function handleformSubmit(){
                     }}
                 >   <Text>
                     <GEB pesoAtual={pesoAtual} altura={altura} idade={idade} geb={geb} />
+                    </Text>
+                    </Box>
+                    :null}
+                    {Fa? 
+                    <Box
+                    styleSheet={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        width: '100%',
+                        alignItems: 'center',
+                        padding: '6px 8px',
+                        marginBottom: '16px',
+                        marginTop: '16px',
+                        marginRight: '12px',
+                        backgroundColor: appConfig.theme.colors.neutrals[800],
+                        border: '1px solid',
+                        borderColor: appConfig.theme.colors.neutrals[999],
+                        borderRadius: '10px',
+                        flex: 1,
+                        minHeight: '240px', 
+                    }}
+                >   <Text>
+                        <ClassificationFa  />
                     </Text>
                     </Box>
                     :null}
