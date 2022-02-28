@@ -4,7 +4,6 @@ import { Box, Button, Text, TextField, Image } from '@skynexui/components';
 import React,{ useState, createContext, useContext } from 'react';
 import { useRouter } from 'next/router';
 import { createClient } from '@supabase/supabase-js';
-import sampleImage from '../public/download.jpg';
 
 //Aqui vou usar para capturar o email do usuário e enviar para o banco de dados;
 const SUPABASE_ANON_KEY = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;

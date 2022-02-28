@@ -3,11 +3,6 @@ import React from 'react';
 import { Box, Text } from '@skynexui/components';
 
 
-
-
-
-
-
 export default function EstimativaDePeso(props){
   console.log("Estimativa de Peso props: ", props);
   

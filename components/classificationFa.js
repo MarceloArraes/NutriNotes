@@ -26,7 +26,7 @@ export default function ClassificationFa() {
 
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 250}} size="small" aria-label="a dense table">
+      <Table sx={{ minWidth: 150}} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
             <TableCell align="left">Idade</TableCell>

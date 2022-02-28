@@ -5,6 +5,7 @@ import IMC from '../components/imc.js';
 import GEB from '../components/geb.js';
 import EstimativaDePeso from '../components/estimativaDePeso.js';
 import PerdaDePeso from '../components/perdaDePeso.js';
+import RadioSexo from '../components/radioSexo.js';
 
 import appConfig from '../config.json';
 import Table from '@mui/material/Table';
@@ -21,28 +22,7 @@ import ClassificationFa from '../components/classificationFa.js';
 import Popper from '@mui/material/Popper';
 
 
-function RadioSexo(props){
 
-    function handleChange(event) {
-        console.log(event.target.value);
-        props.setSexo(event.target.value);
-    }
-
-    return(
-        <FormControl disabled={props.isDisabled}>
-        <FormLabel id="demo-row-radio-buttons-group-label"></FormLabel>
-        <RadioGroup
-            aria-labelledby="demo-row-radio-buttons-group-label"
-            defaultValue="mulher"
-            name="radio-row-buttons-group"
-            onChange={handleChange}
-        >
-            <FormControlLabel value="mulher" control={<Radio />} label="Mulher" />
-            <FormControlLabel value="homem" control={<Radio />} label="Homem" />
-        </RadioGroup>
-        </FormControl>
-    )
-  }
 
 
 export default function MetricsPage() {
@@ -101,17 +81,13 @@ export default function MetricsPage() {
 
     useEffect(() => {
         //timer
-        if(!openPopper){
+        if(!openPopper && infoButton){
         const timer = setTimeout(() => {
-            setInfoButton(false)
-            setAnchorEl(null)
+                setInfoButton(false)
+                setAnchorEl(null)
         }, 3000);
         }
-        if(openPopper){
-            //setInfoButton(false)
-            //setOpenPopper(false)
-            //setAnchorEl(null)
-            //pause timer
+        if(openPopper && infoButton){
             clearTimeout(timer);
         }
 
@@ -120,6 +96,8 @@ export default function MetricsPage() {
 function handleformSubmit(){
         console.log("submit");
         var localGeb = 0.0;
+        var localPesoIdeal = 0.0;
+
         if(pesoAtual.trim().length > 0 && altura.trim().length > 0) {
             console.log("Fazer conta do IMC");
             console.log("Peso: ", pesoAtual);
@@ -136,24 +114,22 @@ function handleformSubmit(){
                     idealImc = 22;
                 }
             }
-
             //Essa é a forma mais concisa de fazer a conta do IMC ideal, mas preferi deixar mais clara acima.
             //idade>60? idealImc = 24.5: sexo=='mulher'? idealImc = 21: idealImc = 22;
-
-                if(altura > 3){
+            if(altura > 3){
                     let alturaemmetros = altura /100;
                     let imc = pesoAtual / (alturaemmetros * alturaemmetros);
-                    let pesoIdeal = (alturaemmetros * alturaemmetros) * idealImc;
-                    console.log("Peso Ideal1: ", pesoIdeal);
+                    localPesoIdeal = (alturaemmetros * alturaemmetros) * idealImc;
+                    console.log("Peso Ideal1: ", localPesoIdeal);
                     setImc(imc);
-                    setPesoIdeal(pesoIdeal);
+                    setPesoIdeal(localPesoIdeal);
 
-                }else{
+            }else{
                     let imc = pesoAtual/(altura * altura);
-                    let pesoIdeal = (altura * altura) * idealImc;
-                    console.log("Peso Ideal2: ", pesoIdeal);
+                    localPesoIdeal = (altura * altura) * idealImc;
+                    console.log("Peso Ideal2: ", localPesoIdeal);
                     setImc(imc);
-                    setPesoIdeal(pesoIdeal);
+                    setPesoIdeal(localPesoIdeal);
                 }
             }
         if(pesoAtual.trim().length > 0 && pesoHabitual.trim().length > 0) {
@@ -179,23 +155,31 @@ function handleformSubmit(){
             setEstimativaDePeso(estimativa);
             }
             }
+            //Esse é o GEB
             if(pesoAtual.trim().length > 0 && idade.trim().length > 0 && altura.trim().length > 0) {
                 console.log("Fazer conta do GEB");
-                console.log("Sexo: ", sexo);
-                console.log("Peso: ", pesoAtual);
-                console.log("Idade: ", idade);
-                console.log("Altura: ", altura);
+                var pesoAtualLocal = 0.0;
+                //Se o peso tiver adequado, GEB usa PA. Se não, usa Peso Ajustado.
+                //Adequação do peso = PA x 100 / PI    (Entre 95% e 115% é adequado)
+                //Peso Ajustado = (PA-PI)x0,25 + PI 
+                
+                if((pesoAtual * 100)/localPesoIdeal >= 95 && (pesoAtual * 100)/localPesoIdeal <= 115){
+                    pesoAtualLocal = pesoAtual;
+                }else{
+                    pesoAtualLocal = (pesoAtual - localPesoIdeal) * 0.25 + localPesoIdeal;
+                }
+
                 var alturaemcentimetros = altura
                 if(altura<3){
                     alturaemcentimetros = altura * 100;
                 }
 
                 if(sexo==="homem"){
-                let geb = 66.47 + (13.75*pesoAtual) + (5*alturaemcentimetros) - (6.76*idade);
+                let geb = 66.47 + (13.75*pesoAtualLocal) + (5*alturaemcentimetros) - (6.76*idade);
                 setGeb(geb);
                 localGeb = geb;
                 }else{
-                let geb = 655.1 + (9.56*pesoAtual) + (1.85*alturaemcentimetros) - (4.68*idade);
+                let geb = 655.1 + (9.56*pesoAtualLocal) + (1.85*alturaemcentimetros) - (4.68*idade);
                 setGeb(geb);
                 localGeb = geb;
             }
@@ -492,10 +476,12 @@ function handleformSubmit(){
                                 }}
                                 onMouseOver={(e) => {
                                     e.preventDefault();
+                                    
                                     setInfoButton(true);
+                                    
                                 }
                                 }
-                                //onMouseOut={() => setInfoButton(false)}
+                                
                                 placeholder="Fator de Atividade (Ver Abaixo)PLACEHOLDER"
                                 styleSheet={{
                                 width: '100%',
@@ -518,6 +504,7 @@ function handleformSubmit(){
                             label='Tabela de Referencia.'
                             /* fullWidth */
                             onClick={(event) => {
+                                event.preventDefault();
                                 setAnchorEl(anchorEl ? null : event.currentTarget);
                                 setOpenPopper(!openPopper);
                             }}
@@ -537,7 +524,31 @@ function handleformSubmit(){
                                 mainColorStrong: appConfig.theme.colors.primary[600],
                             }}
                             />
-                            <Popper open={openPopper} anchorEl={anchorEl} placement={"right"}>
+                            <Popper placement="right"  disablePortal={false} open={openPopper} anchorEl={anchorEl} placement={"right"}
+                            modifiers={[
+                                {
+                                  name: 'flip',
+                                  enabled: true,
+                                  options: {
+                                    altBoundary: true,
+                                    rootBoundary: 'document',
+                                    padding: 8,
+                                  },
+                                },
+                                {
+                                  name: 'preventOverflow',
+                                  enabled: true,
+                                  options: {
+                                    altAxis: true,
+                                    altBoundary: true,
+                                    tether: true,
+                                    rootBoundary: 'document',
+                                    padding: 8,
+                                  },
+                                },
+                                
+                              ]}
+                            >
                             <Box styleSheet={{
                                     backgroundColor: appConfig.theme.colors.neutrals[600],
                                     width: '100%',
@@ -791,8 +802,6 @@ function handleformSubmit(){
         </Box>
     )
 }
-
-
 
 function Header() {
     return (
