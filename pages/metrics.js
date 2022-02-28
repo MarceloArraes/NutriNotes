@@ -1,6 +1,7 @@
 import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
 import {FormControl,FormLabel,RadioGroup,FormControlLabel, Radio, Collapse} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
+
 import IMC from '../components/imc.js';
 import GEB from '../components/geb.js';
 import EstimativaDePeso from '../components/estimativaDePeso.js';
@@ -91,7 +92,7 @@ export default function MetricsPage() {
             clearTimeout(timer);
         }
 
-    }, [setInfoButton, openPopper]);
+    }, [openPopper]);
 
 function handleformSubmit(){
         console.log("submit");
@@ -471,14 +472,12 @@ function handleformSubmit(){
                             <TextField
                                 label="FA - Fator de Atividade"
                                 disabled={isDisabled}
-                                onChange={(e) => {  
+                                onChange={(e) => {
                                     setFa(e.target.value); 
                                 }}
                                 onMouseOver={(e) => {
                                     e.preventDefault();
-                                    
                                     setInfoButton(true);
-                                    
                                 }
                                 }
                                 
