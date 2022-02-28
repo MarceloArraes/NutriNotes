@@ -1,6 +1,8 @@
 import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
 import {FormControl,FormLabel,RadioGroup,FormControlLabel, Radio, Collapse} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
+import IMC from '../components/imc.js';
+
 import appConfig from '../config.json';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -13,9 +15,9 @@ import Paper from '@mui/material/Paper';
 
 import { useRouter } from 'next/router'
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
-import ClassificationFa from './visualcomponents/classificationFa.js';
+import ClassificationFa from '../components/classificationFa.js';
 import Popper from '@mui/material/Popper';
-
+/* 
 function IMC(props) {
     console.log(props);
     
@@ -90,7 +92,7 @@ function IMC(props) {
         </MathJaxContext>
     );
   }
-  
+   */
 function GEB(props){
     console.log("PROPS GEB: ", props);
 
