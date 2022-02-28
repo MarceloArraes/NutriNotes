@@ -3,6 +3,8 @@ import {FormControl,FormLabel,RadioGroup,FormControlLabel, Radio, Collapse} from
 import React,{useEffect, useState, useRef} from 'react';
 import IMC from '../components/imc.js';
 import GEB from '../components/geb.js';
+import EstimativaDePeso from '../components/estimativaDePeso.js';
+import PerdaDePeso from '../components/perdaDePeso.js';
 
 import appConfig from '../config.json';
 import Table from '@mui/material/Table';
@@ -12,109 +14,12 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
- 
 
 import { useRouter } from 'next/router'
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
 import ClassificationFa from '../components/classificationFa.js';
 import Popper from '@mui/material/Popper';
 
-/* function GEB(props){
-    console.log("PROPS GEB: ", props);
-
-    return (
-        <MathJaxContext>
-              <Box 
-                styleSheet={{
-                    gap: '16px',
-                    padding: '16px',
-                    margin: '16px',
-                    borderRadius: '5px',
-                }}
-              >
-        GEB(Gasto Energético Basal) para {props.sexo}: {props.geb.toFixed(2)}
-            <Text styleSheet={{padding: '5px',
-                    margin: '5px',
-                    borderRadius: '5px',}}
-            >
-            {props.sexo=='homem'?
-            <>
-            <MathJax>{`\\(66.47  + 13.75  \\times Peso + 5 \\times Estatura\(cm\) - 6.76 \\times Idade\\)`}</MathJax>
-            <MathJax>{`\\(66.47  + 13.75 \\times ${props.pesoAtual} + 5 \\times ${props.altura} - 6.76 \\times ${props.idade}=${props.geb.toFixed(2)}kcal/dia\\)`}</MathJax>
-            </>
-            :
-            <>
-            <MathJax>{`\\(655.1 + 9.56  \\times Peso + 1.85 \\times Estatura\(cm\) - 4.68\\times Idade\\)`}</MathJax>
-            <MathJax>{`\\(655.1 + 9.56 \\times ${props.pesoAtual} + 1.85 \\times ${props.altura} - 4.68 \\times ${props.idade}=${props.geb.toFixed(2)}kcal/dia\\)`}</MathJax>
-            </>
-            }
-            </Text>
-
-            </Box>
-        </MathJaxContext>
-    );
-  } */
-function PerdaDePeso(props){
-    console.log(props);
-    
-    return (
-        <MathJaxContext>
-              <Box 
-                styleSheet={{
-                    gap: '16px',
-                    padding: '16px',
-                    margin: '16px',
-                    borderRadius: '5px',
-                }}
-              >
-            Perda de Peso: {props.perdaDePeso}%
-            <Text styleSheet={{padding: '5px',
-                    margin: '5px',
-                    borderRadius: '5px',}}
-            >
-            {/* <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(props.altura*props.altura).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax> */}
-            <MathJax>{`\\(\\frac {PH-PA}{PH} \\times 100=\\frac {${props.pesohabitual}-${props.pesoAtual}}{${props.pesohabitual}} \\times 100={${props.perdaDePeso}}\\%\\)`}</MathJax>
-            {/* <MathJax>{`\\(\\frac {${props.pesohabitual}-${props.pesoAtual}}{${props.pesohabitual}} \\times 100={${props.perdaDePeso}}\\%\\)`}</MathJax> */}
-            </Text>
-
-            </Box>
-        </MathJaxContext>
-    );
-  }
-
-function EstimativaDePeso(props){
-    console.log("Estimativa de Peso props: ", props);
-    
-    return (
-        <MathJaxContext>
-              <Box 
-                styleSheet={{
-                    gap: '16px',
-                    padding: '16px',
-                    margin: '16px',
-                    borderRadius: '5px',
-                }}
-              >
-            Estimativa de Peso para {props.sexo}:
-            <Text styleSheet={{padding: '5px',
-                    margin: '5px',
-                    borderRadius: '5px',}}
-            >
-            {/* <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(props.altura*props.altura).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax> */}
-            {props.sexo=='homem'?
-            <>
-            <MathJax>{`\\(Peso (kg) = (1.73  \\times  CB) + (0.98 \\times CP) + (0.37 \\times DCSE) + (1.16 \\times AJ) – 81.69\\)`}</MathJax>
-            <MathJax>{`\\(Peso (kg) = (1.73  \\times  {${props.CB}}) + (0.98 \\times {${props.CP}}) + (0.37 \\times {${props.DCSE}}) + (1.16 \\times {${props.AJ}}) – 81.69={${props.estimativaDePeso.toFixed(2)}}\\)`}</MathJax>
-            </>:
-            <>
-            <MathJax>{`\\(Peso (kg) = (0.98  \\times  CB) + (1.27 \\times CP) + (0.4 \\times DCSE) + (0.87 \\times AJ) – 62.35\\)`}</MathJax>
-            <MathJax>{`\\(Peso (kg) = (0.98  \\times  {${props.CB}}) + (1.27 \\times {${props.CP}}) + (0.4 \\times {${props.DCSE}}) + (0.87 \\times {${props.AJ}}) –  62.35={${props.estimativaDePeso.toFixed(2)}}\\)`}</MathJax>
-            </>}
-            </Text>
-            </Box>
-        </MathJaxContext>
-    );
-  }
 
 function RadioSexo(props){
 
