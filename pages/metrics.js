@@ -523,7 +523,7 @@ function handleformSubmit(){
                                 mainColorStrong: appConfig.theme.colors.primary[600],
                             }}
                             />
-                            <Popper placement="right"  disablePortal={false} open={openPopper} anchorEl={anchorEl} placement={"right"}
+                            <Popper  disablePortal={false} open={openPopper} anchorEl={anchorEl} placement={"right"}
                             modifiers={[
                                 {
                                   name: 'flip',
