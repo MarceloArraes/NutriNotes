@@ -1,5 +1,5 @@
 import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
-import {FormControl,FormLabel,RadioGroup,FormControlLabel, Radio, Collapse} from '@material-ui/core';
+import {Collapse} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
 
 import IMC from '../components/imc.js';
@@ -7,23 +7,15 @@ import GEB from '../components/geb.js';
 import EstimativaDePeso from '../components/estimativaDePeso.js';
 import PerdaDePeso from '../components/perdaDePeso.js';
 import RadioSexo from '../components/radioSexo.js';
+import Results from '../components/results.js';
+
+import ClassificationFa from '../components/classificationFa.js';
 
 import appConfig from '../config.json';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
 
 import { useRouter } from 'next/router'
-import { MathJaxContext, MathJax } from 'better-react-mathjax';
-import ClassificationFa from '../components/classificationFa.js';
+
 import Popper from '@mui/material/Popper';
-
-
-
 
 
 export default function MetricsPage() {
@@ -31,17 +23,25 @@ export default function MetricsPage() {
     //Refs and constants
     const roteamento = useRouter();
     const username = roteamento.query.email;
-    
 
+    //Modals
+    const [isDisabled, setIsDisabled] = useState(false); ///MODAL
+    const firstUpdate = useRef(true); ///MODAL
+    const [infoButton, setInfoButton] = useState(false); ///MODAL
+    const [anchorEl, setAnchorEl] = useState(null); ///MODAL
+    const [openPopper,setOpenPopper] = useState(false); ///MODAL
+    
     //IMC e IMC ideal
     const [pesoAtual, setPesoAtual] = useState(''); ///INPUT
     const [altura, setAltura] = useState('');///INPUT
     const [imc, setImc] = useState(''); ///RESULTADO
     const [pesoIdeal, setPesoIdeal] = useState(''); ///RESULTADO
+    const [showPesoIdeal, setShowPesoIdeal] = useState(false); ///RESULTADO
 
     //Perda de peso
     const [pesoHabitual, setPesoHabitual] = useState(''); ///INPUT
     const [perdaDePeso, setPerdaDePeso] = useState(''); ///RESULTADO
+    const [showPerdaDePeso, setShowPerdaDePeso] = useState(false); ///RESULTADO
 
     //Estimativa de peso
     const [CB, setCB] = useState(''); ///INPUT
@@ -50,23 +50,21 @@ export default function MetricsPage() {
     const [DCSE, setDCSE] = useState(''); ///INPUT
     const [AJ, setAJ] = useState(''); ///INPUT
     const [estimativaDePeso, setEstimativaDePeso] = useState(''); ///RESULTADO
+    const [showEstimativa, setShowEstimativa] = useState(false); ///RESULTADO
 
     //GEB
     const [idade, setIdade] = useState(''); ///INPUT
-    const [geb, setGeb] = useState('');   ///RESULTADO
     const [nome, setNome] = useState(''); ///INPUT
-
+    const [geb, setGeb] = useState('');   ///RESULTADO
+    const [showGeb, setShowGeb] = useState(false); ///RESULTADO
+    
     //Necessidade Energética Total - NET
     const [Fa, setFa] = useState(''); ///INPUT
     const [Fi, setFi] = useState(''); ///INPUT
-    const[NET, setNET] = useState(''); ///RESULTADO
+    const [NET, setNET] = useState(''); ///RESULTADO
+    const [showNET, setShowNET] = useState(false); ///RESULTADO
 
-    //Modals
-    const [isDisabled, setIsDisabled] = useState(false); ///MODAL
-    const firstUpdate = useRef(true); ///MODAL
-    const [infoButton, setInfoButton] = useState(false); ///MODAL
-    const [anchorEl, setAnchorEl] = useState(null); ///MODAL
-    const [openPopper,setOpenPopper] = useState(false); ///MODAL
+
 
     useEffect(() => {
         //prevent default
@@ -79,19 +77,18 @@ export default function MetricsPage() {
         firstUpdate.current = false;
     }, [imc, perdaDePeso,estimativaDePeso, geb]);
     
-
     useEffect(() => {
         //timer
         if(!openPopper && infoButton){
         const timer = setTimeout(() => {
                 setInfoButton(false)
                 setAnchorEl(null)
+                clearTimeout(timer);
         }, 3000);
         }
         if(openPopper && infoButton){
             clearTimeout(timer);
         }
-
     }, [openPopper]);
 
 function handleformSubmit(){
@@ -99,7 +96,8 @@ function handleformSubmit(){
         var localGeb = 0.0;
         var localPesoIdeal = 0.0;
 
-        if(pesoAtual.trim().length > 0 && altura.trim().length > 0) {
+        //IMC
+        if(pesoAtual.length > 0 && altura.length > 0 && idade.length>0) {
             console.log("Fazer conta do IMC");
             console.log("Peso: ", pesoAtual);
             console.log("Altura: ", altura);
@@ -124,7 +122,6 @@ function handleformSubmit(){
                     console.log("Peso Ideal1: ", localPesoIdeal);
                     setImc(imc);
                     setPesoIdeal(localPesoIdeal);
-
             }else{
                     let imc = pesoAtual/(altura * altura);
                     localPesoIdeal = (altura * altura) * idealImc;
@@ -133,15 +130,17 @@ function handleformSubmit(){
                     setPesoIdeal(localPesoIdeal);
                 }
             }
-        if(pesoAtual.trim().length > 0 && pesoHabitual.trim().length > 0) {
+        //Perda de peso
+        if(pesoAtual.length > 0 && pesoHabitual.length > 0) {
                 console.log("Fazer conta do peso habitual");
                 console.log("Peso: ", pesoAtual);
                 console.log("Peso habitual: ", pesoHabitual);
-                let perdaDePeso2 = ((pesoHabitual - pesoAtual) / pesoHabitual )*100;
-                console.log("Percentual de perda de peso: ", perdaDePeso2);
-                setPerdaDePeso(perdaDePeso2);
+                let perdaDePeso = ((pesoHabitual - pesoAtual) / pesoHabitual )*100;
+                console.log("Percentual de perda de peso: ", perdaDePeso);
+                setPerdaDePeso(perdaDePeso);
             }
-            if(CB.trim().length>0 && CP.trim().length>0 && DCSE.trim().length>0 && AJ.trim().length>0){
+        //Estimativa de peso
+        if(CB.length>0 && CP.length>0 && DCSE.length>0 && AJ.length>0){
             console.log("Estimativa de peso baseadas nos dados");
             console.log("CB: ", CB);
             console.log("CP: ", CP);
@@ -150,14 +149,14 @@ function handleformSubmit(){
             //aqui tenho q ver se o paciente é homem ou mulher
             if(sexo==='mulher'){
                 let estimativaDePeso = (0.98 * CB) + (1.27 * CP) + (0.4 * DCSE) + (0.87 * AJ) - 62.35;
-                setEstimativaDePeso(estimativaDePeso);
+            setEstimativaDePeso(estimativaDePeso);
             }else{
             let estimativa = 1.73 * CB + (0.98 * CP) + (0.37 *DCSE) + (1.16 * AJ) - 81.69;
             setEstimativaDePeso(estimativa);
             }
             }
-            //Esse é o GEB
-            if(pesoAtual.trim().length > 0 && idade.trim().length > 0 && altura.trim().length > 0) {
+        //GEB
+        if(pesoAtual.length > 0 && idade.length > 0 && altura.length > 0) {
                 console.log("Fazer conta do GEB");
                 var pesoAtualLocal = 0.0;
                 //Se o peso tiver adequado, GEB usa PA. Se não, usa Peso Ajustado.
@@ -185,16 +184,14 @@ function handleformSubmit(){
                 localGeb = geb;
             }
         }
-            if(Fa.trim().length>0 && Fi.trim().length>0 && localGeb>0){
+        //NET - Necessidade Energética Total
+        if(Fa.length>0 && Fi.length>0 && localGeb>0){
                 console.log("Fazer conta do NET");
                 console.log("Fa: ", Fa);
                 console.log("Fi: ", Fi);
                 let net = localGeb*(Fa * Fi)
                 setNET(net);
-                }
-            
-            
-        
+            }
     }
 
     return (
@@ -240,7 +237,6 @@ function handleformSubmit(){
                                 e.preventDefault();
                                 handleformSubmit();
                             }}
-                            
                             styleSheet={{
                                 display: 'flex',
                                 alignItems: 'center',
@@ -480,7 +476,6 @@ function handleformSubmit(){
                                     setInfoButton(true);
                                 }
                                 }
-                                
                                 placeholder="Fator de Atividade (Ver Abaixo)PLACEHOLDER"
                                 styleSheet={{
                                 width: '100%',
@@ -590,7 +585,7 @@ function handleformSubmit(){
 {/* A partir daqui são botões e depois os quadros(outputs) */}
 
 
-                            {!imc && !perdaDePeso && !estimativaDePeso && !geb ?
+                            {!imc && !perdaDePeso && !estimativaDePeso && !geb && !NET && !pesoIdeal ?
                             <Button
                             type='submit'
                             label='Enviar'
@@ -622,6 +617,7 @@ function handleformSubmit(){
                                 fullWidth
                                 onClick={() => {
                                     setPesoAtual('');
+                                    setPesoIdeal('');
                                     setAltura('');
                                     setImc('');
                                     setPesoHabitual('');
@@ -636,8 +632,8 @@ function handleformSubmit(){
                                     setFa('');
                                     setFi('');
                                     setSexo('mulher');
-
                                     setIsDisabled(false);
+                                    setOpenPopper(false);
                                     firstUpdate.current = true;
                                 } }
                                 styleSheet={{
@@ -653,7 +649,11 @@ function handleformSubmit(){
                                     mainColor: appConfig.theme.colors.primary[500],
                                     mainColorLight: appConfig.theme.colors.primary[400],
                                     mainColorStrong: appConfig.theme.colors.primary[600],
-                                }} /><Box
+                                }} />
+                                </>}
+
+                                {isDisabled ?<>
+                                <Box
                                     styleSheet={{
                                         display: 'flex',
                                         flexDirection: 'column',
@@ -670,33 +670,42 @@ function handleformSubmit(){
                                         flex: 1,
                                         minHeight: '240px',
                                     }}
-                                >   
+                                >
+                                    <Results  imc={imc} geb={geb} net={NET} perdaDePeso={perdaDePeso} pesoIdeal={pesoIdeal} estimativaDePeso={estimativaDePeso}
+                                    setShowEstimativa={setShowEstimativa} setShowGeb={setShowGeb} setShowPerdaDePeso={setShowPerdaDePeso} setShowPesoIdeal={setShowPesoIdeal}
+                                    setShowNET={setShowNET}
+                                    />
+                                    
+                                    
                                     {imc? <Text>
                                         IMC: {imc.toFixed(2)}
-                                        <div></div>
-                                        PESO IDEAL: {pesoIdeal.toFixed(2)}
+                                        </Text>:null}
+
                                     {geb? <Text>
                                         <div></div>
                                         GEB: {geb.toFixed(2)}
                                     </Text>:null}
+
                                     {NET? 
                                     <Text>
                                         NET: {NET.toFixed(2)}
                                     </Text>:null}
-                                    </Text>:null}
+
                                     {perdaDePeso? <Text>
                                         Perda de peso: {perdaDePeso.toFixed(2)}%
                                     </Text>:null}
+
                                     {pesoIdeal? <Text>
                                         Peso ideal: {pesoIdeal.toFixed(2)}
                                     </Text>:null}
+
                                     {estimativaDePeso? <Text>
                                         <div></div>
                                         Estimativa de Peso: {estimativaDePeso.toFixed(2)}kg
                                     </Text>:null}
-                                </Box></>
-                            }
-                        
+                                </Box>
+                                </>:null}
+                            
                         {imc ? 
                         <Box
                             in={(imc!=='').toString()}
@@ -743,12 +752,12 @@ function handleformSubmit(){
                         }}
                     >
                             <Text>
-                                
                                 {/* send props to APP */}
                                 <PerdaDePeso pesoAtual={pesoAtual} pesohabitual={pesoHabitual} perdaDePeso={perdaDePeso} />
                             </Text>
                     </Box>
                     :null}
+                    
                     {estimativaDePeso? 
                     <Box
                     styleSheet={{
@@ -772,6 +781,7 @@ function handleformSubmit(){
                     </Text>
                 </Box>
                     :null}
+
                     {geb? 
                     <Box
                     styleSheet={{
@@ -791,10 +801,10 @@ function handleformSubmit(){
                         minHeight: '240px', 
                     }}
                 >   <Text>
-                    <GEB sexo={sexo} pesoAtual={pesoAtual} altura={altura} idade={idade} geb={geb} />
+                    <GEB sexo={sexo} pesoAtual={pesoAtual} altura={altura} idade={idade} geb={geb} /> 
                     </Text>
                     </Box>
-                    :null}
+                    :null} 
                     </Box>
                 </Box>
             </Box>
