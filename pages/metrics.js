@@ -94,6 +94,13 @@ function handleformSubmit(){
         console.log("submit");
         var localGeb = 0.0;
         var localPesoIdeal = 0.0;
+        
+        if(Fi==''){
+            setFi(1);
+            var localFi = 1;
+        }else{
+            var localFi = Fi;
+        }
 
         //IMC
         if(pesoAtual.length > 0 && altura.length > 0 && idade.length>0) {
@@ -184,7 +191,7 @@ function handleformSubmit(){
             }
         }
         //NET - Necessidade Energética Total
-        if(Fa.length>0 && Fi.length>0 && localGeb>0){
+        if(Fa.length>0 && localFi.length>0 && localGeb>0){
                 console.log("Fazer conta do NET");
                 console.log("Fa: ", Fa);
                 console.log("Fi: ", Fi);
@@ -239,8 +246,8 @@ function handleformSubmit(){
                             styleSheet={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                flexDirection: 'row',
-                                flexWrap: 'wrap',
+                                flexDirection: 'column',
+                                /* flexWrap: 'wrap', */
                                 flex: 1,
                             }}
                         >
@@ -615,6 +622,15 @@ function handleformSubmit(){
                                 label='Resetar'
                                 fullWidth
                                 onClick={() => {
+                                    
+                                    setIsDisabled(false);
+                                    setOpenPopper(false);
+                                    setShowImc(false);
+                                    setShowEstimativa(false);
+                                    setShowGeb(false);
+                                    setShowPerdaDePeso(false);
+                                    setShowNET(false);
+                                    setShowPesoIdeal(false);
                                     setPesoAtual('');
                                     setPesoIdeal('');
                                     setAltura('');
@@ -631,8 +647,6 @@ function handleformSubmit(){
                                     setFa('');
                                     setFi('');
                                     setSexo('mulher');
-                                    setIsDisabled(false);
-                                    setOpenPopper(false);
                                     firstUpdate.current = true;
                                 } }
                                 styleSheet={{

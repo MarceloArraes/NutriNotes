@@ -150,7 +150,7 @@ export default function PaginaInicial() {
                 borderRadius: '50%',
                 marginBottom: '16px',
               }}
-              src={'/icon.png'}
+              src={'/Icon2.png'}
               alt="Icon"
             />
             <Text

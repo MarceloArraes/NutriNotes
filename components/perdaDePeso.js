@@ -18,13 +18,13 @@ export default function PerdaDePeso(props){
                   borderRadius: '5px',
               }}
             >
-          Perda de Peso: {props.perdaDePeso}%
+          Perda de Peso: {props.perdaDePeso.toFixed(2)}%
           <Text styleSheet={{padding: '5px',
                   margin: '5px',
                   borderRadius: '5px',}}
           >
           {/* <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(props.altura*props.altura).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax> */}
-          <MathJax>{`\\(\\frac {PH-PA}{PH} \\times 100=\\frac {${props.pesohabitual}-${props.pesoAtual}}{${props.pesohabitual}} \\times 100={${props.perdaDePeso}}\\%\\)`}</MathJax>
+          <MathJax>{`\\(\\frac {PH-PA}{PH} \\times 100=\\frac {${props.pesohabitual}-${props.pesoAtual}}{${props.pesohabitual}} \\times 100={${props.perdaDePeso.toFixed(2)}}\\%\\)`}</MathJax>
           {/* <MathJax>{`\\(\\frac {${props.pesohabitual}-${props.pesoAtual}}{${props.pesohabitual}} \\times 100={${props.perdaDePeso}}\\%\\)`}</MathJax> */}
           </Text>
 

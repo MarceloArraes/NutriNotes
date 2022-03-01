@@ -33,19 +33,19 @@ export default function Results(props) {
     rows2.push(createData('IMC', props.imc.toFixed(2), props.setShowImc));
   }
   if(props.pesoIdeal){
-    rows2.push(createData('Peso Ideal', props.pesoIdeal.toFixed(2) , props.setShowPesoIdeal));
+    rows2.push(createData('Peso Ideal', `${props.pesoIdeal.toFixed(2)} kg` , props.setShowPesoIdeal));
   }
   if(props.estimativaDePeso){
-    rows2.push(createData('Estimativa de Peso', props.estimativaDePeso.toFixed(2), props.setShowEstimativa));
+    rows2.push(createData('Estimativa de Peso', `${props.estimativaDePeso.toFixed(2)} kg`, props.setShowEstimativa));
   }
   if(props.perdaDePeso){
-    rows2.push(createData('Perda de Peso', `${props.perdaDePeso}%`, props.setShowPerdaDePeso));
+    rows2.push(createData('Perda de Peso', `${props.perdaDePeso.toFixed(2)}%`, props.setShowPerdaDePeso));
   }
   if(props.geb){
-    rows2.push(createData('Gasto Energético Basal', Math.round(props.geb) , props.setShowGeb));
+    rows2.push(createData('Gasto Energético Basal', `${Math.round(props.geb)} kcal` , props.setShowGeb));
   }
   if(props.net){
-    rows2.push(createData('Necessidade Energetica Total', Math.round(props.net), props.setShowNET));
+    rows2.push(createData('Necessidade Energetica Total', `${Math.round(props.net)} kcal`, props.setShowNET));
   }
 
 
