@@ -37,6 +37,7 @@ export default function MetricsPage() {
     const [imc, setImc] = useState(''); ///RESULTADO
     const [pesoIdeal, setPesoIdeal] = useState(''); ///RESULTADO
     const [showPesoIdeal, setShowPesoIdeal] = useState(false); ///RESULTADO
+    const [showImc, setShowImc] = useState(false); ///RESULTADO
 
     //Perda de peso
     const [pesoHabitual, setPesoHabitual] = useState(''); ///INPUT
@@ -63,8 +64,6 @@ export default function MetricsPage() {
     const [Fi, setFi] = useState(''); ///INPUT
     const [NET, setNET] = useState(''); ///RESULTADO
     const [showNET, setShowNET] = useState(false); ///RESULTADO
-
-
 
     useEffect(() => {
         //prevent default
@@ -242,7 +241,7 @@ function handleformSubmit(){
                                 alignItems: 'center',
                                 flexDirection: 'row',
                                 flexWrap: 'wrap',
-                                flex: 2,
+                                flex: 1,
                             }}
                         >
                             <Box
@@ -673,40 +672,40 @@ function handleformSubmit(){
                                 >
                                     <Results  imc={imc} geb={geb} net={NET} perdaDePeso={perdaDePeso} pesoIdeal={pesoIdeal} estimativaDePeso={estimativaDePeso}
                                     setShowEstimativa={setShowEstimativa} setShowGeb={setShowGeb} setShowPerdaDePeso={setShowPerdaDePeso} setShowPesoIdeal={setShowPesoIdeal}
-                                    setShowNET={setShowNET}
+                                    setShowNET={setShowNET} setShowImc={setShowImc}
                                     />
                                     
                                     
-                                    {imc? <Text>
+                                    {showImc? <Text>
                                         IMC: {imc.toFixed(2)}
                                         </Text>:null}
 
-                                    {geb? <Text>
+                                    {showGeb? <Text>
                                         <div></div>
                                         GEB: {geb.toFixed(2)}
                                     </Text>:null}
 
-                                    {NET? 
+                                    {showNET? 
                                     <Text>
                                         NET: {NET.toFixed(2)}
                                     </Text>:null}
 
-                                    {perdaDePeso? <Text>
+                                    {showPerdaDePeso? <Text>
                                         Perda de peso: {perdaDePeso.toFixed(2)}%
                                     </Text>:null}
 
-                                    {pesoIdeal? <Text>
+                                    {showPesoIdeal? <Text>
                                         Peso ideal: {pesoIdeal.toFixed(2)}
                                     </Text>:null}
 
-                                    {estimativaDePeso? <Text>
+                                    {showEstimativa? <Text>
                                         <div></div>
                                         Estimativa de Peso: {estimativaDePeso.toFixed(2)}kg
                                     </Text>:null}
                                 </Box>
                                 </>:null}
                             
-                        {imc ? 
+                        {showImc ? 
                         <Box
                             in={(imc!=='').toString()}
                             styleSheet={{
@@ -732,7 +731,8 @@ function handleformSubmit(){
                                 </Text>
                         </Box>
                         :null}
-                        {perdaDePeso?
+
+                        {showPerdaDePeso?
                         <Box
                         styleSheet={{
                             display: 'flex',
@@ -758,7 +758,7 @@ function handleformSubmit(){
                     </Box>
                     :null}
                     
-                    {estimativaDePeso? 
+                    {showEstimativa? 
                     <Box
                     styleSheet={{
                         display: 'flex',
@@ -782,7 +782,7 @@ function handleformSubmit(){
                 </Box>
                     :null}
 
-                    {geb? 
+                    {showGeb? 
                     <Box
                     styleSheet={{
                         display: 'flex',

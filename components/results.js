@@ -6,24 +6,47 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import SvgIcon from '@mui/material/SvgIcon';
+import IconButton from '@mui/material/IconButton';
 
-function createData(name, equation, resultValue, showState) {
-  return { name, equation, resultValue, showState };
+
+function createData(name, resultValue, setState) {
+  return { name, resultValue, setState };
 }
 
-const rows = [
-  createData('Frozen yoghurt', 159, 6.0, 24),
-  createData('Ice cream sandwich', 237, 9.0, 37),
-  createData('Eclair', 262, 16.0, 24),
-  createData('Cupcake', 305, 3.7, 67),
-  createData('Gingerbread', 356, 16.0, 49),
-];
 
 export default function Results(props) {
+  console.log(props);
+  var rows2 = [];
 
-
+ /*  const rows = [
+    createData('IMC', props.imc.toFixed(2), props.setShowImc),
+    createData('Peso Ideal', props.pesoIdeal.toFixed(2) , props.setShowPesoIdeal),
+    createData('Estimativa de Peso', props.estimativaDePeso.toFixed(2), props.setShowEstimativa),
+    createData('Perda de Peso', `${props.perdaDePeso}%`, props.setShowPerdaDePeso),
+    createData('Gasto Energético Basal', Math.round(props.geb) , props.setShowGeb),
+    createData('Necessidade Energetica Total', Math.round(props.net), props.setShowNET),
+  ]; */
   
-
+  if(props.imc){
+    rows2.push(createData('IMC', props.imc.toFixed(2), props.setShowImc));
+  }
+  if(props.pesoIdeal){
+    rows2.push(createData('Peso Ideal', props.pesoIdeal.toFixed(2) , props.setShowPesoIdeal));
+  }
+  if(props.estimativaDePeso){
+    rows2.push(createData('Estimativa de Peso', props.estimativaDePeso.toFixed(2), props.setShowEstimativa));
+  }
+  if(props.perdaDePeso){
+    rows2.push(createData('Perda de Peso', `${props.perdaDePeso}%`, props.setShowPerdaDePeso));
+  }
+  if(props.geb){
+    rows2.push(createData('Gasto Energético Basal', Math.round(props.geb) , props.setShowGeb));
+  }
+  if(props.net){
+    rows2.push(createData('Necessidade Energetica Total', Math.round(props.net), props.setShowNET));
+  }
 
 
   return (
@@ -31,14 +54,13 @@ export default function Results(props) {
       <Table sx={{ minWidth: 150 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
-            <TableCell>Dessert (100g serving)</TableCell>
-            <TableCell align="right">Calories</TableCell>
-            <TableCell align="right">Fat&nbsp;(g)</TableCell>
-            <TableCell align="right">Carbs&nbsp;(g)</TableCell>
+            <TableCell>Metódo de Medida: </TableCell>
+            <TableCell align="right">Resultado: </TableCell>
+            <TableCell align="right">Ver Formula: </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {rows2.map((row) => (
             <TableRow
               key={row.name}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -46,9 +68,17 @@ export default function Results(props) {
               <TableCell component="th" scope="row">
                 {row.name}
               </TableCell>
-              <TableCell align="right">{row.equation}</TableCell>
               <TableCell align="right">{row.resultValue}</TableCell>
-              <TableCell align="right">{row.showState}</TableCell>
+              <TableCell align="right">
+              <IconButton onClick={
+                () => {
+                  row.setState(prevState => !prevState )
+                  console.log("Tentando alterar visibilidade.")
+                }}
+                align="center" aria-label="visibility" size="small">
+                    <VisibilityIcon fontSize="inherit" />
+              </IconButton>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
