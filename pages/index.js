@@ -94,6 +94,7 @@ export default function PaginaInicial() {
             <TextField
               placeholder="Digite seu email"
               fullWidth
+              type="email"
               textFieldColors={{
                 neutral: {
                   textColor: appConfig.theme.colors.neutrals[200],

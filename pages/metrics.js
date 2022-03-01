@@ -16,7 +16,7 @@ import appConfig from '../config.json';
 import { useRouter } from 'next/router'
 
 import Popper from '@mui/material/Popper';
-
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 export default function MetricsPage() {
     
@@ -200,6 +200,10 @@ function handleformSubmit(){
             }
     }
 
+    const handleClickAway = () => {
+        setOpenPopper(false);
+      };
+
     return (
         <Box
             styleSheet={{
@@ -245,7 +249,7 @@ function handleformSubmit(){
                             }}
                             styleSheet={{
                                 display: 'flex',
-                                alignItems: 'center',
+                                alignItems: 'left',
                                 flexDirection: 'column',
                                 /* flexWrap: 'wrap', */
                                 flex: 1,
@@ -482,6 +486,7 @@ function handleformSubmit(){
                                     setInfoButton(true);
                                 }
                                 }
+                                
                                 placeholder="Fator de Atividade (Ver Abaixo)PLACEHOLDER"
                                 styleSheet={{
                                 width: '100%',
@@ -506,7 +511,10 @@ function handleformSubmit(){
                             onClick={(event) => {
                                 event.preventDefault();
                                 setAnchorEl(anchorEl ? null : event.currentTarget);
-                                setOpenPopper(!openPopper);
+                                if(Boolean(anchorEl)){
+                                    setOpenPopper(false);
+                                }else setOpenPopper(true);
+                                
                             }}
                             styleSheet={{
                                 width: '50%',
@@ -514,7 +522,7 @@ function handleformSubmit(){
                                 resize: 'none',
                                 borderRadius: '5px',
                                 padding: '6px 8px',
-                                marginRight: '12px',
+                                /* marginRight: '12px', */
                                 marginBottom: '9px',
                                 }}
                             buttonColors={{
@@ -524,7 +532,8 @@ function handleformSubmit(){
                                 mainColorStrong: appConfig.theme.colors.primary[600],
                             }}
                             />
-                            <Popper  disablePortal={false} open={openPopper} anchorEl={anchorEl} placement={"right"}
+                            
+                            <Popper  disablePortal={false} open={openPopper} anchorEl={anchorEl} placement={"bottom-start"}
                             modifiers={[
                                 {
                                   name: 'flip',
@@ -560,12 +569,14 @@ function handleformSubmit(){
                                     marginRight: '12px',
                                     color: appConfig.theme.colors.neutrals[200],
                                 }}
-                            >
+                            ><ClickAwayListener onClickAway={handleClickAway}>
                                     <Text>
                                         <ClassificationFa  />
                                     </Text>
+                            </ClickAwayListener>
                                 </Box>
                             </Popper>
+                            
                             </Collapse>
                             <TextField
                                 label="FI - Fator de Injúria (padrão = 1)"
@@ -688,34 +699,6 @@ function handleformSubmit(){
                                     setShowEstimativa={setShowEstimativa} setShowGeb={setShowGeb} setShowPerdaDePeso={setShowPerdaDePeso} setShowPesoIdeal={setShowPesoIdeal}
                                     setShowNET={setShowNET} setShowImc={setShowImc}
                                     />
-                                    
-                                    
-                                    {showImc? <Text>
-                                        IMC: {imc.toFixed(2)}
-                                        </Text>:null}
-
-                                    {showGeb? <Text>
-                                        <div></div>
-                                        GEB: {geb.toFixed(2)}
-                                    </Text>:null}
-
-                                    {showNET? 
-                                    <Text>
-                                        NET: {NET.toFixed(2)}
-                                    </Text>:null}
-
-                                    {showPerdaDePeso? <Text>
-                                        Perda de peso: {perdaDePeso.toFixed(2)}%
-                                    </Text>:null}
-
-                                    {showPesoIdeal? <Text>
-                                        Peso ideal: {pesoIdeal.toFixed(2)}
-                                    </Text>:null}
-
-                                    {showEstimativa? <Text>
-                                        <div></div>
-                                        Estimativa de Peso: {estimativaDePeso.toFixed(2)}kg
-                                    </Text>:null}
                                 </Box>
                                 </>:null}
                             
