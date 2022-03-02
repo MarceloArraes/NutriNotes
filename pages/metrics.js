@@ -8,6 +8,7 @@ import EstimativaDePeso from '../components/estimativaDePeso.js';
 import PerdaDePeso from '../components/perdaDePeso.js';
 import RadioSexo from '../components/radioSexo.js';
 import Results from '../components/results.js';
+import RadioButtomFa from '../components/radioButtomFa.js';
 
 import ClassificationFa from '../components/classificationFa.js';
 
@@ -475,6 +476,9 @@ function handleformSubmit(){
                                 value={AJ}
                                 variant="bottomBorder"
                             />
+
+                            <RadioButtomFa />
+
                             <TextField
                                 label="FA - Fator de Atividade"
                                 disabled={isDisabled}
@@ -486,7 +490,6 @@ function handleformSubmit(){
                                     setInfoButton(true);
                                 }
                                 }
-                                
                                 placeholder="Fator de Atividade (Ver Abaixo)PLACEHOLDER"
                                 styleSheet={{
                                 width: '100%',
@@ -724,7 +727,7 @@ function handleformSubmit(){
                         >
                                 <Text>
                                     {/* send props to APP */}
-                                    <IMC peso={pesoAtual} altura={altura} imc={imc} />
+                                    <IMC pesoIdeal={pesoIdeal} peso={pesoAtual} altura={altura} imc={imc} />
                                 </Text>
                         </Box>
                         :null}

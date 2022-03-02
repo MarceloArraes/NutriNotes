@@ -7,7 +7,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-import SvgIcon from '@mui/material/SvgIcon';
 import IconButton from '@mui/material/IconButton';
 
 
@@ -48,6 +47,13 @@ export default function Results(props) {
     rows2.push(createData('Necessidade Energetica Total', `${Math.round(props.net)} kcal`, props.setShowNET));
   }
 
+  if(rows2.length === 0){
+    return(
+      <div>
+        
+      </div>
+    )
+  }
 
   return (
     <TableContainer component={Paper}>
