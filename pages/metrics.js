@@ -62,6 +62,7 @@ export default function MetricsPage() {
     
     //Necessidade Energética Total - NET
     const [Fa, setFa] = useState(''); ///INPUT
+    const [radioFa, setRadioFa] = useState(''); ///INPUT
     const [Fi, setFi] = useState(''); ///INPUT
     const [NET, setNET] = useState(''); ///RESULTADO
     const [showNET, setShowNET] = useState(false); ///RESULTADO
@@ -82,14 +83,68 @@ export default function MetricsPage() {
         if(!openPopper && infoButton){
         const timer = setTimeout(() => {
                 setInfoButton(false)
-                setAnchorEl(null)
-                clearTimeout(timer);
         }, 3000);
         }
         if(openPopper && infoButton){
             clearTimeout(timer);
         }
     }, [openPopper]);
+
+    useEffect(() => {
+        if(idade>=10 && radioFa!==''){
+            console.log("entering faHandler");
+
+            if(idade<=18 && idade>10){
+                if(sexo==='mulher'){
+                    if(radioFa=='pesado')setFa(6.0);
+
+                    if(radioFa=='moderado')setFa(2.2);
+    
+                    if(radioFa=='leve')setFa(1.5);
+                }else if(sexo==='homem'){
+                    if(radioFa=='pesado')setFa(6.0);
+
+                    if(radioFa=='moderado' )setFa(2.5);
+    
+                    if(radioFa=='leve')setFa(1.60);
+                }
+            }else if(idade>18 && idade<=65){
+                if(sexo==='mulher'){
+                    if(radioFa=='pesado')setFa(1.82);
+
+                    if(radioFa=='moderado')setFa(1.64);
+    
+                    if(radioFa=='leve')setFa(1.56);
+                }
+                else if(sexo==='homem'){
+                    if(radioFa=='pesado')setFa(2.1);
+
+                    if(radioFa=='moderado')setFa(1.78);
+    
+                    if(radioFa=='leve')setFa(1.55);
+                }
+
+            }else if(idade>65){
+                if(sexo==='mulher'){
+                    if(radioFa=='pesado')setFa(1.8);
+
+                    if(radioFa=='moderado')setFa(1.6);
+    
+                    if(radioFa=='leve')setFa(1.4);
+                }
+                else if(sexo==='homem'){
+                    if(radioFa=='pesado')setFa(1.9);
+
+                    if(radioFa=='moderado')setFa(1.6);
+    
+                    if(radioFa=='leve')setFa(1.4);
+                }
+            }
+        }else if(idade>0 && idade<10){
+            setFa('');
+        }
+    },[idade, radioFa, sexo]);
+
 
 function handleformSubmit(){
         console.log("submit");
@@ -476,14 +531,36 @@ function handleformSubmit(){
                                 value={AJ}
                                 variant="bottomBorder"
                             />
-
-                            <RadioButtomFa />
-
+                            <Text styleSheet={{
+                                    width: '100%',
+                                    border: '0',
+                                    resize: 'none',
+                                    //borderRadius: '5px',
+                                    //padding: '6px 8px',
+                                    marginRight: '12px',
+                                    color: appConfig.theme.colors.neutrals[200],
+                                }}
+                            >Nível de Atividade física: </Text>
+                            <Box
+                                styleSheet={{
+                                    backgroundColor: appConfig.theme.colors.neutrals[600],
+                                    width: '100%',
+                                    border: '5px',
+                                    marginBottom: '5px',
+                                    resize: 'none',
+                                    borderRadius: '5px',
+                                    padding: '6px 8px',
+                                    marginRight: '12px',
+                                    color: appConfig.theme.colors.neutrals[200],
+                                }}
+                                >
+                            <RadioButtomFa setRadioFa={setRadioFa} />
+                            </Box>
                             <TextField
                                 label="FA - Fator de Atividade"
                                 disabled={isDisabled}
                                 onChange={(e) => {
-                                    setFa(e.target.value); 
+                                    setFa(Fa); 
                                 }}
                                 onMouseOver={(e) => {
                                     e.preventDefault();
@@ -505,7 +582,6 @@ function handleformSubmit(){
                                 value={Fa}
                                 variant="bottomBorder"
                             />
-                            
                             <Collapse in={infoButton}>
                             <Button
                             type='button'
@@ -536,7 +612,7 @@ function handleformSubmit(){
                             }}
                             />
                             
-                            <Popper  disablePortal={false} open={openPopper} anchorEl={anchorEl} placement={"bottom-start"}
+                            <Popper  disablePortal={false} open={openPopper} anchorEl={anchorEl} placement={'bottom-start'}
                             modifiers={[
                                 {
                                   name: 'flip',
