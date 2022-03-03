@@ -46,12 +46,13 @@ export default function Results(props) {
   if(props.net){
     rows2.push(createData('Necessidade Energetica Total', `${Math.round(props.net)} kcal`, props.setShowNET));
   }
+  if(props.rCQ){
+    rows2.push(createData('Relaçao Cintura/Quadril', `${props.rCQ.toFixed(2)}`, props.setShowRCQ));
+  }
 
   if(rows2.length === 0){
     return(
-      <div>
-        
-      </div>
+      null
     )
   }
 

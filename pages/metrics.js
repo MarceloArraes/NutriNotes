@@ -67,6 +67,13 @@ export default function MetricsPage() {
     const [NET, setNET] = useState(''); ///RESULTADO
     const [showNET, setShowNET] = useState(false); ///RESULTADO
 
+    //Relaçao Cintura/Quadril (rCQ)
+    const [cC, setcC] = useState(''); ///INPUT
+    const [cQ, setcQ] = useState(''); ///INPUT
+    const [rCQ, setrCQ] = useState(''); ///RESULTADO
+    const [showrCQ, setShowrCQ] = useState(false); ///RESULTADO
+
+
     useEffect(() => {
         //prevent default
         if(firstUpdate.current) {
@@ -151,6 +158,7 @@ function handleformSubmit(){
         var localGeb = 0.0;
         var localPesoIdeal = 0.0;
         
+        //Fator de Injúria
         if(Fi==''){
             setFi(1);
             var localFi = 1;
@@ -254,6 +262,14 @@ function handleformSubmit(){
                 let net = localGeb*(Fa * Fi)
                 setNET(net);
             }
+        //Relaçao Cintura/Quadril (rCQ)
+        if(cC.length>0 && cQ.length>0){
+            console.log("Fazer conta do cQ");
+            console.log("cC: ", cC);
+            console.log("cQ: ", cQ);
+            console.log("cC/cQ: ", cC/cQ);
+            setrCQ(cC/cQ);
+        }
     }
 
     const handleClickAway = () => {
@@ -531,6 +547,47 @@ function handleformSubmit(){
                                 value={AJ}
                                 variant="bottomBorder"
                             />
+                            <TextField
+                                label="cC - Circunferência da Cintura"
+                                disabled={isDisabled}
+                                onChange={(e) => {  
+                                    setcC(e.target.value); 
+                                }}
+                                placeholder="Circunferência da Cintura"
+                                styleSheet={{width: '100%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                backgroundColor: appConfig.theme.colors.neutrals[800],
+                                marginRight: '12px',
+                                color: appConfig.theme.colors.neutrals[200],
+                                }}
+                                type="number"
+                                value={cC}
+                                variant="bottomBorder"
+                            />
+                            <TextField
+                                label="cQ - Circunferência de Quadril"
+                                disabled={isDisabled}
+                                onChange={(e) => {  
+                                    setcQ(e.target.value); 
+                                }}
+                      
+                                placeholder="Circunferência de Quadril"
+                                styleSheet={{width: '100%',
+                                border: '0',
+                                resize: 'none',
+                                borderRadius: '5px',
+                                padding: '6px 8px',
+                                backgroundColor: appConfig.theme.colors.neutrals[800],
+                                marginRight: '12px',
+                                color: appConfig.theme.colors.neutrals[200],
+                                }}
+                                type="number"
+                                value={cQ}
+                                variant="bottomBorder"
+                            />
                             <Text styleSheet={{
                                     width: '100%',
                                     border: '0',
@@ -774,9 +831,9 @@ function handleformSubmit(){
                                         minHeight: '240px',
                                     }}
                                 >
-                                    <Results  imc={imc} geb={geb} net={NET} perdaDePeso={perdaDePeso} pesoIdeal={pesoIdeal} estimativaDePeso={estimativaDePeso}
+                                    <Results  imc={imc} geb={geb} net={NET} perdaDePeso={perdaDePeso} pesoIdeal={pesoIdeal} estimativaDePeso={estimativaDePeso} rCQ={rCQ}
                                     setShowEstimativa={setShowEstimativa} setShowGeb={setShowGeb} setShowPerdaDePeso={setShowPerdaDePeso} setShowPesoIdeal={setShowPesoIdeal}
-                                    setShowNET={setShowNET} setShowImc={setShowImc}
+                                    setShowNET={setShowNET} setShowImc={setShowImc} setShowrCQ={setShowrCQ}
                                     />
                                 </Box>
                                 </>:null}
