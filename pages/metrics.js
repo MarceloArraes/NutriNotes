@@ -39,6 +39,7 @@ export default function MetricsPage() {
     const [pesoIdeal, setPesoIdeal] = useState(''); ///RESULTADO
     const [showPesoIdeal, setShowPesoIdeal] = useState(false); ///RESULTADO
     const [showImc, setShowImc] = useState(false); ///RESULTADO
+    const [interpretacaoDoImc, setInterpretacaoDoImc] = useState(''); ///INTERPRETACAO
 
     //Perda de peso
     const [pesoHabitual, setPesoHabitual] = useState(''); ///INPUT
@@ -53,6 +54,7 @@ export default function MetricsPage() {
     const [AJ, setAJ] = useState(''); ///INPUT
     const [estimativaDePeso, setEstimativaDePeso] = useState(''); ///RESULTADO
     const [showEstimativa, setShowEstimativa] = useState(false); ///RESULTADO
+    const [InterpretacaoDeAdequacaoDoPeso,setInterpretacaoDeAdequacaoDoPeso]=useState(''); ///INTERPRETAÇAO
 
     //GEB
     const [idade, setIdade] = useState(''); ///INPUT
@@ -172,6 +174,7 @@ function handleformSubmit(){
             console.log("Peso: ", pesoAtual);
             console.log("Altura: ", altura);
             var idealImc = 0.0;
+            var imc = 0.0;
 
             if(idade>60){
                 idealImc = 24.5;
@@ -183,23 +186,43 @@ function handleformSubmit(){
                     idealImc = 22;
                 }
             }
+
             //Essa é a forma mais concisa de fazer a conta do IMC ideal, mas preferi deixar mais clara acima.
             //idade>60? idealImc = 24.5: sexo=='mulher'? idealImc = 21: idealImc = 22;
             if(altura > 3){
                     let alturaemmetros = altura /100;
-                    let imc = pesoAtual / (alturaemmetros * alturaemmetros);
+                    imc = pesoAtual / (alturaemmetros * alturaemmetros);
                     localPesoIdeal = (alturaemmetros * alturaemmetros) * idealImc;
                     console.log("Peso Ideal1: ", localPesoIdeal);
                     setImc(imc);
                     setPesoIdeal(localPesoIdeal);
             }else{
-                    let imc = pesoAtual/(altura * altura);
+                    imc = pesoAtual/(altura * altura);
                     localPesoIdeal = (altura * altura) * idealImc;
                     console.log("Peso Ideal2: ", localPesoIdeal);
                     setImc(imc);
                     setPesoIdeal(localPesoIdeal);
                 }
+            
+            //INTERPRETACAO IMC
+            if(imc<16){
+                setInterpretacaoDoImc("Interpretação do IMC: Magreza grau III");
+            }else if( imc>=16 && imc<17){
+                setInterpretacaoDoImc("Interpretação do IMC: Magreza grau II");
+            } else if( imc>=17 && imc<18.5){
+                setInterpretacaoDoImc("Interpretação do IMC: Magreza grau I");
+            } else if( imc>=18.5 && imc<25){
+                setInterpretacaoDoImc("Interpretação do IMC: Faixa Normal");
+            } else if( imc>=25 && imc<30){
+                setInterpretacaoDoImc("Interpretação do IMC: Pré Obesidade");
+            } else if( imc>=30 && imc<35){
+                setInterpretacaoDoImc("Interpretação do IMC: Obesidade grau I");
+            } else if( imc>=35 && imc<40){
+                setInterpretacaoDoImc("Interpretação do IMC: Obesidade grau II");
+            } else if( imc>=40){
+                setInterpretacaoDoImc("Interpretação do IMC: Obesidade grau III");
             }
+        }
         //Perda de peso
         if(pesoAtual.length > 0 && pesoHabitual.length > 0) {
                 console.log("Fazer conta do peso habitual");
@@ -231,12 +254,27 @@ function handleformSubmit(){
                 var pesoAtualLocal = 0.0;
                 //Se o peso tiver adequado, GEB usa PA. Se não, usa Peso Ajustado.
                 //Adequação do peso = PA x 100 / PI    (Entre 95% e 115% é adequado)
-                //Peso Ajustado = (PA-PI)x0,25 + PI 
+                //Peso Ajustado = (PA-PI)x0,25 + PI
+
+                let adequacaoDoPeso = (pesoAtual * 100)/localPesoIdeal;
                 
-                if((pesoAtual * 100)/localPesoIdeal >= 95 && (pesoAtual * 100)/localPesoIdeal <= 115){
+                if(adequacaoDoPeso>= 95 && adequacaoDoPeso <= 115){
                     pesoAtualLocal = pesoAtual;
                 }else{
                     pesoAtualLocal = (pesoAtual - localPesoIdeal) * 0.25 + localPesoIdeal;
+                    if(adequacaoDoPeso<=70){
+                        setInterpretacaoDeAdequacaoDoPeso("Grau de Adequação: Desnutrição Grave");
+                    }else if(adequacaoDoPeso>70 && adequacaoDoPeso<=80){
+                        setInterpretacaoDeAdequacaoDoPeso("Grau de Adequação: Desnutrição Moderada");
+                    }else if(adequacaoDoPeso>80 && adequacaoDoPeso<=90){
+                        setInterpretacaoDeAdequacaoDoPeso("Grau de Adequação: Desnutrição Leve");
+                    } else if(adequacaoDoPeso>90 && adequacaoDoPeso<=110){
+                        setInterpretacaoDeAdequacaoDoPeso("Grau de Adequação: Eutrofia");
+                    }else if(adequacaoDoPeso>110 && adequacaoDoPeso<=120){
+                        setInterpretacaoDeAdequacaoDoPeso("Grau de Adequação: Sobrepeso");
+                    }else if(adequacaoDoPeso>120){
+                        setInterpretacaoDeAdequacaoDoPeso("Grau de Adequação: Obesidade");
+                    }
                 }
 
                 var alturaemcentimetros = altura
@@ -840,7 +878,8 @@ function handleformSubmit(){
                                 >
                                     <Results  imc={imc} geb={geb} net={nET} perdaDePeso={perdaDePeso} pesoIdeal={pesoIdeal} estimativaDePeso={estimativaDePeso} rCQ={rCQ}
                                     setShowEstimativa={setShowEstimativa} setShowGeb={setShowGeb} setShowPerdaDePeso={setShowPerdaDePeso} setShowPesoIdeal={setShowPesoIdeal}
-                                    setShowNET={setShowNET} setShowImc={setShowImc} setShowrCQ={setShowrCQ}
+                                    setShowNET={setShowNET} setShowImc={setShowImc} setShowrCQ={setShowrCQ} InterpretacaoDeAdequacaoDoPeso={InterpretacaoDeAdequacaoDoPeso}
+                                    interpretacaoDoImc={interpretacaoDoImc}
                                     />
                                 </Box>
                                 </>:null}
@@ -969,4 +1008,3 @@ function Header() {
         </>
     )
 }
-

@@ -10,8 +10,8 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import IconButton from '@mui/material/IconButton';
 
 
-function createData(name, resultValue, setState) {
-  return { name, resultValue, setState };
+function createData(name, resultValue, setState, interpretacao) {
+  return { name, resultValue, setState, interpretacao };
 }
 
 
@@ -29,25 +29,25 @@ export default function Results(props) {
   ]; */
   
   if(props.imc){
-    rows2.push(createData('IMC', props.imc.toFixed(2), props.setShowImc));
+    rows2.push(createData('IMC', props.imc.toFixed(2), props.setShowImc, props.interpretacaoDoImc));
   }
   if(props.pesoIdeal){
-    rows2.push(createData('Peso Ideal', `${props.pesoIdeal.toFixed(2)} kg` , props.setShowPesoIdeal));
+    rows2.push(createData('Peso Ideal', `${props.pesoIdeal.toFixed(2)} kg` , props.setShowPesoIdeal, ''));
   }
   if(props.estimativaDePeso){
-    rows2.push(createData('Estimativa de Peso', `${props.estimativaDePeso.toFixed(2)} kg`, props.setShowEstimativa));
+    rows2.push(createData('Estimativa de Peso', `${props.estimativaDePeso.toFixed(2)} kg`, props.setShowEstimativa, ''));
   }
   if(props.perdaDePeso){
-    rows2.push(createData('Perda de Peso', `${props.perdaDePeso.toFixed(2)}%`, props.setShowPerdaDePeso));
+    rows2.push(createData('Perda de Peso', `${props.perdaDePeso.toFixed(2)}%`, props.setShowPerdaDePeso, ''));
   }
   if(props.geb){
-    rows2.push(createData('Gasto Energético Basal', `${Math.round(props.geb)} kcal` , props.setShowGeb));
+    rows2.push(createData('Gasto Energético Basal', `${Math.round(props.geb)} kcal` , props.setShowGeb, props.InterpretacaoDeAdequacaoDoPeso));
   }
   if(props.net){
-    rows2.push(createData('Necessidade Energetica Total', `${Math.round(props.net)} kcal`, props.setShowNET));
+    rows2.push(createData('Necessidade Energetica Total', `${Math.round(props.net)} kcal`, props.setShowNET, ''));
   }
   if(props.rCQ){
-    rows2.push(createData('Relaçao Cintura/Quadril', `${props.rCQ.toFixed(2)}`, props.setShowRCQ));
+    rows2.push(createData('Relaçao Cintura/Quadril', `${props.rCQ.toFixed(2)}`, props.setShowRCQ, ''));
   }
 
   if(rows2.length === 0){
@@ -80,12 +80,15 @@ export default function Results(props) {
               <IconButton onClick={
                 () => {
                   row.setState(prevState => !prevState )
-                  console.log("Tentando alterar visibilidade.")
                 }}
                 align="center" aria-label="visibility" size="small">
                     <VisibilityIcon fontSize="inherit" />
               </IconButton>
               </TableCell>
+              {row.interpretacao ?<>
+                <TableCell align="right">{row.interpretacao}</TableCell>
+                </>
+              :null}
             </TableRow>
           ))}
         </TableBody>
