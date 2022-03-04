@@ -1,4 +1,5 @@
-import * as React from 'react';
+import React from 'react';
+import { useEffect, useState} from 'react';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
@@ -9,11 +10,21 @@ import FormLabel from '@mui/material/FormLabel';
 
 
 export default function RadioButtomFa(props) {
+  const [faRadioButtonValue, setFaRadioButtonValue]=useState('');
 
   function handleChange(event) {
     console.log(event.target.value);
     props.setRadioFa(event.target.value);
 }
+
+useEffect(() => {
+  if(props.radioFa === ""){
+    setFaRadioButtonValue('');
+  }else{
+    setFaRadioButtonValue(props.radioFa);
+  }
+
+}, [props.radioFa])
 
 
   return (
@@ -24,6 +35,7 @@ export default function RadioButtomFa(props) {
         aria-labelledby="demo-row-radio-buttons-group-label"
         name="row-radio-buttons-group"
         onChange={handleChange}
+        value={faRadioButtonValue}
       >
         <FormControlLabel value="leve" control={<Radio />} label="leve" />
         <FormControlLabel value="moderado" control={<Radio />} label="moderado" />

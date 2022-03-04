@@ -64,7 +64,7 @@ export default function MetricsPage() {
     const [Fa, setFa] = useState(''); ///INPUT
     const [radioFa, setRadioFa] = useState(''); ///INPUT
     const [Fi, setFi] = useState(''); ///INPUT
-    const [NET, setNET] = useState(''); ///RESULTADO
+    const [nET, setNET] = useState(''); ///RESULTADO
     const [showNET, setShowNET] = useState(false); ///RESULTADO
 
     //Relaçao Cintura/Quadril (rCQ)
@@ -246,21 +246,24 @@ function handleformSubmit(){
 
                 if(sexo==="homem"){
                 let geb = 66.47 + (13.75*pesoAtualLocal) + (5*alturaemcentimetros) - (6.76*idade);
-                setGeb(geb);
                 localGeb = geb;
+                setGeb(geb);
                 }else{
                 let geb = 655.1 + (9.56*pesoAtualLocal) + (1.85*alturaemcentimetros) - (4.68*idade);
-                setGeb(geb);
                 localGeb = geb;
+                setGeb(geb);
             }
         }
         //NET - Necessidade Energética Total
-        if(Fa.length>0 && localFi.length>0 && localGeb>0){
+        if(Fa>0){
                 console.log("Fazer conta do NET");
                 console.log("Fa: ", Fa);
-                console.log("Fi: ", Fi);
-                let net = localGeb*(Fa * Fi)
-                setNET(net);
+                console.log("Fi: ", localFi);
+                if( localGeb>0){
+                    console.log("Geb: ", localGeb);
+                }
+                let net1 = localGeb*(Fa * localFi)
+                setNET(net1);
             }
         //Relaçao Cintura/Quadril (rCQ)
         if(cC.length>0 && cQ.length>0){
@@ -548,7 +551,7 @@ function handleformSubmit(){
                                 variant="bottomBorder"
                             />
                             <TextField
-                                label="cC - Circunferência da Cintura"
+                                label="CC - Circunferência da Cintura"
                                 disabled={isDisabled}
                                 onChange={(e) => {  
                                     setcC(e.target.value); 
@@ -568,7 +571,7 @@ function handleformSubmit(){
                                 variant="bottomBorder"
                             />
                             <TextField
-                                label="cQ - Circunferência de Quadril"
+                                label="CQ - Circunferência de Quadril"
                                 disabled={isDisabled}
                                 onChange={(e) => {  
                                     setcQ(e.target.value); 
@@ -611,7 +614,7 @@ function handleformSubmit(){
                                     color: appConfig.theme.colors.neutrals[200],
                                 }}
                                 >
-                            <RadioButtomFa setRadioFa={setRadioFa} />
+                            <RadioButtomFa radioFa={radioFa} setRadioFa={setRadioFa} />
                             </Box>
                             <TextField
                                 label="FA - Fator de Atividade"
@@ -738,7 +741,7 @@ function handleformSubmit(){
 {/* A partir daqui são botões e depois os quadros(outputs) */}
 
 
-                            {!imc && !perdaDePeso && !estimativaDePeso && !geb && !NET && !pesoIdeal ?
+                            {!isDisabled ?
                             <Button
                             type='submit'
                             label='Enviar'
@@ -769,7 +772,6 @@ function handleformSubmit(){
                                 label='Resetar'
                                 fullWidth
                                 onClick={() => {
-                                    
                                     setIsDisabled(false);
                                     setOpenPopper(false);
                                     setShowImc(false);
@@ -778,6 +780,7 @@ function handleformSubmit(){
                                     setShowPerdaDePeso(false);
                                     setShowNET(false);
                                     setShowPesoIdeal(false);
+                                    setShowrCQ(false);
                                     setPesoAtual('');
                                     setPesoIdeal('');
                                     setAltura('');
@@ -793,6 +796,10 @@ function handleformSubmit(){
                                     setIdade('');
                                     setFa('');
                                     setFi('');
+                                    setcC('');
+                                    setcQ('');
+                                    setrCQ('');
+                                    setRadioFa('');
                                     setSexo('mulher');
                                     firstUpdate.current = true;
                                 } }
@@ -831,7 +838,7 @@ function handleformSubmit(){
                                         minHeight: '240px',
                                     }}
                                 >
-                                    <Results  imc={imc} geb={geb} net={NET} perdaDePeso={perdaDePeso} pesoIdeal={pesoIdeal} estimativaDePeso={estimativaDePeso} rCQ={rCQ}
+                                    <Results  imc={imc} geb={geb} net={nET} perdaDePeso={perdaDePeso} pesoIdeal={pesoIdeal} estimativaDePeso={estimativaDePeso} rCQ={rCQ}
                                     setShowEstimativa={setShowEstimativa} setShowGeb={setShowGeb} setShowPerdaDePeso={setShowPerdaDePeso} setShowPesoIdeal={setShowPesoIdeal}
                                     setShowNET={setShowNET} setShowImc={setShowImc} setShowrCQ={setShowrCQ}
                                     />
