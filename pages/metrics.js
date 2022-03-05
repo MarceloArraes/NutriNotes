@@ -206,21 +206,21 @@ function handleformSubmit(){
             
             //INTERPRETACAO IMC
             if(imc<16){
-                setInterpretacaoDoImc("Interpretação do IMC: Magreza grau III");
+                setInterpretacaoDoImc("Magreza grau III");
             }else if( imc>=16 && imc<17){
-                setInterpretacaoDoImc("Interpretação do IMC: Magreza grau II");
+                setInterpretacaoDoImc("Magreza grau II");
             } else if( imc>=17 && imc<18.5){
-                setInterpretacaoDoImc("Interpretação do IMC: Magreza grau I");
+                setInterpretacaoDoImc("Magreza grau I");
             } else if( imc>=18.5 && imc<25){
-                setInterpretacaoDoImc("Interpretação do IMC: Faixa Normal");
+                setInterpretacaoDoImc("Faixa Normal");
             } else if( imc>=25 && imc<30){
-                setInterpretacaoDoImc("Interpretação do IMC: Pré Obesidade");
+                setInterpretacaoDoImc("Pré Obesidade");
             } else if( imc>=30 && imc<35){
-                setInterpretacaoDoImc("Interpretação do IMC: Obesidade grau I");
+                setInterpretacaoDoImc("Obesidade grau I");
             } else if( imc>=35 && imc<40){
-                setInterpretacaoDoImc("Interpretação do IMC: Obesidade grau II");
+                setInterpretacaoDoImc("Obesidade grau II");
             } else if( imc>=40){
-                setInterpretacaoDoImc("Interpretação do IMC: Obesidade grau III");
+                setInterpretacaoDoImc("Obesidade grau III");
             }
         }
         //Perda de peso
@@ -263,17 +263,17 @@ function handleformSubmit(){
                 }else{
                     pesoAtualLocal = (pesoAtual - localPesoIdeal) * 0.25 + localPesoIdeal;
                     if(adequacaoDoPeso<=70){
-                        setInterpretacaoDeAdequacaoDoPeso("Grau de Adequação: Desnutrição Grave");
+                        setInterpretacaoDeAdequacaoDoPeso("Desnutrição Grave");
                     }else if(adequacaoDoPeso>70 && adequacaoDoPeso<=80){
-                        setInterpretacaoDeAdequacaoDoPeso("Grau de Adequação: Desnutrição Moderada");
+                        setInterpretacaoDeAdequacaoDoPeso("Desnutrição Moderada");
                     }else if(adequacaoDoPeso>80 && adequacaoDoPeso<=90){
-                        setInterpretacaoDeAdequacaoDoPeso("Grau de Adequação: Desnutrição Leve");
+                        setInterpretacaoDeAdequacaoDoPeso("Desnutrição Leve");
                     } else if(adequacaoDoPeso>90 && adequacaoDoPeso<=110){
-                        setInterpretacaoDeAdequacaoDoPeso("Grau de Adequação: Eutrofia");
+                        setInterpretacaoDeAdequacaoDoPeso("Eutrofia");
                     }else if(adequacaoDoPeso>110 && adequacaoDoPeso<=120){
-                        setInterpretacaoDeAdequacaoDoPeso("Grau de Adequação: Sobrepeso");
+                        setInterpretacaoDeAdequacaoDoPeso("Sobrepeso");
                     }else if(adequacaoDoPeso>120){
-                        setInterpretacaoDeAdequacaoDoPeso("Grau de Adequação: Obesidade");
+                        setInterpretacaoDeAdequacaoDoPeso("Obesidade");
                     }
                 }
 
@@ -652,7 +652,7 @@ function handleformSubmit(){
                                     color: appConfig.theme.colors.neutrals[200],
                                 }}
                                 >
-                            <RadioButtomFa radioFa={radioFa} setRadioFa={setRadioFa} />
+                            <RadioButtomFa isDisabled={isDisabled} radioFa={radioFa} setRadioFa={setRadioFa} />
                             </Box>
                             <TextField
                                 label="FA - Fator de Atividade"

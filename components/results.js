@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import IconButton from '@mui/material/IconButton';
-
+import { Typography } from '@mui/material';
 
 function createData(name, resultValue, setState, interpretacao) {
   return { name, resultValue, setState, interpretacao };
@@ -74,6 +74,9 @@ export default function Results(props) {
             >
               <TableCell component="th" scope="row">
                 {row.name}
+                {row.interpretacao ?<div>
+                <strong>Interpretação: <Typography color="red">{row.interpretacao}</Typography></strong></div>
+                :null}
               </TableCell>
               <TableCell align="right">{row.resultValue}</TableCell>
               <TableCell align="right">
@@ -85,10 +88,6 @@ export default function Results(props) {
                     <VisibilityIcon fontSize="inherit" />
               </IconButton>
               </TableCell>
-              {row.interpretacao ?<>
-                <TableCell align="right">{row.interpretacao}</TableCell>
-                </>
-              :null}
             </TableRow>
           ))}
         </TableBody>

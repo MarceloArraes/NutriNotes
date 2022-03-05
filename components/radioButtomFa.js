@@ -28,7 +28,7 @@ useEffect(() => {
 
 
   return (
-    <FormControl>
+    <FormControl disabled={props.isDisabled}>
       {/* <FormLabel id="demo-row-radio-buttons-group-label">Fator de Atividade Física: </FormLabel> */}
       <RadioGroup
         row
