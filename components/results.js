@@ -75,7 +75,7 @@ export default function Results(props) {
               <TableCell component="th" scope="row">
                 {row.name}
                 {row.interpretacao ?<div>
-                <strong>Interpretação: <Typography color="red">{row.interpretacao}</Typography></strong></div>
+                <strong>Interpretação: <Typography color="red" align="justify">{row.interpretacao}</Typography></strong></div>
                 :null}
               </TableCell>
               <TableCell align="right">{row.resultValue}</TableCell>

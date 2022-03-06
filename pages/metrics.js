@@ -9,6 +9,7 @@ import PerdaDePeso from '../components/perdaDePeso.js';
 import RadioSexo from '../components/radioSexo.js';
 import Results from '../components/results.js';
 import RadioButtomFa from '../components/radioButtomFa.js';
+import FormFi from '../components/formFi.js';
 
 import ClassificationFa from '../components/classificationFa.js';
 
@@ -751,10 +752,24 @@ function handleformSubmit(){
                                         <ClassificationFa  />
                                     </Text>
                             </ClickAwayListener>
-                                </Box>
+                            </Box>
                             </Popper>
-                            
                             </Collapse>
+                            <Box
+                                styleSheet={{
+                                    backgroundColor: appConfig.theme.colors.neutrals[600],
+                                    width: '100%',
+                                    border: '5px',
+                                    marginBottom: '5px',
+                                    resize: 'none',
+                                    borderRadius: '5px',
+                                    padding: '6px 8px',
+                                    marginRight: '12px',
+                                    color: appConfig.theme.colors.neutrals[200],
+                                }}
+                            >
+                            <FormFi/>
+                            </Box>
                             <TextField
                                 label="FI - Fator de Injúria (padrão = 1)"
                                 disabled={isDisabled}
