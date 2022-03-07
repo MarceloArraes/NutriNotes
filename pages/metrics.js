@@ -9,7 +9,8 @@ import PerdaDePeso from '../components/perdaDePeso.js';
 import RadioSexo from '../components/radioSexo.js';
 import Results from '../components/results.js';
 import RadioButtomFa from '../components/radioButtomFa.js';
-import FormFi from '../components/formFi.js';
+import DropdownFi from '../components/dropdownFi.js';
+import PlaceholderSelect from '../components/select.js';
 
 import ClassificationFa from '../components/classificationFa.js';
 
@@ -387,7 +388,7 @@ function handleformSubmit(){
 
                             <TextField
                                 placeholder="Nome do Paciente"
-                                type="textarea"
+                                type="text"
                                 disabled={isDisabled}
                                 onChange={(e) => {
                                     setNome(e.target.value); 
@@ -768,8 +769,11 @@ function handleformSubmit(){
                                     color: appConfig.theme.colors.neutrals[200],
                                 }}
                             >
-                            <FormFi/>
+                            {/* <DropdownFi/>*/}
+                            {/* <PlaceholderSelect/>  */}
+                            
                             </Box>
+                            
                             <TextField
                                 label="FI - Fator de Injúria (padrão = 1)"
                                 disabled={isDisabled}

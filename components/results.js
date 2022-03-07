@@ -63,7 +63,6 @@ export default function Results(props) {
           <TableRow>
             <TableCell>Metódo de Medida: </TableCell>
             <TableCell align="right">Resultado: </TableCell>
-            <TableCell align="right">Ver Formula: </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -73,21 +72,18 @@ export default function Results(props) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}
-                {row.interpretacao ?<div>
-                <strong>Interpretação: <Typography color="red" align="justify">{row.interpretacao}</Typography></strong></div>
-                :null}
-              </TableCell>
-              <TableCell align="right">{row.resultValue}</TableCell>
-              <TableCell align="right">
-              <IconButton onClick={
+                {row.name}<IconButton onClick={
                 () => {
                   row.setState(prevState => !prevState )
                 }}
                 align="center" aria-label="visibility" size="small">
                     <VisibilityIcon fontSize="inherit" />
               </IconButton>
+                {row.interpretacao ?<div>
+                <strong>Interpretação: <Typography color="red" align="justify">{row.interpretacao}</Typography></strong></div>
+                :null}
               </TableCell>
+              <TableCell align="right">{row.resultValue}</TableCell>
             </TableRow>
           ))}
         </TableBody>
