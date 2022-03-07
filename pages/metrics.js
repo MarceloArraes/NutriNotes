@@ -9,8 +9,7 @@ import PerdaDePeso from '../components/perdaDePeso.js';
 import RadioSexo from '../components/radioSexo.js';
 import Results from '../components/results.js';
 import RadioButtomFa from '../components/radioButtomFa.js';
-import DropdownFi from '../components/dropdownFi.js';
-import PlaceholderSelect from '../components/select.js';
+import CheckboxFi from '../components/checkboxFi.js';
 
 import ClassificationFa from '../components/classificationFa.js';
 
@@ -771,7 +770,7 @@ function handleformSubmit(){
                             >
                             {/* <DropdownFi/>*/}
                             {/* <PlaceholderSelect/>  */}
-                            
+                            <CheckboxFi/>
                             </Box>
                             
                             <TextField
