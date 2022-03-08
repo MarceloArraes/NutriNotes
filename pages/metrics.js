@@ -11,6 +11,7 @@ import Results from '../components/results.js';
 import RadioButtomFa from '../components/radioButtomFa.js';
 import CheckboxFi from '../components/checkboxFi.js';
 import SplitButton from '../components/splitButton.js';
+import DropdownFi from '../components/dropdownFi.js';
 
 import ClassificationFa from '../components/classificationFa.js';
 
@@ -67,7 +68,7 @@ export default function MetricsPage() {
     //Necessidade Energética Total - NET
     const [Fa, setFa] = useState(''); ///INPUT
     const [radioFa, setRadioFa] = useState(''); ///INPUT
-    const [Fi, setFi] = useState(''); ///INPUT
+    
     const [nET, setNET] = useState(''); ///RESULTADO
     const [showNET, setShowNET] = useState(false); ///RESULTADO
 
@@ -76,6 +77,11 @@ export default function MetricsPage() {
     const [cQ, setcQ] = useState(''); ///INPUT
     const [rCQ, setrCQ] = useState(''); ///RESULTADO
     const [showrCQ, setShowrCQ] = useState(false); ///RESULTADO
+
+    //Fator Injúria:
+    const [fatorInjuria, setFatorInjuria] = useState(''); ///RESULTADO
+    const [showFatorInjuria, setShowFatorInjuria] = useState(false); ///RESULTADO
+
 
 
     useEffect(() => {
@@ -163,11 +169,11 @@ function handleformSubmit(){
         var localPesoIdeal = 0.0;
         
         //Fator de Injúria
-        if(Fi==''){
-            setFi(1);
+        if(fatorInjuria==''){
+            setFatorInjuria(1);
             var localFi = 1;
         }else{
-            var localFi = Fi;
+            var localFi = fatorInjuria;
         }
 
         //IMC
@@ -298,7 +304,7 @@ function handleformSubmit(){
         if(Fa>0){
                 console.log("Fazer conta do NET");
                 console.log("Fa: ", Fa);
-                console.log("Fi: ", localFi);
+                console.log("fatorInjuria: ", localFi);
                 if( localGeb>0){
                     console.log("Geb: ", localGeb);
                 }
@@ -769,19 +775,18 @@ function handleformSubmit(){
                                     color: appConfig.theme.colors.neutrals[200],
                                 }}
                             >
-                            {/* <DropdownFi/>*/}
-                            {/* <PlaceholderSelect/>  */}
-                            {/* <CheckboxFi/> */}
-                            <SplitButton/>
+                            <DropdownFi setFatorInjuria={setFatorInjuria}/>
+{/*                             <CheckboxFi/>
+                            <SplitButton/> */}
                             </Box>
                             
                             <TextField
-                                label="FI - Fator de Injúria (padrão = 1)"
+                                label="fatorInjuria - Fator de Injúria (padrão = 1)"
                                 disabled={isDisabled}
                                 onChange={(e) => {  
-                                    setFi(e.target.value); 
+                                    setFatorInjuria(e.target.value); 
                                 }}
-                                placeholder="FI - Fator de Injúria PLACEHOLDER"
+                                placeholder="fatorInjuria - Fator de Injúria PLACEHOLDER"
                                 styleSheet={{width: '100%',
                                 border: '0',
                                 resize: 'none',
@@ -792,7 +797,7 @@ function handleformSubmit(){
                                 color: appConfig.theme.colors.neutrals[200],
                                 }}
                                 type="number"
-                                value={Fi}
+                                value={fatorInjuria}
                                 variant="bottomBorder"
                             />
 
@@ -853,7 +858,7 @@ function handleformSubmit(){
                                     setGeb('');
                                     setIdade('');
                                     setFa('');
-                                    setFi('');
+                                    setFatorInjuria('');
                                     setcC('');
                                     setcQ('');
                                     setrCQ('');
