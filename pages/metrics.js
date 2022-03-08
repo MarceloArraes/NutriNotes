@@ -79,6 +79,8 @@ export default function MetricsPage() {
     const [showrCQ, setShowrCQ] = useState(false); ///RESULTADO
 
     //Fator Injúria:
+    const [condicaoClinica, setCondicaoClinica] = useState('');
+    const [level, setLevel] = useState('');
     const [fatorInjuria, setFatorInjuria] = useState(''); ///RESULTADO
     const [showFatorInjuria, setShowFatorInjuria] = useState(false); ///RESULTADO
 
@@ -775,7 +777,8 @@ function handleformSubmit(){
                                     color: appConfig.theme.colors.neutrals[200],
                                 }}
                             >
-                            <DropdownFi setFatorInjuria={setFatorInjuria}/>
+                            <DropdownFi fatorInjuria={fatorInjuria} setFatorInjuria={setFatorInjuria} condicaoClinica={condicaoClinica} setCondicaoClinica={setCondicaoClinica} 
+                            level={level}  setLevel={setLevel} />
 {/*                             <CheckboxFi/>
                             <SplitButton/> */}
                             </Box>
@@ -859,6 +862,8 @@ function handleformSubmit(){
                                     setIdade('');
                                     setFa('');
                                     setFatorInjuria('');
+                                    setCondicaoClinica('');
+                                    setLevel('');
                                     setcC('');
                                     setcQ('');
                                     setrCQ('');

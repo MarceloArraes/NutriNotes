@@ -5,23 +5,19 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import React,{useState, useEffect} from 'react';
 
-function createData(condicaoclinica, leve, grave) {
+/* function createData(condicaoclinica, leve, grave) {
   return { condicaoclinica, leve, grave };
-}
+} */
 
 export default function  DropdownFi(props) {
   //const [resultingFactor, setResultingFactor] = useState('');
-  const [condicaoClinica, setCondicaoClinica] = useState('');
-  const [level, setLevel] = useState('');
 
   useEffect(() => {
-    console.log("condicaoClinica", condicaoClinica);
-    console.log("level", level);
-    if(condicaoClinica!='' && level!=''){
-      props.setFatorInjuria(injuries.injury[condicaoClinica][level]);
+    if(props.condicaoClinica!='' && props.level!=''){
+      props.setFatorInjuria(injuries.injury[props.condicaoClinica][props.level]);
     }
 
-  }, [condicaoClinica, level])
+  }, [props.condicaoClinica, props.level, props.fatorInjuria])
 
   const injuries = {
     "injury":{
@@ -38,7 +34,6 @@ export default function  DropdownFi(props) {
     Queimadura_20_a_40: [1.5, 1.85],
     Queimadura_até_40_a_100: [1.85, 2.05]},
   }; 
-  console.log("injuries", injuries);
   
 /*   const listaCondicaoClinica = [
     "Desnutrição_grave",
@@ -71,10 +66,10 @@ export default function  DropdownFi(props) {
   }
 
   const handleChange = (event) => {
-    setCondicaoClinica(event.target.value);
+    props.setCondicaoClinica(event.target.value);
   };
   const handleChangeLevel = (event) => {
-    setLevel(event.target.value);
+    props.setLevel(event.target.value);
   };
 
   return (
@@ -84,7 +79,7 @@ export default function  DropdownFi(props) {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={condicaoClinica}
+          value={props.condicaoClinica}
           label="Condição Clínica"
           onChange={handleChange}
         > 
@@ -101,7 +96,7 @@ export default function  DropdownFi(props) {
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
-          value={level}
+          value={props.level}
           label="Gravidade"
           onChange={handleChangeLevel}
         >
