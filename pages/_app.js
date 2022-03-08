@@ -1,8 +1,13 @@
 import React,{useEffect} from "react";
+import { CacheProvider } from '@emotion/react';
+import { ThemeProvider, CssBaseline } from '@mui/material';
 
+import createEmotionCache from '../utility/createEmotionCache';
+//import lightTheme from '../styles/theme/lightTheme';
 
+const clientSideEmotionCache = createEmotionCache();
 
-export default function MyApp({ Component, pageProps}) {
+export default function MyApp({ Component, emotionCache = clientSideEmotionCache, pageProps}) {
   console.log('Roda em todas as páginas');
 
   useEffect(() => {
@@ -14,10 +19,11 @@ export default function MyApp({ Component, pageProps}) {
 
 
   return ( 
-    <>
+    <CacheProvider value={emotionCache}>
     <GlobalStyle />
+    <CssBaseline />
     <Component {...pageProps} />
-    </>
+    </CacheProvider>
   );
 }
 

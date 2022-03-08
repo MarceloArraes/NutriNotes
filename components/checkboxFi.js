@@ -43,9 +43,8 @@ export default function CheckboxFi() {
   };
 
   const handleInjuryChange = (event) => {
-    console.log("event.target.name", event.target.checked)
-    console.log({...injury})
     var localInjury = {...injury}
+    console.log("event target   ",event.target);
     if(event.target.checked){
       Object.entries(injury).forEach(([key, value]) => {
         if(key != event.target.name){
@@ -57,13 +56,15 @@ export default function CheckboxFi() {
           localInjury[key] = true;
         }
       })
+    }else{
+      localInjury[event.target.name] = false;
     }
+
     console.log("localInjury", localInjury);
 
     setInjury({
       ...localInjury,
     });
-
 
   };
 
@@ -71,14 +72,16 @@ export default function CheckboxFi() {
     setIsInjured(state => !state);
   };
   const { Condição_Clínica, Desnutrição_grave, Pequena_cirurgia_eletiva, Pós_operatório_geral_, Peritinote, Sepse, Infecção_grave, Câncer, Traumatismo_de_tecidos_moles, Fraturas_múltiplas, Queimadura_até_20, Queimadura_20_a_40, Queimadura_até_40_a_100 } = injury;
+  
   const { gilad, jason, antoine } = state;
   const error = [gilad, jason, antoine].filter((v) => v).length !== 2;
 
   return (
     <Box sx={{ display: 'flex' }}>
       <FormControl sx={{ m: 3 }} component="fieldset" variant="standard">
-      <FormLabel component="legend">Paciente está Doente ou ferido?</FormLabel>
-      {!isInjured ? 
+      
+        {!isInjured ? <>
+        <FormLabel component="legend">Paciente está Doente ou ferido?</FormLabel>
         <FormGroup >
           <FormControlLabel
             control={
@@ -86,9 +89,9 @@ export default function CheckboxFi() {
             }
             label="Sim"
           />
-          </FormGroup>
+          </FormGroup></>
         :<>
-        <FormLabel component="legend">Qual </FormLabel>
+        <FormLabel component="legend">Qual?</FormLabel>
         <FormGroup>
           <FormControlLabel
             control={

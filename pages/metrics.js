@@ -10,6 +10,7 @@ import RadioSexo from '../components/radioSexo.js';
 import Results from '../components/results.js';
 import RadioButtomFa from '../components/radioButtomFa.js';
 import CheckboxFi from '../components/checkboxFi.js';
+import SplitButton from '../components/splitButton.js';
 
 import ClassificationFa from '../components/classificationFa.js';
 
@@ -770,7 +771,8 @@ function handleformSubmit(){
                             >
                             {/* <DropdownFi/>*/}
                             {/* <PlaceholderSelect/>  */}
-                            <CheckboxFi/>
+                            {/* <CheckboxFi/> */}
+                            <SplitButton/>
                             </Box>
                             
                             <TextField
