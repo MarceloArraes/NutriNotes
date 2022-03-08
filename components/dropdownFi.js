@@ -18,7 +18,6 @@ export default function  DropdownFi(props) {
     console.log("condicaoClinica", condicaoClinica);
     console.log("level", level);
     if(condicaoClinica!='' && level!=''){
-      console.log(injuries.injury[condicaoClinica][level]);
       props.setFatorInjuria(injuries.injury[condicaoClinica][level]);
     }
 
@@ -41,7 +40,7 @@ export default function  DropdownFi(props) {
   }; 
   console.log("injuries", injuries);
   
-  const listaCondicaoClinica = [
+/*   const listaCondicaoClinica = [
     "Desnutrição_grave",
     "Pequena_cirurgia_eletiva",
     "Pós_operatório_geral",
@@ -54,7 +53,22 @@ export default function  DropdownFi(props) {
     "Queimadura_até_20",
     "Queimadura_20_a_40",
     "Queimadura_até_40_a_100",
-  ]
+  ] */
+  const objCondicaoClinica2 = {
+    obs:[
+    {"name":"Desnutrição grave", "value": "Desnutrição_grave", "factor": [1.5, 1.5]},
+    {"name":"Pequena cirurgia eletiva", "value": "Pequena_cirurgia_eletiva", "factor": [1.1, 1.2]},
+    {"name":"Pós operatório geral", "value": "Pós_operatório_geral", "factor": [1.2, 1.5]},
+    {"name":"Peritinote", "value": "Peritinote", "factor": [1.2, 1.5]},
+    {"name":"Sepse", "value": "Sepse", "factor": [1.4, 1.8]},
+    {"name":"Infecção grave", "value": "Infecção_grave", "factor": [1.3, 1.35]},
+    {"name":"Câncer", "value": "Câncer", "factor": [1.1, 1.45]},
+    {"name":"Traumatismo de tecidos moles", "value": "Traumatismo_de_tecidos_moles", "factor": [1.4, 1.7]},
+    {"name":"Fraturas múltiplas", "value": "Fraturas_múltiplas", "factor": [1.2, 1.35]},
+    {"name":"Queimadura até 20%", "value": "Queimadura_até_20", "factor": [1, 1.5]},
+    {"name":"Queimadura 20% a 40%", "value": "Queimadura_20_a_40", "factor": [1.5, 1.85]},
+    {"name":"Queimadura até 40% a 100%", "value": "Queimadura_até_40_a_100", "factor": [1.85, 2.05]}],
+  }
 
   const handleChange = (event) => {
     setCondicaoClinica(event.target.value);
@@ -74,9 +88,9 @@ export default function  DropdownFi(props) {
           label="Condição Clínica"
           onChange={handleChange}
         > 
-          {listaCondicaoClinica.map((condicaoClinica) => (
-            <MenuItem key={condicaoClinica} value={condicaoClinica}>
-              {condicaoClinica}
+          {objCondicaoClinica2.obs.map((condicaoClinica) => (
+            <MenuItem key={condicaoClinica.name} value={condicaoClinica.value}>
+              {condicaoClinica.name}
             </MenuItem>
           ))}
         </Select>

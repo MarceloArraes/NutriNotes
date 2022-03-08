@@ -784,7 +784,7 @@ function handleformSubmit(){
                                 label="fatorInjuria - Fator de Injúria (padrão = 1)"
                                 disabled={isDisabled}
                                 onChange={(e) => {  
-                                    setFatorInjuria(e.target.value); 
+                                    setFatorInjuria(fatorInjuria); 
                                 }}
                                 placeholder="fatorInjuria - Fator de Injúria PLACEHOLDER"
                                 styleSheet={{width: '100%',
