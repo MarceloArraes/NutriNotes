@@ -1,7 +1,7 @@
 import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
 import {Collapse} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
-
+//import {TextField as TextField2} from '@mui/material/TextField';
 import IMC from '../components/imc.js';
 import GEB from '../components/geb.js';
 import EstimativaDePeso from '../components/estimativaDePeso.js';
@@ -424,6 +424,7 @@ function handleformSubmit(){
                                     color: appConfig.theme.colors.neutrals[200],
                                 }}
                                 >
+                            {/* <TextField2 id="filled-basic" label="Filled" variant="filled" /> */}
                             <RadioSexo  isDisabled={isDisabled} setSexo={setSexo} />
                             </Box>
                             
@@ -662,7 +663,7 @@ function handleformSubmit(){
                                     color: appConfig.theme.colors.neutrals[200],
                                 }}
                                 >
-                            <RadioButtomFa isDisabled={isDisabled} radioFa={radioFa} setRadioFa={setRadioFa} />
+                            <RadioButtomFa isDisabled={isDisabled} radioFa={radioFa} setRadioFa={setRadioFa} /> 
                             </Box>
                             <TextField
                                 label="FA - Fator de Atividade"
@@ -690,7 +691,7 @@ function handleformSubmit(){
                                 value={Fa}
                                 variant="bottomBorder"
                             />
-                            <Collapse in={infoButton}>
+                            {/* <Collapse in={infoButton}> */}
                             <Button
                             type='button'
                             label='Tabela de Referencia.'
@@ -763,7 +764,7 @@ function handleformSubmit(){
                             </ClickAwayListener>
                             </Box>
                             </Popper>
-                            </Collapse>
+                            {/* </Collapse> */}
                             <Box
                                 styleSheet={{
                                     backgroundColor: appConfig.theme.colors.neutrals[600],

@@ -72,13 +72,14 @@ export default function Results(props) {
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
-                {row.name}<IconButton onClick={
+                {row.name}
+                {row.setState?<IconButton onClick={
                 () => {
                   row.setState(prevState => !prevState )
                 }}
                 align="center" aria-label="visibility" size="small">
                     <VisibilityIcon fontSize="inherit" />
-              </IconButton>
+              </IconButton>:null}
                 {row.interpretacao ?<div>
                 <strong>Interpretação: <Typography color="red" align="justify">{row.interpretacao}</Typography></strong></div>
                 :null}

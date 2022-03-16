@@ -1,10 +1,9 @@
 import appConfig from '../config.json';
-//import { Button as Button2, Text, TextField as TextField2 } from '@skynexui/components';
-import Button from '@mui/material/Button';
+import {Button,Text, TextField, Image } from '@skynexui/components';
+import {Box as Box2} from '@skynexui/components';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';
-import TextField from '@mui/material/TextField';
 //import Image from 'next/image';
 import React,{ useState, createContext, useContext } from 'react';
 import { useRouter } from 'next/router';
@@ -92,24 +91,21 @@ export default function PaginaInicial() {
             }}
           >
             <Titulo tag="h2">Boas vindas!</Titulo>
-            <Typography variant="body2" sx={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
+            <Text variant="body3" sx={{ marginBottom: '32px', color: appConfig.theme.colors.neutrals[300] }}>
               {appConfig.name}
-            </Typography>
+            </Text>
 
             <TextField
               placeholder="Digite seu email"
               fullWidth
-              autoFocus
-              variant='outlined'
               type="email"
-              size="small"
-              sx={{
+              textFieldColors={{
+                neutral: {
+                  textColor: appConfig.theme.colors.neutrals[200],
                   mainColor: appConfig.theme.colors.neutrals[900],
                   mainColorHighlight: appConfig.theme.colors.primary[500],
-                //color:appConfig.theme.colors.neutrals[200],
-                textColor: appConfig.theme.colors.neutrals[200],
-                backgroundColor: appConfig.theme.colors.neutrals[800],
-                borderColor: appConfig.theme.colors.neutrals[999],
+                  backgroundColor: appConfig.theme.colors.neutrals[800],
+                },
               }}
               onChange={ 
                 (e) => {
@@ -121,34 +117,9 @@ export default function PaginaInicial() {
                 }
               }
               }
-              />
+            />
 
-            <Button variant="contained" fullWidth 
-            type='submit'
-            
-            sx={{
-              margin: '18px',
-              contrastColor: appConfig.theme.colors.neutrals["000"],
-              mainColor: appConfig.theme.colors.primary[500],
-              color: appConfig.theme.colors.neutrals[100],
-              backgroundColor: appConfig.theme.colors.primary[500],
-              mainColorLight: appConfig.theme.colors.primary[400],
-              mainColorStrong: appConfig.theme.colors.primary[600],
-              mainColorHighlight: appConfig.theme.colors.primary[500],
-              ":hover": {
-                contrastColor: appConfig.theme.colors.neutrals["000"],
-                mainColor: appConfig.theme.colors.primary[500],
-                color: appConfig.theme.colors.neutrals[100],
-                backgroundColor: appConfig.theme.colors.primary[600],
-                mainColorLight: appConfig.theme.colors.primary[400],
-                mainColorStrong: appConfig.theme.colors.primary[600],
-              },
-              
-            }}>
-              Entrar
-            </Button> 
-
-{/*             <Button2
+            <Button
               type='submit'
               label='Entrar'
               fullWidth
@@ -158,24 +129,28 @@ export default function PaginaInicial() {
                 mainColorLight: appConfig.theme.colors.primary[400],
                 mainColorStrong: appConfig.theme.colors.primary[600],
               }}
-            /> */}
+            />
           </Box>  
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              maxWidth: '200px',
-              padding: '16px',
-              backgroundColor: appConfig.theme.colors.neutrals[800],
-              border: '1px solid',
-              borderColor: appConfig.theme.colors.neutrals[999],
-              borderRadius: '10px',
-              flex: 1,
-              minHeight: '240px',
-              overflow: 'hidden',
-            }}
-          >
+
+            <Box
+                    sx={{
+                        display: 'flex',
+                        flex: 1,
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        maxWidth: '200px',
+                        minHeight: '240px',
+                        padding: '16px',
+                        border: '1px solid',
+                        borderRadius: '10px',
+                        backgroundColor: appConfig.theme.colors.neutrals[800],
+                        borderColor: appConfig.theme.colors.neutrals[999],
+                        /* '&:hover': {
+                        backgroundColor: 'primary.main',
+                        opacity: [0.9, 0.8, 0.7],
+                        }, */
+                    }}
+                >
             <Avatar alt="Icon" src="/Icon2.png" 
             sx={{
                 borderRadius: '50%',
@@ -183,20 +158,16 @@ export default function PaginaInicial() {
                 width: '90%',
                 height: 'auto',
                 }} />
-            <Typography
-              variant="body2"
-              sx={{
+            <Typography variant="body2" component="h4" sx={{
                 color: appConfig.theme.colors.neutrals[200],
                 backgroundColor: appConfig.theme.colors.neutrals[900],
                 padding: '3px 10px',
                 borderRadius: '1000px',
-                wordBreak: 'break-word',
-
-              }}
-            >
-              {username}
+            }}>
+                {username}
             </Typography>
-          </Box>
+            </Box>
+          
           {/* Photo Area */}
         </Box>
       </Box>
