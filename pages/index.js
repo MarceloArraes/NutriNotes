@@ -79,16 +79,23 @@ export default function PaginaInicial() {
           {/* Formulário  width: { xs: '100%', sm: '50%' }*/}
           <Box
             as="form"
-            onSubmit={(e) => {
+            //component="form"
+            noValidate 
+            onSubmit={
+              (e) => {
               e.preventDefault();
               // Aqui vou usar para capturar o email do usuário e enviar para o banco de dados;
               insertEmailonDatabase();
               roteamento.push(`/metrics?email=${username}`);
-
             }}
             sx={{
-              display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-              width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
+              display: 'flex', 
+              flexDirection: 'column', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              width: { xs: '100%', sm: '50%' }, 
+              textAlign: 'center', 
+              marginBottom: '32px',
             }}
           >
             <Titulo tag="h2">Boas vindas!</Titulo>
@@ -100,6 +107,8 @@ export default function PaginaInicial() {
               placeholder="Digite seu email"
               fullWidth
               autoFocus
+              required
+              autoComplete="email"
               variant='outlined'
               type="email"
               size="small"
@@ -122,10 +131,9 @@ export default function PaginaInicial() {
               }
               }
               />
-
-            <Button variant="contained" fullWidth 
+            <Button variant="contained" 
+            fullWidth 
             type='submit'
-            
             sx={{
               margin: '18px',
               contrastColor: appConfig.theme.colors.neutrals["000"],
@@ -147,18 +155,6 @@ export default function PaginaInicial() {
             }}>
               Entrar
             </Button> 
-
-{/*             <Button2
-              type='submit'
-              label='Entrar'
-              fullWidth
-              buttonColors={{
-                contrastColor: appConfig.theme.colors.neutrals["000"],
-                mainColor: appConfig.theme.colors.primary[500],
-                mainColorLight: appConfig.theme.colors.primary[400],
-                mainColorStrong: appConfig.theme.colors.primary[600],
-              }}
-            /> */}
           </Box>  
           <Box
             sx={{
