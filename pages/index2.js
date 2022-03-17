@@ -1,6 +1,5 @@
 import appConfig from '../config.json';
 import {Button,Text, TextField, Image } from '@skynexui/components';
-import {Box as Box2} from '@skynexui/components';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Avatar from '@mui/material/Avatar';

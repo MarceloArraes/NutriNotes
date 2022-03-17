@@ -1,4 +1,5 @@
-import { Box, Text} from '@skynexui/components';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 /* import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -17,7 +18,7 @@ export default function GEB(props){
   return (
       <MathJaxContext>
             <Box 
-              styleSheet={{
+              sx={{
                   gap: '16px',
                   padding: '16px',
                   margin: '16px',
@@ -25,7 +26,7 @@ export default function GEB(props){
               }}
             >
       GEB(Gasto Energético Basal) para {props.sexo}: {props.geb.toFixed(2)}
-          <Text styleSheet={{padding: '5px',
+          <Typography sx={{padding: '5px',
                   margin: '5px',
                   borderRadius: '5px',}}
           >
@@ -40,7 +41,7 @@ export default function GEB(props){
           <MathJax>{`\\(655.1 + 9.56 \\times ${props.pesoAtual} + 1.85 \\times ${props.altura} - 4.68 \\times ${props.idade}=${props.geb.toFixed(2)}kcal/dia\\)`}</MathJax>
           </>
           }
-          </Text>
+          </Typography>
 
           </Box>
       </MathJaxContext>

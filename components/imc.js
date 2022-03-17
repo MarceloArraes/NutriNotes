@@ -1,4 +1,5 @@
-import { Box, Text} from '@skynexui/components';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,8 +9,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
 import React from 'react';
-
-
 
 
 export default function IMC(props) {
@@ -66,7 +65,7 @@ export default function IMC(props) {
   return (
       <MathJaxContext>
             <Box 
-              styleSheet={{
+              sx={{
                   gap: '16px',
                   padding: '16px',
                   margin: '16px',
@@ -74,12 +73,13 @@ export default function IMC(props) {
               }}
             >
           IMC: {props.imc.toFixed(2)}
-          <Text styleSheet={{padding: '5px',
+          Peso Ideal: {props.pesoIdeal.toFixed(2)}
+          <Typography sx={{padding: '5px',
                   margin: '5px',
                   borderRadius: '5px',}}
           >
           <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(alturaemmetros*alturaemmetros).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax>
-          </Text>
+          </Typography>
           <NutricionalStateTable/>
           
           </Box>

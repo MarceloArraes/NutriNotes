@@ -1,6 +1,8 @@
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
 import React from 'react';
-import { Box, Text } from '@skynexui/components';
+
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 
 export default function EstimativaDePeso(props){
@@ -9,7 +11,7 @@ export default function EstimativaDePeso(props){
   return (
       <MathJaxContext>
             <Box 
-              styleSheet={{
+              sx={{
                   gap: '16px',
                   padding: '16px',
                   margin: '16px',
@@ -17,7 +19,7 @@ export default function EstimativaDePeso(props){
               }}
             >
           Estimativa de Peso para {props.sexo}:
-          <Text styleSheet={{padding: '5px',
+          <Typography sx={{padding: '5px',
                   margin: '5px',
                   borderRadius: '5px',}}
           >
@@ -31,7 +33,7 @@ export default function EstimativaDePeso(props){
           <MathJax>{`\\(Peso = 0.98  \\times  CB + 1.27 \\times CP + 0.4 \\times DCSE + 0.87 \\times AJ – 62.35\\)`}</MathJax>
           <MathJax>{`\\(Peso = 0.98  \\times  {${props.CB}} + 1.27 \\times {${props.CP}} + 0.4 \\times {${props.DCSE}} + 0.87 \\times {${props.AJ}} –  62.35={${props.estimativaDePeso.toFixed(2)}}\\)`}</MathJax>
           </>}
-          </Text>
+          </Typography>
           </Box>
       </MathJaxContext>
   );

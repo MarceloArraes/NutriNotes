@@ -1,8 +1,8 @@
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
 import React from 'react';
-import { Box, Text } from '@skynexui/components';
 
-
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 
 export default function PerdaDePeso(props){
@@ -11,7 +11,7 @@ export default function PerdaDePeso(props){
   return (
       <MathJaxContext>
             <Box 
-              styleSheet={{
+              sx={{
                   gap: '16px',
                   padding: '16px',
                   margin: '16px',
@@ -19,14 +19,14 @@ export default function PerdaDePeso(props){
               }}
             >
           Perda de Peso: {props.perdaDePeso.toFixed(2)}%
-          <Text styleSheet={{padding: '5px',
+          <Typography sx={{padding: '5px',
                   margin: '5px',
                   borderRadius: '5px',}}
           >
           {/* <MathJax>{`\\(IMC=\\frac{peso}{altura^2}=\\frac{${props.peso}}{${(props.altura*props.altura).toFixed(2)}} \\approx {${(props.imc).toFixed(2)}}\\)`}</MathJax> */}
           <MathJax>{`\\(\\frac {PH-PA}{PH} \\times 100=\\frac {${props.pesohabitual}-${props.pesoAtual}}{${props.pesohabitual}} \\times 100={${props.perdaDePeso.toFixed(2)}}\\%\\)`}</MathJax>
           {/* <MathJax>{`\\(\\frac {${props.pesohabitual}-${props.pesoAtual}}{${props.pesohabitual}} \\times 100={${props.perdaDePeso}}\\%\\)`}</MathJax> */}
-          </Text>
+          </Typography>
 
           </Box>
       </MathJaxContext>
