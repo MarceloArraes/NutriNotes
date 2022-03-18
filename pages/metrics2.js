@@ -1,15 +1,13 @@
 import TextField from '@mui/material/TextField';
-
+import InputAdornment from '@mui/material/InputAdornment';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 //import Avatar from '@mui/material/Avatar';
-//import TextField from '@mui/material/TextField';
 
 
 import {Collapse} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
-//import {TextField as TextField2} from '@mui/material/TextField';
 import IMC from '../components/imc.js';
 import GEB from '../components/geb.js';
 import EstimativaDePeso from '../components/estimativaDePeso.js';
@@ -384,6 +382,7 @@ function handleformSubmit(){
                                 flexDirection: 'column',
                                 /* flexWrap: 'wrap', */
                                 flex: 1,
+                                
                             }}
                         >
                             <Box
@@ -418,6 +417,12 @@ function handleformSubmit(){
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
+                                "& label.Mui-focused": {
+                                    color: appConfig.theme.colors.neutrals[200],
+                                  },
+                                  "& .MuiFilledInput-underline:after": {
+                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
+                                  },
                                 }}/>
                             <Box
                                 sx={{
@@ -439,6 +444,9 @@ function handleformSubmit(){
                             <TextField
                                 label="Idade"
                                 disabled={isDisabled}
+                                type="number"
+                                value={idade}
+                                variant="filled"
                                 onChange={(e) => {
                                     setIdade(e.target.value); 
                                 } }
@@ -448,41 +456,60 @@ function handleformSubmit(){
                                     border: '0',
                                     resize: 'none',
                                     borderRadius: '5px',
-                                    padding: '6px 8px',
+                                    //padding: '6px 8px',
                                     backgroundColor: appConfig.theme.colors.neutrals[800],
                                     marginRight: '12px',
                                     color: appConfig.theme.colors.neutrals[200],
+                                      "& label.Mui-focused": {
+                                        color: appConfig.theme.colors.neutrals[200],
+                                      },
+                                      "& .MuiFilledInput-underline:after": {
+                                        borderBottomColor: appConfig.theme.colors.neutrals[200],
+                                      },
                                 }}
-                                type="number"
-                                value={idade}
-                                //variant="bottomBorder"
                             />
                             <TextField
                                 label="Altura em Centímetros"
                                 disabled={isDisabled}
+                                type="number"
+                                value={altura}
+                                variant="filled"
+                                
                                 onChange={(e) => {
                                     setAltura(e.target.value); 
                                 } }
                            
                                 placeholder="Altura em Centímetros"
                                 sx={{
+                                    hiddenLabel: true,
                                     width: '100%',
                                     border: '0',
                                     resize: 'none',
                                     borderRadius: '5px',
-                                    padding: '6px 8px',
+                                    //padding: '6px 8px',
                                     backgroundColor: appConfig.theme.colors.neutrals[800],
                                     marginRight: '12px',
-                                    color: appConfig.theme.colors.neutrals[200],
+                                    color: appConfig.theme.colors.primary[200],
+                                    //label: { color: 'red' }
+                                   
+                                    "& label.Mui-focused": {
+                                        color: appConfig.theme.colors.neutrals[200],
+                                      },
+                                      "& .MuiFilledInput-underline:after": {
+                                        borderBottomColor: appConfig.theme.colors.neutrals[200],
+                                      },
                                 }}
-                                type="number"
-                                value={altura}
-                                //variant="bottomBorder"
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
+                                  }}
                             />
                             
                             <TextField
                                 label="Peso Atual (Kg)"
                                 disabled={isDisabled}
+                                variant="filled"
+                                type="number"
+                                value={pesoAtual}
                                 onChange={(e) => {  
                                     setPesoAtual(e.target.value); 
                                 }}
@@ -492,19 +519,30 @@ function handleformSubmit(){
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                padding: '6px 8px',
+                                //padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
+                                "& label.Mui-focused": {
+                                    color: appConfig.theme.colors.neutrals[200],
+                                  },
+                                  "& .MuiFilledInput-underline:after": {
+                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
+                                  },
                                 }}
-                                type="number"
-                                value={pesoAtual}
-                                //variant="bottomBorder"
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="start">kg</InputAdornment>,
+                                  }}
+                                
+                                
                             />
                             
                             <TextField
                                 label="Peso Habitual(Anterior) (Kg)"
                                 disabled={isDisabled}
+                                variant="filled"
+                                type="number"
+                                value={pesoHabitual}
                                 onChange={(e) => {  
                                     setPesoHabitual(e.target.value); 
                                 }}
@@ -514,18 +552,27 @@ function handleformSubmit(){
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                padding: '6px 8px',
+                                //padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
+                                "& label.Mui-focused": {
+                                    color: appConfig.theme.colors.neutrals[200],
+                                  },
+                                  "& .MuiFilledInput-underline:after": {
+                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
+                                  },
                                 }}
-                                type="number"
-                                value={pesoHabitual}
-                                //variant="bottomBorder"
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="start">kg</InputAdornment>,
+                                  }}
                             />
                             <TextField
                                 label="CB - Circunferência do Braço"
                                 disabled={isDisabled}
+                                type="number"
+                                value={CB}
+                                variant="filled"
                                 onChange={(e) => {  
                                     setCB(e.target.value); 
                                 }}
@@ -535,18 +582,28 @@ function handleformSubmit(){
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                padding: '6px 8px',
+                                //padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
+                                "& label.Mui-focused": {
+                                    color: appConfig.theme.colors.neutrals[200],
+                                  },
+                                  "& .MuiFilledInput-underline:after": {
+                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
+                                  },
                                 }}
-                                type="number"
-                                value={CB}
-                                //variant="bottomBorder"
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
+                                  }}
+
                             />
                             <TextField
                                 label="CP - Circunferência da Panturrilha"
                                 disabled={isDisabled}
+                                type="number"
+                                value={CP}
+                                variant="filled"
                                 onChange={(e) => {  
                                     setCP(e.target.value); 
                                 }}
@@ -556,18 +613,27 @@ function handleformSubmit(){
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                padding: '6px 8px',
+                                //padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
+                                "& label.Mui-focused": {
+                                    color: appConfig.theme.colors.neutrals[200],
+                                  },
+                                  "& .MuiFilledInput-underline:after": {
+                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
+                                  },
                                 }}
-                                type="number"
-                                value={CP}
-                                //variant="bottomBorder"
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
+                                  }}
                             />
                             <TextField
                                 label="DCSE - Dobra Cutânea Sub Escapular"
                                 disabled={isDisabled}
+                                type="number"
+                                value={DCSE}
+                                variant="filled"
                                 onChange={(e) => {  
                                     setDCSE(e.target.value); 
                                 }}
@@ -577,18 +643,27 @@ function handleformSubmit(){
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                padding: '6px 8px',
+                                //padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
+                                "& label.Mui-focused": {
+                                    color: appConfig.theme.colors.neutrals[200],
+                                  },
+                                  "& .MuiFilledInput-underline:after": {
+                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
+                                  },
                                 }}
-                                type="number"
-                                value={DCSE}
-                                //variant="bottomBorder"
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
+                                  }}
                             />
                             <TextField
                                 label="AJ - Altura do Joelho"
                                 disabled={isDisabled}
+                                type="number"
+                                value={AJ}
+                                variant="filled"
                                 onChange={(e) => {  
                                     setAJ(e.target.value); 
                                 }}
@@ -598,18 +673,27 @@ function handleformSubmit(){
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                padding: '6px 8px',
+                                //padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
+                                "& label.Mui-focused": {
+                                    color: appConfig.theme.colors.neutrals[200],
+                                  },
+                                  "& .MuiFilledInput-underline:after": {
+                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
+                                  },
                                 }}
-                                type="number"
-                                value={AJ}
-                                //variant="bottomBorder"
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
+                                  }}
                             />
                             <TextField
                                 label="CC - Circunferência da Cintura"
                                 disabled={isDisabled}
+                                type="number"
+                                value={cC}
+                                variant="filled"
                                 onChange={(e) => {  
                                     setcC(e.target.value); 
                                 }}
@@ -618,35 +702,49 @@ function handleformSubmit(){
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                padding: '6px 8px',
+                                //padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
+                                "& label.Mui-focused": {
+                                    color: appConfig.theme.colors.neutrals[200],
+                                  },
+                                  "& .MuiFilledInput-underline:after": {
+                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
+                                  },
                                 }}
-                                type="number"
-                                value={cC}
-                                //variant="bottomBorder"
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
+                                  }}
                             />
                             <TextField
                                 label="CQ - Circunferência de Quadril"
                                 disabled={isDisabled}
+                                type="number"
+                                value={cQ}
+                                variant="filled"
                                 onChange={(e) => {  
                                     setcQ(e.target.value); 
                                 }}
-                      
                                 placeholder="Circunferência de Quadril"
                                 sx={{width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                padding: '6px 8px',
+                                //padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
+                                "& label.Mui-focused": {
+                                    color: appConfig.theme.colors.neutrals[200],
+                                  },
+                                  "& .MuiFilledInput-underline:after": {
+                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
+                                  },
                                 }}
-                                type="number"
-                                value={cQ}
-                                //variant="bottomBorder"
+                                InputProps={{
+                                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
+                                  }}
                             />
                             <Typography sx={{
                                     width: '100%',
@@ -676,6 +774,10 @@ function handleformSubmit(){
                             <TextField
                                 label="FA - Fator de Atividade"
                                 disabled={isDisabled}
+                                //disabled
+                                type="number"
+                                value={Fa}
+                                variant="filled"
                                 onChange={(e) => {
                                     setFa(Fa); 
                                 }}
@@ -684,20 +786,24 @@ function handleformSubmit(){
                                     setInfoButton(true);
                                 }
                                 }
-                                placeholder="Fator de Atividade (Ver Abaixo)PLACEHOLDER"
+                                placeholder="Responda a idade e o nível de atividade física"
                                 sx={{
                                 width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                padding: '6px 8px',
+                                //padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
+                                "& label.Mui-focused": {
+                                    color: appConfig.theme.colors.neutrals[200],
+                                  },
+                                  "& .MuiFilledInput-underline:after": {
+                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
+                                  },
                                 }}
-                                type="number"
-                                value={Fa}
-                                //variant="bottomBorder"
+
                             />
                             {/* <Collapse in={infoButton}> */}
                             <Button
@@ -737,12 +843,6 @@ function handleformSubmit(){
                                   mainColorStrong: appConfig.theme.colors.primary[600],
                                 },
                                 }}
-/*                             buttonColors={{
-                                contrastColor: appConfig.theme.colors.neutrals["000"],
-                                mainColor: appConfig.theme.colors.primary[500],
-                                mainColorLight: appConfig.theme.colors.primary[400],
-                                mainColorStrong: appConfig.theme.colors.primary[600],
-                            }} */
                             >Tabela de Referencia.</Button>
                             
                             <Popper  disablePortal={false} open={openPopper} anchorEl={anchorEl} placement={'bottom-start'}
@@ -800,6 +900,7 @@ function handleformSubmit(){
                                     padding: '6px 8px',
                                     marginRight: '12px',
                                     color: appConfig.theme.colors.neutrals[200],
+                                    
                                 }}
                             >
                             <DropdownFi fatorInjuria={fatorInjuria} setFatorInjuria={setFatorInjuria} condicaoClinica={condicaoClinica} setCondicaoClinica={setCondicaoClinica} 
@@ -811,10 +912,13 @@ function handleformSubmit(){
                             <TextField
                                 label="Fator de Injúria (padrão = 1)"
                                 disabled={isDisabled}
+                                type="number"
+                                value={fatorInjuria}
+                                variant="filled"
                                 onChange={(e) => {  
                                     setFatorInjuria(fatorInjuria); 
                                 }}
-                                placeholder="Fator de Injúria (padrão = 1)"
+                                placeholder="Responda a condição clínica e a gravidade da injúria"
                                 sx={{width: '100%',
                                 border: '0',
                                 resize: 'none',
@@ -823,14 +927,16 @@ function handleformSubmit(){
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
+                                "& label.Mui-focused": {
+                                    color: appConfig.theme.colors.neutrals[200],
+                                  },
+                                  "& .MuiFilledInput-underline:after": {
+                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
+                                  },
                                 }}
-                                type="number"
-                                value={fatorInjuria}
-                                //variant="bottomBorder"
                             />
 
 {/* A partir daqui são botões e depois os quadros(outputs) */}
-
 
                             {!isDisabled ?
                             <Button
