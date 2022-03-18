@@ -334,7 +334,7 @@ function handleformSubmit(){
       };
 
     return (
-        <Box
+/*         <Box
             sx={{
                 display: 'flex', 
                 alignItems: 'center', 
@@ -345,7 +345,7 @@ function handleformSubmit(){
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 color: appConfig.theme.colors.neutrals['000']
             }}
-        >
+        > */
             <Box
                 sx={{
                     display: 'flex',
@@ -354,9 +354,9 @@ function handleformSubmit(){
                     boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
                     borderRadius: '5px',
                     backgroundColor: appConfig.theme.colors.neutrals[700],
-                    maxWidth: '95%',
-                    maxHeight: '100%',
-                    padding: '32px',
+                    maxWidth: '100%',
+                    //maxHeight: '100%',
+
                 }}
             >
                 <Header />
@@ -1175,7 +1175,7 @@ function handleformSubmit(){
                     </Box>
                 </Box>
             </Box>
-        </Box>
+        
     )
 }
 
