@@ -1,4 +1,3 @@
-//import {  TextField} from '@skynexui/components';
 import TextField from '@mui/material/TextField';
 
 import Button from '@mui/material/Button';
@@ -434,7 +433,7 @@ function handleformSubmit(){
                                 }}
                                 >
                             {/* <TextField2 id="filled-basic" label="Filled" variant="filled" /> */}
-                            <RadioSexo  isDisabled={isDisabled} setSexo={setSexo} />
+                            {/* <RadioSexo  isDisabled={isDisabled} setSexo={setSexo} /> */}
                             </Box>
                             
                             <TextField

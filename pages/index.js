@@ -1,5 +1,4 @@
 import appConfig from '../config.json';
-//import { Button as Button2, Text, TextField as TextField2 } from '@skynexui/components';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
