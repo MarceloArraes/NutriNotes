@@ -1,13 +1,7 @@
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-//import Avatar from '@mui/material/Avatar';
-
-
+import { Box, Text, TextField, Image, Button, Icon } from '@skynexui/components';
 import {Collapse} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
+//import {TextField as TextField2} from '@mui/material/TextField';
 import IMC from '../components/imc.js';
 import GEB from '../components/geb.js';
 import EstimativaDePeso from '../components/estimativaDePeso.js';
@@ -334,8 +328,8 @@ function handleformSubmit(){
       };
 
     return (
-/*         <Box
-            sx={{
+        <Box
+            styleSheet={{
                 display: 'flex', 
                 alignItems: 'center', 
                 justifyContent: 'center',
@@ -345,23 +339,23 @@ function handleformSubmit(){
                 backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
                 color: appConfig.theme.colors.neutrals['000']
             }}
-        > */
+        >
             <Box
-                sx={{
+                styleSheet={{
                     display: 'flex',
                     flexDirection: 'column',
                     flex: 1,
                     boxShadow: '0 2px 10px 0 rgb(0 0 0 / 20%)',
                     borderRadius: '5px',
                     backgroundColor: appConfig.theme.colors.neutrals[700],
-                    maxWidth: '100%',
-                    //maxHeight: '100%',
-
+                    maxWidth: '95%',
+                    maxHeight: '100%',
+                    padding: '32px',
                 }}
             >
                 <Header />
                 <Box
-                    sx={{
+                    styleSheet={{
                         position: 'relative',
                         display: 'flex',
                         backgroundColor: appConfig.theme.colors.neutrals[600],
@@ -376,17 +370,16 @@ function handleformSubmit(){
                                 e.preventDefault();
                                 handleformSubmit();
                             }}
-                            sx={{
+                            styleSheet={{
                                 display: 'flex',
                                 alignItems: 'left',
                                 flexDirection: 'column',
                                 /* flexWrap: 'wrap', */
                                 flex: 1,
-                                
                             }}
                         >
                             <Box
-                                sx={{
+                                styleSheet={{
                                     backgroundColor: appConfig.theme.colors.primary[900],
                                     width: '100%',
                                     border: '5px',
@@ -408,7 +401,7 @@ function handleformSubmit(){
                                 onChange={(e) => {
                                     setNome(e.target.value); 
                                 } }
-                                sx={{
+                                styleSheet={{
                                 width: '100%',
                                 border: '0',
                                 resize: 'none',
@@ -417,15 +410,9 @@ function handleformSubmit(){
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                                "& label.Mui-focused": {
-                                    color: appConfig.theme.colors.neutrals[200],
-                                  },
-                                  "& .MuiFilledInput-underline:after": {
-                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
-                                  },
                                 }}/>
                             <Box
-                                sx={{
+                                styleSheet={{
                                     backgroundColor: appConfig.theme.colors.neutrals[600],
                                     width: '100%',
                                     border: '5px',
@@ -438,315 +425,222 @@ function handleformSubmit(){
                                 }}
                                 >
                             {/* <TextField2 id="filled-basic" label="Filled" variant="filled" /> */}
-                            {/* <RadioSexo  isDisabled={isDisabled} setSexo={setSexo} /> */}
+                            <RadioSexo  isDisabled={isDisabled} setSexo={setSexo} />
                             </Box>
                             
                             <TextField
                                 label="Idade"
                                 disabled={isDisabled}
-                                type="number"
-                                value={idade}
-                                variant="filled"
                                 onChange={(e) => {
                                     setIdade(e.target.value); 
                                 } }
-                                placeholder="Idade"
-                                sx={{
+                                placeholder="Placeholder text..."
+                                styleSheet={{
                                     width: '100%',
                                     border: '0',
                                     resize: 'none',
                                     borderRadius: '5px',
-                                    //padding: '6px 8px',
+                                    padding: '6px 8px',
                                     backgroundColor: appConfig.theme.colors.neutrals[800],
                                     marginRight: '12px',
                                     color: appConfig.theme.colors.neutrals[200],
-                                      "& label.Mui-focused": {
-                                        color: appConfig.theme.colors.neutrals[200],
-                                      },
-                                      "& .MuiFilledInput-underline:after": {
-                                        borderBottomColor: appConfig.theme.colors.neutrals[200],
-                                      },
                                 }}
+                                type="number"
+                                value={idade}
+                                variant="bottomBorder"
                             />
                             <TextField
                                 label="Altura em Centímetros"
                                 disabled={isDisabled}
-                                type="number"
-                                value={altura}
-                                variant="filled"
-                                
                                 onChange={(e) => {
                                     setAltura(e.target.value); 
                                 } }
                            
-                                placeholder="Altura em Centímetros"
-                                sx={{
-                                    hiddenLabel: true,
+                                placeholder="Placeholder text..."
+                                styleSheet={{
                                     width: '100%',
                                     border: '0',
                                     resize: 'none',
                                     borderRadius: '5px',
-                                    //padding: '6px 8px',
+                                    padding: '6px 8px',
                                     backgroundColor: appConfig.theme.colors.neutrals[800],
                                     marginRight: '12px',
-                                    color: appConfig.theme.colors.primary[200],
-                                    //label: { color: 'red' }
-                                   
-                                    "& label.Mui-focused": {
-                                        color: appConfig.theme.colors.neutrals[200],
-                                      },
-                                      "& .MuiFilledInput-underline:after": {
-                                        borderBottomColor: appConfig.theme.colors.neutrals[200],
-                                      },
+                                    color: appConfig.theme.colors.neutrals[200],
                                 }}
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
-                                  }}
+                                type="number"
+                                value={altura}
+                                variant="bottomBorder"
                             />
                             
                             <TextField
                                 label="Peso Atual (Kg)"
                                 disabled={isDisabled}
-                                variant="filled"
-                                type="number"
-                                value={pesoAtual}
                                 onChange={(e) => {  
                                     setPesoAtual(e.target.value); 
                                 }}
                                
-                                placeholder="Peso Atual em Kg"
-                                sx={{width: '100%',
+                                placeholder="PESO ATUAL PLACEHOLDER"
+                                styleSheet={{width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                //padding: '6px 8px',
+                                padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                                "& label.Mui-focused": {
-                                    color: appConfig.theme.colors.neutrals[200],
-                                  },
-                                  "& .MuiFilledInput-underline:after": {
-                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
-                                  },
                                 }}
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="start">kg</InputAdornment>,
-                                  }}
-                                
-                                
+                                type="number"
+                                value={pesoAtual}
+                                variant="bottomBorder"
                             />
                             
                             <TextField
                                 label="Peso Habitual(Anterior) (Kg)"
                                 disabled={isDisabled}
-                                variant="filled"
-                                type="number"
-                                value={pesoHabitual}
                                 onChange={(e) => {  
                                     setPesoHabitual(e.target.value); 
                                 }}
                            
-                                placeholder="Peso Habitual em Kg"
-                                sx={{width: '100%',
+                                placeholder="PESO Habitual PLACEHOLDER"
+                                styleSheet={{width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                //padding: '6px 8px',
+                                padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                                "& label.Mui-focused": {
-                                    color: appConfig.theme.colors.neutrals[200],
-                                  },
-                                  "& .MuiFilledInput-underline:after": {
-                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
-                                  },
                                 }}
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="start">kg</InputAdornment>,
-                                  }}
+                                type="number"
+                                value={pesoHabitual}
+                                variant="bottomBorder"
                             />
                             <TextField
                                 label="CB - Circunferência do Braço"
                                 disabled={isDisabled}
-                                type="number"
-                                value={CB}
-                                variant="filled"
                                 onChange={(e) => {  
                                     setCB(e.target.value); 
                                 }}
                         
-                                placeholder="Circunferência do Braço"
-                                sx={{width: '100%',
+                                placeholder="PESO Habitual PLACEHOLDER"
+                                styleSheet={{width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                //padding: '6px 8px',
+                                padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                                "& label.Mui-focused": {
-                                    color: appConfig.theme.colors.neutrals[200],
-                                  },
-                                  "& .MuiFilledInput-underline:after": {
-                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
-                                  },
                                 }}
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
-                                  }}
-
+                                type="number"
+                                value={CB}
+                                variant="bottomBorder"
                             />
                             <TextField
                                 label="CP - Circunferência da Panturrilha"
                                 disabled={isDisabled}
-                                type="number"
-                                value={CP}
-                                variant="filled"
                                 onChange={(e) => {  
                                     setCP(e.target.value); 
                                 }}
                         
-                                placeholder="Circunferência da Panturrilha"
-                                sx={{width: '100%',
+                                placeholder="PESO Habitual PLACEHOLDER"
+                                styleSheet={{width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                //padding: '6px 8px',
+                                padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                                "& label.Mui-focused": {
-                                    color: appConfig.theme.colors.neutrals[200],
-                                  },
-                                  "& .MuiFilledInput-underline:after": {
-                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
-                                  },
                                 }}
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
-                                  }}
+                                type="number"
+                                value={CP}
+                                variant="bottomBorder"
                             />
                             <TextField
                                 label="DCSE - Dobra Cutânea Sub Escapular"
                                 disabled={isDisabled}
-                                type="number"
-                                value={DCSE}
-                                variant="filled"
                                 onChange={(e) => {  
                                     setDCSE(e.target.value); 
                                 }}
                         
-                                placeholder="Dobra Cutânea Sub Escapular"
-                                sx={{width: '100%',
+                                placeholder="PESO Habitual PLACEHOLDER"
+                                styleSheet={{width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                //padding: '6px 8px',
+                                padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                                "& label.Mui-focused": {
-                                    color: appConfig.theme.colors.neutrals[200],
-                                  },
-                                  "& .MuiFilledInput-underline:after": {
-                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
-                                  },
                                 }}
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
-                                  }}
+                                type="number"
+                                value={DCSE}
+                                variant="bottomBorder"
                             />
                             <TextField
                                 label="AJ - Altura do Joelho"
                                 disabled={isDisabled}
-                                type="number"
-                                value={AJ}
-                                variant="filled"
                                 onChange={(e) => {  
                                     setAJ(e.target.value); 
                                 }}
                       
-                                placeholder="Altura do Joelho"
-                                sx={{width: '100%',
+                                placeholder="PESO Habitual PLACEHOLDER"
+                                styleSheet={{width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                //padding: '6px 8px',
+                                padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                                "& label.Mui-focused": {
-                                    color: appConfig.theme.colors.neutrals[200],
-                                  },
-                                  "& .MuiFilledInput-underline:after": {
-                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
-                                  },
                                 }}
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
-                                  }}
+                                type="number"
+                                value={AJ}
+                                variant="bottomBorder"
                             />
                             <TextField
                                 label="CC - Circunferência da Cintura"
                                 disabled={isDisabled}
-                                type="number"
-                                value={cC}
-                                variant="filled"
                                 onChange={(e) => {  
                                     setcC(e.target.value); 
                                 }}
                                 placeholder="Circunferência da Cintura"
-                                sx={{width: '100%',
+                                styleSheet={{width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                //padding: '6px 8px',
+                                padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                                "& label.Mui-focused": {
-                                    color: appConfig.theme.colors.neutrals[200],
-                                  },
-                                  "& .MuiFilledInput-underline:after": {
-                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
-                                  },
                                 }}
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
-                                  }}
+                                type="number"
+                                value={cC}
+                                variant="bottomBorder"
                             />
                             <TextField
                                 label="CQ - Circunferência de Quadril"
                                 disabled={isDisabled}
-                                type="number"
-                                value={cQ}
-                                variant="filled"
                                 onChange={(e) => {  
                                     setcQ(e.target.value); 
                                 }}
+                      
                                 placeholder="Circunferência de Quadril"
-                                sx={{width: '100%',
+                                styleSheet={{width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                //padding: '6px 8px',
+                                padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                                "& label.Mui-focused": {
-                                    color: appConfig.theme.colors.neutrals[200],
-                                  },
-                                  "& .MuiFilledInput-underline:after": {
-                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
-                                  },
                                 }}
-                                InputProps={{
-                                    endAdornment: <InputAdornment position="start">cm</InputAdornment>,
-                                  }}
+                                type="number"
+                                value={cQ}
+                                variant="bottomBorder"
                             />
-                            <Typography sx={{
+                            <Text styleSheet={{
                                     width: '100%',
                                     border: '0',
                                     resize: 'none',
@@ -755,9 +649,9 @@ function handleformSubmit(){
                                     marginRight: '12px',
                                     color: appConfig.theme.colors.neutrals[200],
                                 }}
-                            >Nível de Atividade física: </Typography>
+                            >Nível de Atividade física: </Text>
                             <Box
-                                sx={{
+                                styleSheet={{
                                     backgroundColor: appConfig.theme.colors.neutrals[600],
                                     width: '100%',
                                     border: '5px',
@@ -774,10 +668,6 @@ function handleformSubmit(){
                             <TextField
                                 label="FA - Fator de Atividade"
                                 disabled={isDisabled}
-                                //disabled
-                                type="number"
-                                value={Fa}
-                                variant="filled"
                                 onChange={(e) => {
                                     setFa(Fa); 
                                 }}
@@ -786,28 +676,23 @@ function handleformSubmit(){
                                     setInfoButton(true);
                                 }
                                 }
-                                placeholder="Responda a idade e o nível de atividade física"
-                                sx={{
+                                placeholder="Fator de Atividade (Ver Abaixo)PLACEHOLDER"
+                                styleSheet={{
                                 width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
-                                //padding: '6px 8px',
+                                padding: '6px 8px',
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                                "& label.Mui-focused": {
-                                    color: appConfig.theme.colors.neutrals[200],
-                                  },
-                                  "& .MuiFilledInput-underline:after": {
-                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
-                                  },
                                 }}
-
+                                type="number"
+                                value={Fa}
+                                variant="bottomBorder"
                             />
                             {/* <Collapse in={infoButton}> */}
                             <Button
-                            variant="contained"
                             type='button'
                             label='Tabela de Referencia.'
                             /* fullWidth */
@@ -819,7 +704,7 @@ function handleformSubmit(){
                                 }else setOpenPopper(true);
                                 
                             }}
-                            sx={{
+                            styleSheet={{
                                 width: '50%',
                                 border: '0',
                                 resize: 'none',
@@ -827,23 +712,14 @@ function handleformSubmit(){
                                 padding: '6px 8px',
                                 /* marginRight: '12px', */
                                 marginBottom: '9px',
+                                }}
+                            buttonColors={{
                                 contrastColor: appConfig.theme.colors.neutrals["000"],
                                 mainColor: appConfig.theme.colors.primary[500],
-                                color: appConfig.theme.colors.neutrals[100],
-                                backgroundColor: appConfig.theme.colors.primary[500],
                                 mainColorLight: appConfig.theme.colors.primary[400],
                                 mainColorStrong: appConfig.theme.colors.primary[600],
-                                mainColorHighlight: appConfig.theme.colors.primary[500],
-                                ":hover": {
-                                  contrastColor: appConfig.theme.colors.neutrals["000"],
-                                  mainColor: appConfig.theme.colors.primary[500],
-                                  color: appConfig.theme.colors.neutrals[100],
-                                  backgroundColor: appConfig.theme.colors.primary[600],
-                                  mainColorLight: appConfig.theme.colors.primary[400],
-                                  mainColorStrong: appConfig.theme.colors.primary[600],
-                                },
-                                }}
-                            >Tabela de Referencia.</Button>
+                            }}
+                            />
                             
                             <Popper  disablePortal={false} open={openPopper} anchorEl={anchorEl} placement={'bottom-start'}
                             modifiers={[
@@ -870,7 +746,7 @@ function handleformSubmit(){
                                 
                               ]}
                             >
-                            <Box sx={{
+                            <Box styleSheet={{
                                     backgroundColor: appConfig.theme.colors.neutrals[600],
                                     width: '100%',
                                     border: '5px',
@@ -882,15 +758,15 @@ function handleformSubmit(){
                                     color: appConfig.theme.colors.neutrals[200],
                                 }}
                             ><ClickAwayListener onClickAway={handleClickAway}>
-                                <Box >
+                                    <Text>
                                         <ClassificationFa  />
-                                </Box>
+                                    </Text>
                             </ClickAwayListener>
                             </Box>
                             </Popper>
                             {/* </Collapse> */}
                             <Box
-                                sx={{
+                                styleSheet={{
                                     backgroundColor: appConfig.theme.colors.neutrals[600],
                                     width: '100%',
                                     border: '5px',
@@ -900,7 +776,6 @@ function handleformSubmit(){
                                     padding: '6px 8px',
                                     marginRight: '12px',
                                     color: appConfig.theme.colors.neutrals[200],
-                                    
                                 }}
                             >
                             <DropdownFi fatorInjuria={fatorInjuria} setFatorInjuria={setFatorInjuria} condicaoClinica={condicaoClinica} setCondicaoClinica={setCondicaoClinica} 
@@ -910,16 +785,13 @@ function handleformSubmit(){
                             </Box>
                             
                             <TextField
-                                label="Fator de Injúria (padrão = 1)"
+                                label="fatorInjuria - Fator de Injúria (padrão = 1)"
                                 disabled={isDisabled}
-                                type="number"
-                                value={fatorInjuria}
-                                variant="filled"
                                 onChange={(e) => {  
                                     setFatorInjuria(fatorInjuria); 
                                 }}
-                                placeholder="Responda a condição clínica e a gravidade da injúria"
-                                sx={{width: '100%',
+                                placeholder="fatorInjuria - Fator de Injúria PLACEHOLDER"
+                                styleSheet={{width: '100%',
                                 border: '0',
                                 resize: 'none',
                                 borderRadius: '5px',
@@ -927,20 +799,17 @@ function handleformSubmit(){
                                 backgroundColor: appConfig.theme.colors.neutrals[800],
                                 marginRight: '12px',
                                 color: appConfig.theme.colors.neutrals[200],
-                                "& label.Mui-focused": {
-                                    color: appConfig.theme.colors.neutrals[200],
-                                  },
-                                  "& .MuiFilledInput-underline:after": {
-                                    borderBottomColor: appConfig.theme.colors.neutrals[200],
-                                  },
                                 }}
+                                type="number"
+                                value={fatorInjuria}
+                                variant="bottomBorder"
                             />
 
 {/* A partir daqui são botões e depois os quadros(outputs) */}
 
+
                             {!isDisabled ?
                             <Button
-                            variant="contained"
                             type='submit'
                             label='Enviar'
                             onKeyPress={(e) => {
@@ -950,38 +819,22 @@ function handleformSubmit(){
                                 }
                             }}
                             fullWidth
-                            sx={{
+                            styleSheet={{
                                 width: '100%',
                                     border: '0',
                                     resize: 'none',
                                     borderRadius: '5px',
                                     padding: '6px 8px',
                                     marginRight: '12px',
-                                    contrastColor: appConfig.theme.colors.neutrals["000"],
-                                    mainColor: appConfig.theme.colors.primary[500],
-                                    color: appConfig.theme.colors.neutrals[100],
-                                    backgroundColor: appConfig.theme.colors.primary[500],
-                                    mainColorLight: appConfig.theme.colors.primary[400],
-                                    mainColorStrong: appConfig.theme.colors.primary[600],
-                                    mainColorHighlight: appConfig.theme.colors.primary[500],
-                                    ":hover": {
-                                      contrastColor: appConfig.theme.colors.neutrals["000"],
-                                      mainColor: appConfig.theme.colors.primary[500],
-                                      color: appConfig.theme.colors.neutrals[100],
-                                      backgroundColor: appConfig.theme.colors.primary[600],
-                                      mainColorLight: appConfig.theme.colors.primary[400],
-                                      mainColorStrong: appConfig.theme.colors.primary[600],
-                                    },
                                 }}
-/*                             buttonColors={{
+                            buttonColors={{
                                 contrastColor: appConfig.theme.colors.neutrals["000"],
                                 mainColor: appConfig.theme.colors.primary[500],
                                 mainColorLight: appConfig.theme.colors.primary[400],
                                 mainColorStrong: appConfig.theme.colors.primary[600],
-                            }} */
-                            >Enviar</Button>:
+                            }}
+                            />:
                             <><Button
-                                variant="contained"
                                 type='button'
                                 label='Resetar'
                                 fullWidth
@@ -1019,35 +872,25 @@ function handleformSubmit(){
                                     setSexo('mulher');
                                     firstUpdate.current = true;
                                 } }
-                                sx={{
+                                styleSheet={{
                                     width: '100%',
                                     border: '0',
                                     resize: 'none',
                                     borderRadius: '5px',
                                     padding: '6px 8px',
                                     marginRight: '12px',
+                                }}
+                                buttonColors={{
                                     contrastColor: appConfig.theme.colors.neutrals["000"],
                                     mainColor: appConfig.theme.colors.primary[500],
-                                    color: appConfig.theme.colors.neutrals[100],
-                                    backgroundColor: appConfig.theme.colors.primary[500],
                                     mainColorLight: appConfig.theme.colors.primary[400],
                                     mainColorStrong: appConfig.theme.colors.primary[600],
-                                    mainColorHighlight: appConfig.theme.colors.primary[500],
-                                    ":hover": {
-                                      contrastColor: appConfig.theme.colors.neutrals["000"],
-                                      mainColor: appConfig.theme.colors.primary[500],
-                                      color: appConfig.theme.colors.neutrals[100],
-                                      backgroundColor: appConfig.theme.colors.primary[600],
-                                      mainColorLight: appConfig.theme.colors.primary[400],
-                                      mainColorStrong: appConfig.theme.colors.primary[600],
-                                    },
-                                }}
-                                  >Resetar</Button>
+                                }} />
                                 </>}
 
                                 {isDisabled ?<>
                                 <Box
-                                    sx={{
+                                    styleSheet={{
                                         display: 'flex',
                                         flexDirection: 'column',
                                         width: '100%',
@@ -1075,7 +918,7 @@ function handleformSubmit(){
                         {showImc ? 
                         <Box
                             in={(imc!=='').toString()}
-                            sx={{
+                            styleSheet={{
                             display: 'flex',
                             flexDirection: 'column',
                             width: '100%',
@@ -1092,16 +935,16 @@ function handleformSubmit(){
                             minHeight: '240px', 
                             }}
                         >
-                                <Box>
+                                <Text>
                                     {/* send props to APP */}
                                     <IMC pesoIdeal={pesoIdeal} peso={pesoAtual} altura={altura} imc={imc} />
-                                </Box>
+                                </Text>
                         </Box>
                         :null}
 
                         {showPerdaDePeso?
                         <Box
-                        sx={{
+                        styleSheet={{
                             display: 'flex',
                             flexDirection: 'column',
                             width: '100%',
@@ -1118,16 +961,16 @@ function handleformSubmit(){
                             minHeight: '240px', 
                         }}
                     >
-                            <Box>
+                            <Text>
                                 {/* send props to APP */}
                                 <PerdaDePeso pesoAtual={pesoAtual} pesohabitual={pesoHabitual} perdaDePeso={perdaDePeso} />
-                            </Box>
+                            </Text>
                     </Box>
                     :null}
                     
                     {showEstimativa? 
                     <Box
-                    sx={{
+                    styleSheet={{
                         display: 'flex',
                         flexDirection: 'column',
                         width: '100%',
@@ -1143,15 +986,15 @@ function handleformSubmit(){
                         flex: 1,
                         minHeight: '240px', 
                     }}
-                >   <Box>
+                >   <Text>
                     <EstimativaDePeso sexo={sexo} CB={CB} CP={CP} DCSE={DCSE} AJ={AJ} estimativaDePeso={estimativaDePeso} />
-                    </Box>
+                    </Text>
                 </Box>
                     :null}
 
                     {showGeb? 
                     <Box
-                    sx={{
+                    styleSheet={{
                         display: 'flex',
                         flexDirection: 'column',
                         width: '100%',
@@ -1167,30 +1010,31 @@ function handleformSubmit(){
                         flex: 1,
                         minHeight: '240px', 
                     }}
-                >   <Box>
+                >   <Text>
                     <GEB sexo={sexo} pesoAtual={pesoAtual} altura={altura} idade={idade} geb={geb} /> 
-                    </Box>
+                    </Text>
                     </Box>
                     :null} 
                     </Box>
                 </Box>
             </Box>
-        
+        </Box>
     )
 }
 
 function Header() {
     return (
         <>
-            <Box sx={{ width: '100%', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
-                <Typography variant='heading5'>
+            <Box styleSheet={{ width: '100%', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
+                <Text variant='heading5'>
                     Metrics
-                </Typography>
+                </Text>
                 <Button
                     variant='tertiary'
+                    colorVariant='neutral'
                     label='Logout'
                     href="/"
-                >Logout</Button>
+                />
             </Box>
         </>
     )

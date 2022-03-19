@@ -4,6 +4,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import React,{useState, useEffect} from 'react';
+import appConfig from '../config.json';
 
 /* function createData(condicaoclinica, leve, grave) {
   return { condicaoclinica, leve, grave };
@@ -73,9 +74,13 @@ export default function  DropdownFi(props) {
   };
 
   return (
-    <Box sx={{ minWidth: 120 }}>
+    <Box sx={{ 
+      minWidth: 120 
+    }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Condição Clínica</InputLabel>
+        <InputLabel id="demo-simple-select-label" sx={{
+          fontWeight: 'bold',
+        }}>Condição Clínica</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
@@ -92,7 +97,9 @@ export default function  DropdownFi(props) {
       </FormControl>
 
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Gravidade</InputLabel>
+        <InputLabel id="demo-simple-select-label" sx={{
+          fontWeight: 'bold',
+        }}>Gravidade</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
