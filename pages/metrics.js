@@ -326,18 +326,6 @@ function handleformSubmit(){
     }
 
     return (
-/*         <Box
-            sx={{
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center',
-                height: 'auto',
-                //backgroundColor: appConfig.theme.colors.primary[500],
-                backgroundImage: `url(/background.png)`,
-                backgroundRepeat: 'no-repeat', backgroundSize: 'cover', backgroundBlendMode: 'multiply',
-                color: appConfig.theme.colors.neutrals['000']
-            }}
-        > */
             <Box
                 sx={{
                     display: 'flex',
@@ -433,7 +421,7 @@ function handleformSubmit(){
                                 }}
                                 >
                             {/* <TextField2 id="filled-basic" label="Filled" variant="filled" /> */}
-                            {/* <RadioSexo  isDisabled={isDisabled} setSexo={setSexo} /> */}
+                            <RadioSexo  isDisabled={isDisabled} setSexo={setSexo} />
                             </Box>
                             
                             <TextField
@@ -866,6 +854,7 @@ function handleformSubmit(){
                                     borderRadius: '5px',
                                     padding: '6px 8px',
                                     marginRight: '12px',
+                                    marginTop: '10px',
                                     contrastColor: appConfig.theme.colors.neutrals["000"],
                                     mainColor: appConfig.theme.colors.primary[500],
                                     color: appConfig.theme.colors.neutrals[100],
@@ -882,12 +871,7 @@ function handleformSubmit(){
                                       mainColorStrong: appConfig.theme.colors.primary[600],
                                     },
                                 }}
-/*                             buttonColors={{
-                                contrastColor: appConfig.theme.colors.neutrals["000"],
-                                mainColor: appConfig.theme.colors.primary[500],
-                                mainColorLight: appConfig.theme.colors.primary[400],
-                                mainColorStrong: appConfig.theme.colors.primary[600],
-                            }} */
+
                             >Enviar</Button>:
                             <><Button
                                 variant="contained"
@@ -935,6 +919,7 @@ function handleformSubmit(){
                                     borderRadius: '5px',
                                     padding: '6px 8px',
                                     marginRight: '12px',
+                                    marginTop: '10px',
                                     contrastColor: appConfig.theme.colors.neutrals["000"],
                                     mainColor: appConfig.theme.colors.primary[500],
                                     color: appConfig.theme.colors.neutrals[100],
@@ -1036,51 +1021,13 @@ function handleformSubmit(){
                     :null}
                     
                     {showEstimativa? 
-                    <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        width: '100%',
-                        alignItems: 'center',
-                        padding: '6px 8px',
-                        marginBottom: '16px',
-                        marginTop: '16px',
-                        marginRight: '12px',
-                        backgroundColor: appConfig.theme.colors.neutrals[800],
-                        border: '1px solid',
-                        borderColor: appConfig.theme.colors.neutrals[999],
-                        borderRadius: '10px',
-                        flex: 1,
-                        minHeight: '240px', 
-                    }}
-                >   <Box>
+
                     <EstimativaDePeso sexo={sexo} CB={CB} CP={CP} DCSE={DCSE} AJ={AJ} estimativaDePeso={estimativaDePeso} />
-                    </Box>
-                </Box>
+
                     :null}
 
                     {showGeb? 
-                    <Box
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        width: '100%',
-                        alignItems: 'center',
-                        padding: '6px 8px',
-                        marginBottom: '16px',
-                        marginTop: '16px',
-                        marginRight: '12px',
-                        backgroundColor: appConfig.theme.colors.neutrals[800],
-                        border: '1px solid',
-                        borderColor: appConfig.theme.colors.neutrals[999],
-                        borderRadius: '10px',
-                        flex: 1,
-                        minHeight: '240px', 
-                    }}
-                >   <Box>
                     <GEB sexo={sexo} pesoAtual={pesoAtual} altura={altura} idade={idade} geb={geb} /> 
-                    </Box>
-                    </Box>
                     :null} 
                     </Box>
                 </Box>
@@ -1092,14 +1039,15 @@ function handleformSubmit(){
 function Header() {
     return (
         <>
-            <Box sx={{ width: '100%', marginBottom: '16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
-                <Typography variant='heading5'>
+            <Box sx={{ width: '100%', marginBottom: '16px', marginRight:'10px', marginLeft:'10px', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }} >
+                <Typography >
                     Metrics
                 </Typography>
                 <Button
                     variant='tertiary'
                     label='Logout'
                     href="/"
+                    
                 >Logout</Button>
             </Box>
         </>

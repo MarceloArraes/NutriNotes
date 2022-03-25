@@ -77,7 +77,17 @@ export default function ClassificationFa(props) {
   };
 
   return (
-    <Accordion>
+    <Accordion sx={{
+      width: '100%',
+      border: '0',
+      resize: 'none',
+      borderRadius: '5px',
+      //padding: '6px 8px',
+      backgroundColor: appConfig.theme.colors.neutrals[800],
+      marginRight: '12px',
+      color: appConfig.theme.colors.neutrals[200],
+      label: {fontWeight: 'bold'},
+    }}>
     <AccordionSummary
           expandIcon={<ExpandMoreIcon />}
           aria-controls="panel1a-content"

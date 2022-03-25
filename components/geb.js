@@ -1,21 +1,32 @@
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-/* import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper'; */
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
 import React from 'react';
-
+import appConfig from '../config.json';
 
 
 export default function GEB(props){
   console.log("PROPS GEB: ", props);
 
   return (
+    <Box
+    sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        width: '100%',
+        alignItems: 'center',
+        padding: '6px 8px',
+        marginBottom: '16px',
+        marginTop: '16px',
+        marginRight: '12px',
+        backgroundColor: appConfig.theme.colors.neutrals[800],
+        border: '1px solid',
+        borderColor: appConfig.theme.colors.neutrals[999],
+        borderRadius: '10px',
+        flex: 1,
+        minHeight: '240px', 
+    }}
+>   <Box>
       <MathJaxContext>
             <Box 
               sx={{
@@ -45,5 +56,7 @@ export default function GEB(props){
 
           </Box>
       </MathJaxContext>
+      </Box>
+    </Box>
   );
 }
