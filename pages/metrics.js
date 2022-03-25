@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 //import Avatar from '@mui/material/Avatar';
 
 
-import {Collapse} from '@material-ui/core';
 import React,{useEffect, useState, useRef} from 'react';
 import IMC from '../components/imc.js';
 import GEB from '../components/geb.js';
@@ -24,9 +23,6 @@ import ClassificationFa from '../components/classificationFa.js';
 import appConfig from '../config.json';
 
 import { useRouter } from 'next/router'
-
-import Popper from '@mui/material/Popper';
-import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 export default function MetricsPage() {
     
@@ -328,10 +324,6 @@ function handleformSubmit(){
             setrCQ(cC/cQ);
         }
     }
-
-    const handleClickAway = () => {
-        setOpenPopper(false);
-      };
 
     return (
 /*         <Box
@@ -802,90 +794,9 @@ function handleformSubmit(){
                                 }}
 
                             />
-                            {/* <Collapse in={infoButton}> */}
-                            <Button
-                            variant="contained"
-                            type='button'
-                            label='Tabela de Referencia.'
-                            /* fullWidth */
-                            onClick={(event) => {
-                                event.preventDefault();
-                                setAnchorEl(anchorEl ? null : event.currentTarget);
-                                if(Boolean(anchorEl)){
-                                    setOpenPopper(false);
-                                }else setOpenPopper(true);
-                                
-                            }}
-                            sx={{
-                                width: '50%',
-                                border: '0',
-                                resize: 'none',
-                                borderRadius: '5px',
-                                padding: '6px 8px',
-                                /* marginRight: '12px', */
-                                marginBottom: '9px',
-                                contrastColor: appConfig.theme.colors.neutrals["000"],
-                                mainColor: appConfig.theme.colors.primary[500],
-                                color: appConfig.theme.colors.neutrals[100],
-                                backgroundColor: appConfig.theme.colors.primary[500],
-                                mainColorLight: appConfig.theme.colors.primary[400],
-                                mainColorStrong: appConfig.theme.colors.primary[600],
-                                mainColorHighlight: appConfig.theme.colors.primary[500],
-                                ":hover": {
-                                  contrastColor: appConfig.theme.colors.neutrals["000"],
-                                  mainColor: appConfig.theme.colors.primary[500],
-                                  color: appConfig.theme.colors.neutrals[100],
-                                  backgroundColor: appConfig.theme.colors.primary[600],
-                                  mainColorLight: appConfig.theme.colors.primary[400],
-                                  mainColorStrong: appConfig.theme.colors.primary[600],
-                                },
-                                }}
-                            >Tabela de Referencia.</Button>
-                            
-                            <Popper  disablePortal={false} open={openPopper} anchorEl={anchorEl} placement={'bottom-start'}
-                            modifiers={[
-                                {
-                                  name: 'flip',
-                                  enabled: true,
-                                  options: {
-                                    altBoundary: true,
-                                    rootBoundary: 'document',
-                                    padding: 8,
-                                  },
-                                },
-                                {
-                                  name: 'preventOverflow',
-                                  enabled: true,
-                                  options: {
-                                    altAxis: true,
-                                    altBoundary: true,
-                                    tether: true,
-                                    rootBoundary: 'document',
-                                    padding: 8,
-                                  },
-                                },
-                                
-                              ]}
-                            >
-                            <Box sx={{
-                                    backgroundColor: appConfig.theme.colors.neutrals[600],
-                                    width: '100%',
-                                    border: '5px',
-                                    marginBottom: '5px',
-                                    resize: 'none',
-                                    borderRadius: '5px',
-                                    padding: '6px 8px',
-                                    marginRight: '12px',
-                                    color: appConfig.theme.colors.neutrals[200],
-                                }}
-                            ><ClickAwayListener onClickAway={handleClickAway}>
-                                <Box >
-                                        <ClassificationFa  />
-                                </Box>
-                            </ClickAwayListener>
-                            </Box>
-                            </Popper>
-                            {/* </Collapse> */}
+
+                            <ClassificationFa setOpenPopper={setOpenPopper}  />
+
                             <Box
                                 sx={{
                                     backgroundColor: appConfig.theme.colors.neutrals[600],

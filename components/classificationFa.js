@@ -6,6 +6,15 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
+import Box from '@mui/material/Box';
+import appConfig from '../config.json';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Typography from '@mui/material/Typography';  
+
 
 function createData(id ,idade, genero, leve, moderado, pesado) {
   return { id ,idade, genero, leve, moderado, pesado };
@@ -20,13 +29,89 @@ const rows = [
   createData(6,'Acima de 65 anos', "Feminino", 1.4, 1.6, 1.8),
 ];
 
+ 
+/*         <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+        >
+          <Typography>Accordion 1</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel2a-content"
+          id="panel2a-header"
+        >
+          <Typography>Accordion 2</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+          <Typography>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
+            malesuada lacus ex, sit amet blandit leo lobortis eget.
+          </Typography>
+        </AccordionDetails>
+      </Accordion>
+      <Accordion disabled>
+        <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel3a-content"
+          id="panel3a-header"
+        >
+          <Typography>Disabled Accordion</Typography> */
 
-export default function ClassificationFa() {
 
+
+
+export default function ClassificationFa(props) {
+
+  const handleClickAway = () => {
+    props.setOpenPopper(false);
+  };
 
   return (
+    <Accordion>
+    <AccordionSummary
+          expandIcon={<ExpandMoreIcon />}
+          aria-controls="panel1a-content"
+          id="panel1a-header"
+          sx={{
+            width: '100%',
+            border: '0',
+            resize: 'none',
+            borderRadius: '5px',
+            //padding: '6px 8px',
+            backgroundColor: appConfig.theme.colors.neutrals[800],
+            marginRight: '12px',
+            color: appConfig.theme.colors.neutrals[200],
+            label: {fontWeight: 'bold'},
+          }}
+        >
+          <Typography>Referência do Fator de Atividade</Typography>
+        </AccordionSummary>
+        <AccordionDetails>
+    <Box sx={{
+      backgroundColor: appConfig.theme.colors.neutrals[500],
+      width: '100%',
+      border: '5px',
+      marginBottom: '5px',
+      resize: 'none',
+      borderRadius: '5px',
+      padding: '6px 8px',
+      marginRight: '12px',
+      color: appConfig.theme.colors.neutrals[200],
+  }}
+><ClickAwayListener onClickAway={handleClickAway}>
+  <Box >
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 150}} size="small" aria-label="a dense table">
+      <Table sx={{ minWidth: 150, opacity:1 }} size="small" aria-label="a dense table">
         <TableHead>
           <TableRow>
             <TableCell align="left">Idade</TableCell>
@@ -59,5 +144,10 @@ export default function ClassificationFa() {
         </TableBody>
       </Table>
     </TableContainer>
+    </Box>
+    </ClickAwayListener>
+    </Box>
+    </AccordionDetails>
+    </Accordion>
   );
 }
