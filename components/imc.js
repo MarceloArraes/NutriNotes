@@ -9,7 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { MathJaxContext, MathJax } from 'better-react-mathjax';
 import React from 'react';
-
+import appConfig from '../config.json';
 
 export default function IMC(props) {
   console.log(props);
@@ -59,10 +59,31 @@ export default function IMC(props) {
             </TableBody>
           </Table>
         </TableContainer>
+
       );
     }
     
   return (
+    <Box
+          in={(props.imc!=='').toString()}
+          sx={{
+          //display: 'flex',
+          flexDirection: 'column',
+          width: '100%',
+          display: 'table',
+          alignItems: 'center',
+          padding: '6px 8px',
+          marginBottom: '16px',
+          marginTop: '16px',
+          marginRight: '12px',
+          backgroundColor: appConfig.theme.colors.neutrals[800],
+          border: '1px solid',
+          borderColor: appConfig.theme.colors.neutrals[999],
+          borderRadius: '10px',
+          flex: 1,
+          minHeight: '240px', 
+          }}
+      >
       <MathJaxContext>
             <Box 
               sx={{
@@ -84,5 +105,6 @@ export default function IMC(props) {
           
           </Box>
       </MathJaxContext>
+      </Box>
   );
 }

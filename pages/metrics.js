@@ -940,58 +940,18 @@ function handleformSubmit(){
                                 </>}
 
                                 {isDisabled ?<>
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        width: '100%',
-                                        alignItems: 'center',
-                                        padding: '6px 8px',
-                                        marginBottom: '16px',
-                                        marginTop: '16px',
-                                        marginRight: '12px',
-                                        backgroundColor: appConfig.theme.colors.neutrals[800],
-                                        border: '1px solid',
-                                        borderColor: appConfig.theme.colors.neutrals[999],
-                                        borderRadius: '10px',
-                                        flex: 1,
-                                        minHeight: '200px',
-                                    }}
-                                >
+                                
                                     <Results  imc={imc} geb={geb} net={nET} perdaDePeso={perdaDePeso} pesoIdeal={pesoIdeal} estimativaDePeso={estimativaDePeso} rCQ={rCQ}
                                     setShowEstimativa={setShowEstimativa} setShowGeb={setShowGeb} setShowPerdaDePeso={setShowPerdaDePeso} setShowPesoIdeal={setShowPesoIdeal}
                                     setShowNET={setShowNET} setShowImc={setShowImc} setShowrCQ={setShowrCQ} InterpretacaoDeAdequacaoDoPeso={InterpretacaoDeAdequacaoDoPeso}
                                     interpretacaoDoImc={interpretacaoDoImc}
                                     />
                                     
-                                </Box>
+                                
                                 </>:null}
                             
                         {showImc ? 
-                        <Box
-                            in={(imc!=='').toString()}
-                            sx={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            width: '100%',
-                            alignItems: 'center',
-                            padding: '6px 8px',
-                            marginBottom: '16px',
-                            marginTop: '16px',
-                            marginRight: '12px',
-                            backgroundColor: appConfig.theme.colors.neutrals[800],
-                            border: '1px solid',
-                            borderColor: appConfig.theme.colors.neutrals[999],
-                            borderRadius: '10px',
-                            flex: 1,
-                            minHeight: '240px', 
-                            }}
-                        >
-                                <Box>
-                                    {/* send props to APP */}
-                                    <IMC pesoIdeal={pesoIdeal} peso={pesoAtual} altura={altura} imc={imc} />
-                                </Box>
-                        </Box>
+                        <IMC pesoIdeal={pesoIdeal} peso={pesoAtual} altura={altura} imc={imc} />
                         :null}
 
                         {showPerdaDePeso?

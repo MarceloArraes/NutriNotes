@@ -9,6 +9,8 @@ import Paper from '@mui/material/Paper';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import IconButton from '@mui/material/IconButton';
 import { Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import appConfig from '../config.json';
 
 function createData(name, resultValue, setState, interpretacao) {
   return { name, resultValue, setState, interpretacao };
@@ -57,6 +59,24 @@ export default function Results(props) {
   }
 
   return (
+    <Box
+      sx={{
+          display: 'table',
+          flexDirection: 'column',
+          width: '100%',
+          alignItems: 'center',
+          padding: '6px 8px',
+          marginBottom: '16px',
+          marginTop: '16px',
+          marginRight: '12px',
+          backgroundColor: appConfig.theme.colors.neutrals[800],
+          border: '1px solid',
+          borderColor: appConfig.theme.colors.neutrals[999],
+          borderRadius: '10px',
+          flex: 1,
+          minHeight: '200px',
+      }}
+  >
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 150 }} size="small" aria-label="a dense table">
         <TableHead>
@@ -90,5 +110,6 @@ export default function Results(props) {
         </TableBody>
       </Table>
     </TableContainer>
+    </Box>
   );
 }

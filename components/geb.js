@@ -11,7 +11,7 @@ export default function GEB(props){
   return (
     <Box
     sx={{
-        display: 'flex',
+        display: 'table',
         flexDirection: 'column',
         width: '100%',
         alignItems: 'center',
