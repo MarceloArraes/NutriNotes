@@ -369,7 +369,7 @@ function handleformSubmit(){
                             <Box
                                 sx={{
                                     backgroundColor: appConfig.theme.colors.primary[900],
-                                    width: '100%',
+                                    width: '95%',
                                     border: '5px',
                                     marginBottom: '16px',
                                     resize: 'none',
