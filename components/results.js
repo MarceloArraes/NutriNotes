@@ -20,21 +20,15 @@ function createData(name, resultValue, setState, interpretacao) {
 export default function Results(props) {
   console.log(props);
   var rows2 = [];
-
- /*  const rows = [
-    createData('IMC', props.imc.toFixed(2), props.setShowImc),
-    createData('Peso Ideal', props.pesoIdeal.toFixed(2) , props.setShowPesoIdeal),
-    createData('Estimativa de Peso', props.estimativaDePeso.toFixed(2), props.setShowEstimativa),
-    createData('Perda de Peso', `${props.perdaDePeso}%`, props.setShowPerdaDePeso),
-    createData('Gasto Energético Basal', Math.round(props.geb) , props.setShowGeb),
-    createData('Necessidade Energetica Total', Math.round(props.net), props.setShowNET),
-  ]; */
   
   if(props.imc){
     rows2.push(createData('IMC', props.imc.toFixed(2), props.setShowImc, props.interpretacaoDoImc));
   }
   if(props.pesoIdeal){
     rows2.push(createData('Peso Ideal', `${props.pesoIdeal.toFixed(2)} kg` , props.setShowPesoIdeal, ''));
+  }
+  if(props.adequacaoDePeso){
+    rows2.push(createData('Adequação de Peso', `${props.pesoIdeal.toFixed(2)} %` , props.setShowAdequacao, props.InterpretacaoDeAdequacaoDoPeso));
   }
   if(props.estimativaDePeso){
     rows2.push(createData('Estimativa de Peso', `${props.estimativaDePeso.toFixed(2)} kg`, props.setShowEstimativa, ''));
@@ -49,7 +43,7 @@ export default function Results(props) {
     rows2.push(createData('Necessidade Energetica Total', `${Math.round(props.net)} kcal`, props.setShowNET, ''));
   }
   if(props.rCQ){
-    rows2.push(createData('Relaçao Cintura/Quadril', `${props.rCQ.toFixed(2)}`, props.setShowRCQ, ''));
+    rows2.push(createData('Relaçao Cintura/Quadril', `${props.rCQ.toFixed(2)}`, props.setShowRCQ, props.interpretacaoDeRCQ));
   }
 
   if(rows2.length === 0){
@@ -100,11 +94,11 @@ export default function Results(props) {
                 align="center" aria-label="visibility" size="small">
                     <VisibilityIcon fontSize="inherit" />
               </IconButton>:null}
-                {row.interpretacao ?<div>
-                <strong>Interpretação: <Typography color="red" align="justify">{row.interpretacao}</Typography></strong></div>
-                :null}
               </TableCell>
-              <TableCell align="right">{row.resultValue}</TableCell>
+              <TableCell align="right"><h2>{row.resultValue}</h2>
+              {row.interpretacao ?<div>
+                <strong>Interpretação: <Typography color="red" align="right">{row.interpretacao}</Typography></strong></div>
+                :null}</TableCell>
             </TableRow>
           ))}
         </TableBody>

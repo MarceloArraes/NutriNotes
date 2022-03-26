@@ -59,6 +59,10 @@ export default function MetricsPage() {
     const [AJ, setAJ] = useState(''); ///INPUT
     const [estimativaDePeso, setEstimativaDePeso] = useState(''); ///RESULTADO
     const [showEstimativa, setShowEstimativa] = useState(false); ///RESULTADO
+
+    //Adequaçao de Peso
+    const [adequacaoDePeso, setAdequacaoDePeso] = useState(''); ///RESULTADO
+    const [showAdequacao, setShowAdequacao] = useState(false); ///RESULTADO
     const [InterpretacaoDeAdequacaoDoPeso,setInterpretacaoDeAdequacaoDoPeso]=useState(''); ///INTERPRETAÇAO
 
     //GEB
@@ -79,6 +83,7 @@ export default function MetricsPage() {
     const [cQ, setcQ] = useState(''); ///INPUT
     const [rCQ, setrCQ] = useState(''); ///RESULTADO
     const [showrCQ, setShowrCQ] = useState(false); ///RESULTADO
+    const [interpretacaoDeRCQ, setInterpretacaoDeRCQ] = useState(''); ///INTERPRETAÇAO
 
     //Fator Injúria:
     const [condicaoClinica, setCondicaoClinica] = useState('');
@@ -97,19 +102,7 @@ export default function MetricsPage() {
         }
         setIsDisabled(true);
         firstUpdate.current = false;
-    }, [imc, perdaDePeso,estimativaDePeso, geb]);
-    
-    useEffect(() => {
-        //timer
-        if(!openPopper && infoButton){
-        const timer = setTimeout(() => {
-                setInfoButton(false)
-        }, 3000);
-        }
-        if(openPopper && infoButton){
-            clearTimeout(timer);
-        }
-    }, [openPopper]);
+    }, [imc, perdaDePeso,estimativaDePeso, geb, rCQ, nET]);
 
     useEffect(() => {
         if(idade>=10 && radioFa!==''){
@@ -269,7 +262,9 @@ function handleformSubmit(){
                 //Peso Ajustado = (PA-PI)x0,25 + PI
 
                 let adequacaoDoPeso = (pesoAtual * 100)/localPesoIdeal;
-                
+
+                setAdequacaoDePeso(adequacaoDoPeso);
+
                 if(adequacaoDoPeso>= 95 && adequacaoDoPeso <= 115){
                     pesoAtualLocal = pesoAtual;
                 }else{
@@ -322,6 +317,28 @@ function handleformSubmit(){
             console.log("cQ: ", cQ);
             console.log("cC/cQ: ", cC/cQ);
             setrCQ(cC/cQ);
+
+            if(sexo==="homem"){
+                if(cC/cQ<=0.87){
+                    setInterpretacaoDeRCQ("Risco DCV Baixo");
+                }else if(cC/cQ>=0.88 && cC/cQ<0.95){
+                    setInterpretacaoDeRCQ("Risco DCV Moderado");
+                }else if(cC/cQ>=0.96 && cC/cQ<=1.0){
+                    setInterpretacaoDeRCQ("Risco DCV Alto");
+                }else if(cC/cQ>1.00){
+                    setInterpretacaoDeRCQ("Risco DCV Muito Alto");
+                }
+            }else{
+                if(cC/cQ<=0.72){
+                    setInterpretacaoDeRCQ("Risco DCV Baixo");
+                }else if(cC/cQ>=0.73 && cC/cQ<0.79){
+                    setInterpretacaoDeRCQ("Risco DCV Moderado");
+                }else if(cC/cQ>=0.80 && cC/cQ<=0.87){
+                    setInterpretacaoDeRCQ("Risco DCV Alto");
+                }else if(cC/cQ>0.87){
+                    setInterpretacaoDeRCQ("Risco DCV Muito Alto");
+                }
+            }
         }
     }
 
@@ -942,9 +959,10 @@ function handleformSubmit(){
                                 {isDisabled ?<>
                                 
                                     <Results  imc={imc} geb={geb} net={nET} perdaDePeso={perdaDePeso} pesoIdeal={pesoIdeal} estimativaDePeso={estimativaDePeso} rCQ={rCQ}
+                                    adequacaoDePeso={adequacaoDePeso} setShowAdequacao={setShowAdequacao}
                                     setShowEstimativa={setShowEstimativa} setShowGeb={setShowGeb} setShowPerdaDePeso={setShowPerdaDePeso} setShowPesoIdeal={setShowPesoIdeal}
                                     setShowNET={setShowNET} setShowImc={setShowImc} setShowrCQ={setShowrCQ} InterpretacaoDeAdequacaoDoPeso={InterpretacaoDeAdequacaoDoPeso}
-                                    interpretacaoDoImc={interpretacaoDoImc}
+                                    interpretacaoDoImc={interpretacaoDoImc} interpretacaoDeRCQ={interpretacaoDeRCQ}
                                     />
                                     
                                 
