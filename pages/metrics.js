@@ -210,6 +210,7 @@ function handleformSubmit(){
                 }
             
             //INTERPRETACAO IMC
+            if(idade<65){
             if(imc<16){
                 setInterpretacaoDoImc("Magreza grau III");
             }else if( imc>=16 && imc<17){
@@ -226,6 +227,17 @@ function handleformSubmit(){
                 setInterpretacaoDoImc("Obesidade grau II");
             } else if( imc>=40){
                 setInterpretacaoDoImc("Obesidade grau III");
+            }
+        }
+        else if(idade>=65){
+            if( imc<22){
+                setInterpretacaoDoImc("Magreza");
+            }
+            else if(imc>=22 && imc<=27){
+                setInterpretacaoDoImc("Eutrofia");
+            }
+            else if(imc>27){
+                setInterpretacaoDoImc("Excesso de Peso");
             }
         }
         //Perda de peso
