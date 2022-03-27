@@ -40,6 +40,9 @@ useEffect(() => {
         <FormControlLabel value="leve" control={<Radio />} label="leve" />
         <FormControlLabel value="moderado" control={<Radio />} label="moderado" />
         <FormControlLabel value="pesado" control={<Radio />} label="pesado" />
+        <FormControlLabel value="acamado" control={<Radio />} label="acamado" />
+        <FormControlLabel value="acamadoMovimento" control={<Radio />} label="acamado+movimento" />
+        <FormControlLabel value="ambulante" control={<Radio />} label="ambulante" />
       </RadioGroup>
     </FormControl>
   );

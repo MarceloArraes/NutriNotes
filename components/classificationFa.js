@@ -27,54 +27,13 @@ const rows = [
   createData(4,'18 a 65 anos',"Feminino" , 1.56, 1.64, 1.82),
   createData(5,'Acima de 65 anos', "Masculino", 1.4, 1.6, 1.9),
   createData(6,'Acima de 65 anos', "Feminino", 1.4, 1.6, 1.8),
+  createData(7,'Acamado', "", '', 1.2, ''),
+  createData(8,'Acamado + Movimento', "", '', 1.25, ''),
+  createData(9,'Ambulante', "", '', 1.3, ''),
 ];
-
- 
-/*         <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Accordion 1</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel2a-content"
-          id="panel2a-header"
-        >
-          <Typography>Accordion 2</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
-        </AccordionDetails>
-      </Accordion>
-      <Accordion disabled>
-        <AccordionSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel3a-content"
-          id="panel3a-header"
-        >
-          <Typography>Disabled Accordion</Typography> */
-
-
-
 
 export default function ClassificationFa(props) {
 
-  const handleClickAway = () => {
-    props.setOpenPopper(false);
-  };
 
   return (
     <Accordion sx={{
@@ -118,7 +77,7 @@ export default function ClassificationFa(props) {
       marginRight: '12px',
       color: appConfig.theme.colors.neutrals[200],
   }}
-><ClickAwayListener onClickAway={handleClickAway}>
+>
   <Box >
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 150, opacity:1 }} size="small" aria-label="a dense table">
@@ -155,7 +114,6 @@ export default function ClassificationFa(props) {
       </Table>
     </TableContainer>
     </Box>
-    </ClickAwayListener>
     </Box>
     </AccordionDetails>
     </Accordion>

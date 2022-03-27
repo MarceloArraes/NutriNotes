@@ -34,9 +34,6 @@ export default function MetricsPage() {
     const [isDisabled, setIsDisabled] = useState(false); ///MODAL
     const firstUpdate = useRef(true); ///MODAL
     const [infoButton, setInfoButton] = useState(false); ///MODAL
-    const [anchorEl, setAnchorEl] = useState(null); ///MODAL
-    const [openPopper,setOpenPopper] = useState(false); ///MODAL
-    
     //IMC e IMC ideal
     const [pesoAtual, setPesoAtual] = useState(''); ///INPUT
     const [altura, setAltura] = useState('');///INPUT
@@ -105,10 +102,17 @@ export default function MetricsPage() {
     }, [imc, perdaDePeso,estimativaDePeso, geb, rCQ, nET]);
 
     useEffect(() => {
-        if(idade>=10 && radioFa!==''){
+        if((idade>=10||idade==='')&& radioFa!==''){
             console.log("entering faHandler");
-
-            if(idade<=18 && idade>10){
+            if(radioFa==='acamado'){
+                setFa(1.2)
+            }else if(radioFa==='acamadoMovimento'){
+                setFa(1.25)
+            }else if(radioFa==='ambulante'){
+                setFa(1.3)
+            }else if(idade===''){
+                setFa('')
+            }else if(idade<=18 && idade>10){
                 if(sexo==='mulher'){
                     if(radioFa=='pesado')setFa(6.0);
 
@@ -139,7 +143,7 @@ export default function MetricsPage() {
                 }
 
             }else if(idade>65){
-                if(sexo==='mulher'){
+                    if(sexo==='mulher'){
                     if(radioFa=='pesado')setFa(1.8);
 
                     if(radioFa=='moderado')setFa(1.6);
@@ -153,6 +157,7 @@ export default function MetricsPage() {
     
                     if(radioFa=='leve')setFa(1.4);
                 }
+
             }
         }else if(idade>0 && idade<10){
             setFa('');
@@ -819,7 +824,7 @@ function handleformSubmit(){
 
                             />
 
-                            <ClassificationFa setOpenPopper={setOpenPopper}  />
+                            <ClassificationFa/>
 
                             <Box
                                 sx={{
@@ -916,7 +921,6 @@ function handleformSubmit(){
                                 fullWidth
                                 onClick={() => {
                                     setIsDisabled(false);
-                                    setOpenPopper(false);
                                     setShowImc(false);
                                     setShowEstimativa(false);
                                     setShowGeb(false);
