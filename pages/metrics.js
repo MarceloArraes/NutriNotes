@@ -228,8 +228,7 @@ function handleformSubmit(){
             } else if( imc>=40){
                 setInterpretacaoDoImc("Obesidade grau III");
             }
-        }
-        else if(idade>=65){
+        }else if(idade>=65){
             if( imc<22){
                 setInterpretacaoDoImc("Magreza");
             }
@@ -240,6 +239,14 @@ function handleformSubmit(){
                 setInterpretacaoDoImc("Excesso de Peso");
             }
         }
+
+
+
+        }
+
+
+
+
         //Perda de peso
         if(pesoAtual.length > 0 && pesoHabitual.length > 0) {
                 console.log("Fazer conta do peso habitual");

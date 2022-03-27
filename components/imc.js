@@ -93,8 +93,10 @@ export default function IMC(props) {
                   borderRadius: '5px',
               }}
             >
-          IMC: {props.imc.toFixed(2)}
+          IMC: {props.imc.toFixed(2)}  
+          <div>
           Peso Ideal: {props.pesoIdeal.toFixed(2)}
+          </div>
           <Typography sx={{padding: '5px',
                   margin: '5px',
                   borderRadius: '5px',}}
