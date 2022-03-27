@@ -37,12 +37,12 @@ useEffect(() => {
         onChange={handleChange}
         value={faRadioButtonValue}
       >
-        <FormControlLabel value="leve" control={<Radio />} label="leve" />
-        <FormControlLabel value="moderado" control={<Radio />} label="moderado" />
-        <FormControlLabel value="pesado" control={<Radio />} label="pesado" />
-        <FormControlLabel value="acamado" control={<Radio />} label="acamado" />
-        <FormControlLabel value="acamadoMovimento" control={<Radio />} label="acamado+movimento" />
-        <FormControlLabel value="ambulante" control={<Radio />} label="ambulante" />
+        <FormControlLabel value="leve" control={<Radio />} label="Leve" />
+        <FormControlLabel value="moderado" control={<Radio />} label="Moderado" />
+        <FormControlLabel value="pesado" control={<Radio />} label="Pesado" />
+        <FormControlLabel value="acamado" control={<Radio />} label="Acamado" />
+        <FormControlLabel value="acamadoMovimento" control={<Radio />} label="Acamado + Movimento" />
+        <FormControlLabel value="ambulante" control={<Radio />} label="Ambulante" />
       </RadioGroup>
     </FormControl>
   );

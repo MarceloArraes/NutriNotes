@@ -14,8 +14,6 @@ import PerdaDePeso from '../components/perdaDePeso.js';
 import RadioSexo from '../components/radioSexo.js';
 import Results from '../components/results.js';
 import RadioButtomFa from '../components/radioButtomFa.js';
-import CheckboxFi from '../components/checkboxFi.js';
-import SplitButton from '../components/splitButton.js';
 import DropdownFi from '../components/dropdownFi.js';
 
 import ClassificationFa from '../components/classificationFa.js';
@@ -89,6 +87,12 @@ export default function MetricsPage() {
     const [showFatorInjuria, setShowFatorInjuria] = useState(false); ///RESULTADO
 
 
+    useEffect(() => {
+        if(condicaoClinica==='Amputacao'){
+            console.log('Paciente com amputação abrir novo menu');
+        }
+        //Aqui irei substituir o menu gravidade por menu de amputação. Que será um checkbox com varias opções de membros amputados.
+    }, [condicaoClinica]);
 
     useEffect(() => {
         //prevent default

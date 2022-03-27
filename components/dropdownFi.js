@@ -5,13 +5,13 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import React,{useState, useEffect} from 'react';
 import appConfig from '../config.json';
-
-/* function createData(condicaoclinica, leve, grave) {
-  return { condicaoclinica, leve, grave };
-} */
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import Typography from '@mui/material/Typography';
 
 export default function  DropdownFi(props) {
-  //const [resultingFactor, setResultingFactor] = useState('');
+  const [openAmputacao, setOpenAmputacao] = useState(false);
+  const [checked, setChecked] = React.useState([true, false]);
 
   useEffect(() => {
     if(props.condicaoClinica!='' && props.level!=''){
@@ -33,23 +33,11 @@ export default function  DropdownFi(props) {
     Fraturas_múltiplas:[1.2, 1.35],
     Queimadura_até_20: [1, 1.5],
     Queimadura_20_a_40: [1.5, 1.85],
-    Queimadura_até_40_a_100: [1.85, 2.05]},
+    Queimadura_até_40_a_100: [1.85, 2.05],
+    Amputacao: ['', ''],
+  },
   }; 
   
-/*   const listaCondicaoClinica = [
-    "Desnutrição_grave",
-    "Pequena_cirurgia_eletiva",
-    "Pós_operatório_geral",
-    "Peritinote",
-    "Sepse",
-    "Infecção_grave",
-    "Câncer",
-    "Traumatismo_de_tecidos_moles",
-    "Fraturas_múltiplas",
-    "Queimadura_até_20",
-    "Queimadura_20_a_40",
-    "Queimadura_até_40_a_100",
-  ] */
   const objCondicaoClinica2 = {
     obs:[
     {"name":"Desnutrição grave", "value": "Desnutrição_grave", "factor": [1.5, 1.5]},
@@ -63,11 +51,91 @@ export default function  DropdownFi(props) {
     {"name":"Fraturas múltiplas", "value": "Fraturas_múltiplas", "factor": [1.2, 1.35]},
     {"name":"Queimadura até 20%", "value": "Queimadura_até_20", "factor": [1, 1.5]},
     {"name":"Queimadura 20% a 40%", "value": "Queimadura_20_a_40", "factor": [1.5, 1.85]},
-    {"name":"Queimadura até 40% a 100%", "value": "Queimadura_até_40_a_100", "factor": [1.85, 2.05]}],
+    {"name":"Queimadura até 40% a 100%", "value": "Queimadura_até_40_a_100", "factor": [1.85, 2.05]},
+    {"name":"Amputação", "value": "Amputacao", "factor": ['', '']},
+  ],
   }
+
+  const objBodyParts = {
+    obs:[
+    {"id":1,"name":"Braço Esquerdo", "value": "false", "children1": [
+      {"id":2,"name":"Ombro Esquerdo", "value": false},
+      {"id":3,"name":"Antebraço Esquerdo", "value": false},
+      {"id":4,"name":"Mão Esquerda", "value": false},
+    ]
+    },
+    {"id":5,"name":"Braço Direito", "value": false, "children1": [
+      {"id":6,"name":"Ombro Direito", "value": false},
+      {"id":7,"name":"Antebraço Direito", "value": false},
+      {"id":8,"name":"Mão Direita", "value": false},
+    ],
+    },
+    {"id":9,"name":"Perna Esquerda", "value": "false", "children1": [
+      {"id":10,"name":"Coxa Esquerda", "value": false},
+      {"id":11,"name":"Canela Esquerda", "value": false},
+      {"id":12,"name":"Pé Esquerdo", "value": false},
+    ]
+    },
+    {"id":13,"name":"Perna Direita", "value": "false", "children1": [
+      {"id":14,"name":"Coxa Direita", "value": false},
+      {"id":15,"name":"Canela Direita", "value": false},
+      {"id":16,"name":"Pé Direito", "value": false},
+    ]
+    },
+  ]
+  }
+
+  //Começa CheckBox Amputaçao
+  const handleChange1 = (event) => {
+    setChecked([event.target.checked, event.target.checked]);
+  };
+
+  const handleChange2 = (event) => {
+    setChecked([event.target.checked, checked[1]]);
+  };
+
+  const handleChange3 = (event) => {
+    setChecked([checked[0], event.target.checked]);
+  };
+
+  const children = (
+    <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
+      <FormControlLabel
+        label="Antebraço"
+        control={<Checkbox checked={checked[0]} onChange={handleChange2} />}
+      />
+      <FormControlLabel
+        label="Mão"
+        control={<Checkbox checked={checked[1]} onChange={handleChange3} />}
+      />
+    </Box>
+  );
+
+    function ListChildren(props){
+      const parent = props.bodyParts;
+      return (
+      <Box sx={{ display: 'flex', flexDirection: 'column', ml: 3 }}>
+      {parent.children1.map((item, index) => {
+        console.log(item);
+        console.log(item.name);
+        return (
+      <FormControlLabel
+        key={item.id}
+        label={item.name}
+        control={<Checkbox checked={item.value} onChange={handleChange2} />}
+      /> 
+        )
+      })}
+    </Box>
+    )
+    }
+    //Termina CheckBox Amputaçao
 
   const handleChange = (event) => {
     props.setCondicaoClinica(event.target.value);
+    if(event.target.value=='Amputacao'){
+      setOpenAmputacao(true);
+    }
   };
   const handleChangeLevel = (event) => {
     props.setLevel(event.target.value);
@@ -95,7 +163,7 @@ export default function  DropdownFi(props) {
           ))}
         </Select>
       </FormControl>
-
+      {props.condicaoClinica!='Amputacao'?
       <FormControl fullWidth>
         <InputLabel id="demo-simple-select-label" sx={{
           fontWeight: 'bold',
@@ -111,6 +179,28 @@ export default function  DropdownFi(props) {
           <MenuItem value={"1"}>Grave</MenuItem>
         </Select>
       </FormControl>
+      :<Box>
+        
+        {objBodyParts.obs.map((bodyParts) => (
+          <div key={bodyParts.id}>
+          <FormControlLabel
+            label={bodyParts.name}
+            control={
+              <Checkbox
+                checked={checked[0] && checked[1]}
+                indeterminate={checked[0] !== checked[1]}
+                onChange={handleChange1}
+              />
+            }
+          />
+          <ListChildren bodyParts={bodyParts}/>
+          </div>
+        ))}
+
+
+        
+        
+        </Box>}
     </Box>
   );
 }
