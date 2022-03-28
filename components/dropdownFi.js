@@ -10,26 +10,51 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Typography from '@mui/material/Typography';
 
 export default function  DropdownFi(props) {
-  const [openAmputacao, setOpenAmputacao] = useState(false);
-  const [checked, setChecked] = useState([true, false]);
+  const [objBodyParts, setObjBodyParts] = useState({
+    obs:[
+    {"id":"1","name":"Braço Esquerdo", "value": false, "children1": [
+      {"id":"2","name":"Ombro Esquerdo", "value": false, "percentil": 2.7},
+      {"id":"3","name":"Antebraço Esquerdo", "value": false, "percentil": 1.6},
+      {"id":"4","name":"Mão Esquerda", "value": false, "percentil": 0.7},
+    ]
+    },
+    {"id":"5","name":"Braço Direito", "value": false, "children1": [
+      {"id":"6","name":"Ombro Direito", "value": false, "percentil": 2.7},
+      {"id":"7","name":"Antebraço Direito", "value": false, "percentil": 1.6},
+      {"id":"8","name":"Mão Direita", "value": false, "percentil": 0.7},
+    ],
+    },
+    {"id":"9","name":"Perna Esquerda", "value": false, "children1": [
+      {"id":"10","name":"Coxa Esquerda", "value": false, "percentil": 10.1},
+      {"id":"11","name":"Canela Esquerda", "value": false, "percentil": 4.4},
+      {"id":"12","name":"Pé Esquerdo", "value": false, "percentil": 1.5},
+    ]
+    },
+    {"id":"13","name":"Perna Direita", "value": false, "children1": [
+      {"id":"14","name":"Coxa Direita", "value": false, "percentil": 10.1},
+      {"id":"15","name":"Canela Direita", "value": false, "percentil": 4.4},
+      {"id":"16","name":"Pé Direito", "value": false, "percentil": 1.5},
+    ]
+    },
+  ]
+  })
 
-  //One way of doing it is to create a useState for every body part, like:
-  //const [checkedBracoEsquerdo, setCheckedBracoEsquerdo] = React.useState([false, false, false]);
-  //const [checkedBracoDireito, setCheckedBracoDireito] = React.useState([false, false, false]);
-  //const [checkedPernaEsquerda, setCheckedPernaEsquerda] = React.useState([false, false, false]);
-  //const [checkedPernaDireita, setCheckedPernaDireita] = React.useState([false, false, false]);
-  //Here the parent is just the result of their childrens. 
-  //Or i can try to create a matrix of the body parts, like:
-  //const [bodyPartsList, setbodyPartsList] = React.useState([[false, false, false]]);
-  //
-  
 
   useEffect(() => {
     if(props.condicaoClinica!='' && props.level!=''){
       props.setFatorInjuria(injuries.injury[props.condicaoClinica][props.level]);
     }
-
   }, [props.condicaoClinica, props.level, props.fatorInjuria])
+
+  useEffect(() => {
+    console.log(props.condicaoClinica)
+    var percentilAmputacao = 0.0;
+    if(props.condicaoClinica==="Amputacao"){
+     objBodyParts.obs.map(item => { item.children1.map(item2 => { item2.value? percentilAmputacao+=item2.percentil:null  }) });
+    }
+    console.log(percentilAmputacao)
+
+  }, [objBodyParts])
 
   const injuries = {
     "injury":{
@@ -67,34 +92,7 @@ export default function  DropdownFi(props) {
   ],
   }
 
-  const [objBodyParts, setObjBodyParts] = useState({
-    obs:[
-    {"id":"1","name":"Braço Esquerdo", "value": false, "children1": [
-      {"id":"2","name":"Ombro Esquerdo", "value": false},
-      {"id":"3","name":"Antebraço Esquerdo", "value": false},
-      {"id":"4","name":"Mão Esquerda", "value": false},
-    ]
-    },
-    {"id":"5","name":"Braço Direito", "value": false, "children1": [
-      {"id":"6","name":"Ombro Direito", "value": false},
-      {"id":"7","name":"Antebraço Direito", "value": false},
-      {"id":"8","name":"Mão Direita", "value": false},
-    ],
-    },
-    {"id":"9","name":"Perna Esquerda", "value": false, "children1": [
-      {"id":"10","name":"Coxa Esquerda", "value": false},
-      {"id":"11","name":"Canela Esquerda", "value": false},
-      {"id":"12","name":"Pé Esquerdo", "value": false},
-    ]
-    },
-    {"id":"13","name":"Perna Direita", "value": false, "children1": [
-      {"id":"14","name":"Coxa Direita", "value": false},
-      {"id":"15","name":"Canela Direita", "value": false},
-      {"id":"16","name":"Pé Direito", "value": false},
-    ]
-    },
-  ]
-  })
+  
 
   const handleChange4 = (event) => {
     console.log(event.target.value);
@@ -102,9 +100,7 @@ export default function  DropdownFi(props) {
     let copyOfObject = { ...objBodyParts }
 
     if(event.target.name==="parent"){
-      console.log(event.target.name);
-      console.log(event.target.id);
-      console.log(event.target.checked);
+
       copyOfObject.obs.map(item => {item.id===event.target.id? item.children1.map(item2 => {  item2.value = event.target.checked  }) : null})
       setObjBodyParts(copyOfObject);
 
@@ -135,9 +131,6 @@ export default function  DropdownFi(props) {
 
   const handleChange = (event) => {
     props.setCondicaoClinica(event.target.value);
-    if(event.target.value=='Amputacao'){
-      setOpenAmputacao(true);
-    }
   };
   const handleChangeLevel = (event) => {
     props.setLevel(event.target.value);
