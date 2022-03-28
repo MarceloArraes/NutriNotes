@@ -86,13 +86,15 @@ export default function MetricsPage() {
     const [fatorInjuria, setFatorInjuria] = useState(''); ///RESULTADO
     const [showFatorInjuria, setShowFatorInjuria] = useState(false); ///RESULTADO
 
+    //Amputação
+    const [percentilAmputacao, setPercentilAmputacao] = useState(''); ///RESULTADO
 
     useEffect(() => {
-        if(condicaoClinica==='Amputacao'){
-            console.log('Paciente com amputação abrir novo menu');
-        }
+        if(condicaoClinica==="Amputacao"&& percentilAmputacao>0){
+            setPesoAtual(parseFloat((pesoHabitual/(100-percentilAmputacao))*100));
+            }
         //Aqui irei substituir o menu gravidade por menu de amputação. Que será um checkbox com varias opções de membros amputados.
-    }, [condicaoClinica]);
+    }, [percentilAmputacao]);
 
     useEffect(() => {
         //prevent default
@@ -173,7 +175,7 @@ function handleformSubmit(){
         console.log("submit");
         var localGeb = 0.0;
         var localPesoIdeal = 0.0;
-        
+
         //Fator de Injúria
         if(fatorInjuria==''){
             setFatorInjuria(1);
@@ -182,8 +184,31 @@ function handleformSubmit(){
             var localFi = fatorInjuria;
         }
 
-        //IMC
-        if(pesoAtual.length > 0 && altura.length > 0 && idade.length>0) {
+        //IMC - Primeiro com Amputaçao depois sem.
+        if(percentilAmputacao>0 && altura>0){
+            var idealImc = 0.0;
+            if(idade>60){
+                idealImc = 24.5;
+            }else{
+                if(sexo=='mulher'){
+                    idealImc = 21;
+                }
+                else{
+                    idealImc = 22;
+                }
+            }
+
+            if(altura > 3){
+                let alturaemmetros = altura /100;
+                setImc((pesoHabitual/(100-percentilAmputacao))/((alturaemmetros*alturaemmetros)*(1-(percentilAmputacao/100))));
+                let localPesoIdeal = (alturaemmetros * alturaemmetros) * idealImc;
+                setPesoIdeal(localPesoIdeal);
+            }else{
+                setImc((pesoHabitual/(100-percentilAmputacao))/((altura*altura)*(1-(percentilAmputacao/100))))
+                let localPesoIdeal = (altura * altura) * idealImc;
+                setPesoIdeal(localPesoIdeal);
+            }
+        }else if(pesoAtual > 0 && altura.length > 0 && idade.length>0) {
             console.log("Fazer conta do IMC");
             console.log("Peso: ", pesoAtual);
             console.log("Altura: ", altura);
@@ -252,9 +277,6 @@ function handleformSubmit(){
 
 
         }
-
-
-
 
         //Perda de peso
         if(pesoAtual.length > 0 && pesoHabitual.length > 0) {
@@ -368,6 +390,8 @@ function handleformSubmit(){
                 }
             }
         }
+
+
     }
 
     return (
@@ -559,8 +583,6 @@ function handleformSubmit(){
                                 InputProps={{
                                     endAdornment: <InputAdornment position="start">kg</InputAdornment>,
                                   }}
-                                
-                                
                             />
                             
                             <TextField
@@ -845,7 +867,7 @@ function handleformSubmit(){
                                 }}
                             >
                             <DropdownFi fatorInjuria={fatorInjuria} setFatorInjuria={setFatorInjuria} condicaoClinica={condicaoClinica} setCondicaoClinica={setCondicaoClinica} 
-                            level={level}  setLevel={setLevel} />
+                            level={level}  setLevel={setLevel} pesoHabitual={pesoHabitual} setPesoAtual={setPesoAtual} altura={altura} setImc={setImc} setPercentilAmputacao={setPercentilAmputacao} isDisabled={isDisabled} />
 {/*                             <CheckboxFi/>
                             <SplitButton/> */}
                             </Box>
@@ -953,6 +975,8 @@ function handleformSubmit(){
                                     setcQ('');
                                     setrCQ('');
                                     setRadioFa('');
+                                    setPercentilAmputacao('');
+                                    setCondicaoClinica('');
                                     setSexo('mulher');
                                     firstUpdate.current = true;
                                 } }

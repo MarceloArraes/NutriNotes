@@ -50,10 +50,26 @@ export default function  DropdownFi(props) {
     console.log(props.condicaoClinica)
     var percentilAmputacao = 0.0;
     if(props.condicaoClinica==="Amputacao"){
-     objBodyParts.obs.map(item => { item.children1.map(item2 => { item2.value? percentilAmputacao+=item2.percentil:null  }) });
+     objBodyParts.obs.map(item => {item.children1.map(item2 => {item2.value? percentilAmputacao+=item2.percentil:null  }) });
     }
-    console.log(percentilAmputacao)
+    console.log(percentilAmputacao);
+    props.setPercentilAmputacao(percentilAmputacao);
+    //pesoCorrigido = pesoAnterior/(altura)^2*(1-(percentilAmputacao/100));
+    console.log(props.pesoHabitual);
+    console.log(props.altura);
+    console.log(percentilAmputacao);
 
+    /* if(props.condicaoClinica==="Amputacao" && !props.isDisabled){
+    props.setPesoAtual((props.pesoHabitual/(100-percentilAmputacao))*100)
+    } */
+
+/*     if(props.altura>3){
+      var alturaMetros = props.altura/100;
+      props.setImc((props.pesoHabitual/(100-percentilAmputacao))/((alturaMetros*alturaMetros)*(1-(percentilAmputacao/100))));
+    }else{
+      props.setImc((props.pesoHabitual/(100-percentilAmputacao))/((props.altura*props.altura)*(1-(percentilAmputacao/100))));
+    }
+     */
   }, [objBodyParts])
 
   const injuries = {
